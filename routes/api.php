@@ -16,32 +16,43 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-
-Route::get('/', 'HomeController@index');
-
-Route::group(['middleware' => 'jwt.auth'], function(){
-   Route::post('auth/logout', 'AuthController@logout');
-   Route::get('auth/user', 'AuthController@user');
-   
-});
-
-Route::group(['middleware' => 'jwt.refresh'], function(){
-    Route::post('authrefresh', 'AuthController@getAuthenticatedUser');
-
-});
-
-Route::group(['as' => 'product.', 'namespace' => 'Product'], function () {
-    Route::get('/', 'ProductController@index')->name('product.index');
-    Route::get('/{id}', 'ProductController@show')->name('product.show');
-    Route::post('/', 'PostsCoProductControllerntroller@store')->name('product.create');
-	Route::delete('/{id}', 'PostsCoProductControllerntroller@destroy')->name('product.delete');
-});
+    
 
 Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 
-    Route::post('login', 'AuthController@login');
-    Route::post('register', 'AuthController@register');
+    Route::get('/', 'HomeController@index');
+    Route::post('login', 'AuthController@login')->name('login');
+    Route::post('register', 'AuthController@register');    
+
     Route::post('logout', 'AuthController@logout');
     Route::post('me', 'AuthController@me');
 
+   Route::group(['prefix' => 'products'], function () {
+        Route::get('/','ProductController@store')->name('products.show');
+   });
+
+   Route::group(['middleware' => 'jwt.refresh'], function(){
+    Route::post('authrefresh', 'AuthController@getAuthenticatedUser');
+
+    });
+
+    Route::group(['middleware' => 'jwt.auth'], function(){
+
+       Route::post('auth/logout', 'AuthController@logout');
+       Route::get('auth/user', 'AuthController@user');
+
+       Route::group(['prefix' => 'auth/products', 'middleware' => 'jwt.auth'], function () {
+        Route::post('/store','ProductController@store')->name('products.create');
+        Route::delete('/destroy','ProductController@destroy')->name('products.delete');
+        Route::put('/update','ProductController@update')->name('products.update');
+       });
+
+    });
+    
 });
+
+
+
+
+
+

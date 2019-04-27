@@ -1,5 +1,5 @@
     var Ziggy = {
-        namedRoutes: {"product.product.index":{"uri":"api","methods":["GET","HEAD"],"domain":null},"product.product.show":{"uri":"api\/{id}","methods":["GET","HEAD"],"domain":null},"product.product.create":{"uri":"api","methods":["POST"],"domain":null},"product.product.delete":{"uri":"api\/{id}","methods":["DELETE"],"domain":null}},
+        namedRoutes: {"login":{"uri":"api\/auth\/login","methods":["POST"],"domain":null},"products.show":{"uri":"api\/auth\/products","methods":["GET","HEAD"],"domain":null},"products.create":{"uri":"api\/auth\/auth\/products\/store","methods":["POST"],"domain":null},"products.delete":{"uri":"api\/auth\/auth\/products\/destroy","methods":["DELETE"],"domain":null},"products.update":{"uri":"api\/auth\/auth\/products\/update","methods":["PUT"],"domain":null}},
         baseUrl: 'http://localhost/',
         baseProtocol: 'http',
         baseDomain: 'localhost',

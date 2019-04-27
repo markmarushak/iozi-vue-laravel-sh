@@ -2,28 +2,23 @@
 
 return [
     'role_structure' => [
-        'superadministrator' => [
-            'users' => 'c,r,u,d',
-            'acl' => 'c,r,u,d',
-            'profile' => 'r,u'
+        
+        'admin' => [
+            'product.show',
+            'product.delete',
         ],
-        'administrator' => [
-            'users' => 'c,r,u,d',
-            'profile' => 'r,u'
-        ],
+
         'user' => [
-            'profile' => 'r,u'
-        ],
+            'login',
+            'register',
+
+            'product.show',
+            'product.create',
+            'product.delete',
+            'product.update',
+        ]
     ],
     'permission_structure' => [
-        'cru_user' => [
-            'profile' => 'c,r,u'
-        ],
-    ],
-    'permissions_map' => [
-        'c' => 'create',
-        'r' => 'read',
-        'u' => 'update',
-        'd' => 'delete'
+        
     ]
 ];

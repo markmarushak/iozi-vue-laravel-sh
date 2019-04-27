@@ -15,7 +15,9 @@ class User extends Authenticatable implements JWTSubject
 
     // Rest omitted for brevity
 
+    public $appends = ['maxUserLevel'];
 
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -87,5 +89,23 @@ class User extends Authenticatable implements JWTSubject
     public function hasRole($role)
     {
       return null !== $this->roles()->where('name', $role)->first();
+    }
+
+    public function getMaxUserLevelAttribute()
+    {
+        if ($this) {
+            $rawRoles = config('laratrust_seeder.role_structure');
+            $rolesLevels = array_keys($rawRoles);
+            $maxUserRoleLevel = $this->roles
+                ->map(function (Role $role) use ($rolesLevels, $rawRoles) {
+                    $name = $role->name;
+                    $priority = ($name && isset($rawRoles[$name])) ? array_search($name, $rolesLevels) : null;
+
+                    return $priority === null ? min($rolesLevels) : $priority;
+                })
+                ->max();
+
+            return $maxUserRoleLevel;
+        }
     }
 }

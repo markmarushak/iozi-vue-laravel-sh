@@ -19,6 +19,10 @@ import VueCarousel from 'vue-carousel';
 import App from './views/App'
 import Home from './views/Home'
 import Cabinet from './views/Cabinet.vue'
+import Products from './views/Products.vue'
+import Payment from './views/Payment.vue'
+import Setting from './views/Setting.vue'
+import Rent from './views/Rent.vue'
 
 
 import Dashboard from './components/Dashboard.vue'
@@ -61,7 +65,13 @@ const router = new VueRouter({
         component: Cabinet,
         meta: {
             auth: true
-        } // Meta Field , you can name it 
+        },
+        children: [
+            { path: '/products', name: 'products', component: Products },
+            { path: '/payment', name: 'payment', component: Payment },
+            { path: '/rent', name: 'rent', component: Rent },
+            { path: '/setting', name: 'setting', component: Setting }
+        ]
     }]
 });
 
