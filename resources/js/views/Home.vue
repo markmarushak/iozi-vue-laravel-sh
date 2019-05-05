@@ -90,7 +90,7 @@
 		      </div>
 		      <div class="modal-body profile-more-info">
 		        <carousel :navigationEnabled="true" :perPage="1">
-				  <slide v-for="index in 5">
+				  <slide >
 				    <img src="https://lamcdn.net/wonderzine.com/post-cover/DQqy_LGgARBSI5JhgAuPjg-default.jpg" class="card-img-top" alt="">
 				  </slide>
 				</carousel>
@@ -112,20 +112,7 @@
 	import { Carousel, Slide } from 'vue-carousel';
 
 	export default {
-		data() {
-			return {
-				order: {
-					product: '',
-					service: []
-				},
-				services: {
-
-				}
-			}
-		},
-		methods: {
-
-		},
+		
 		components: {
 		    Carousel,
 		    Slide

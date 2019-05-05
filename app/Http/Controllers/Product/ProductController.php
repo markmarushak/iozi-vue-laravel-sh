@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\AttributeUser;
+use App\Models\Attribute;
+use App\Models\Image;
 
 class ProductController extends Controller
 {
@@ -20,11 +23,20 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-    	return Product::create($request->all());
+    	$attachment = new Image;
+        $attachment->name = $request->name;
+        $attachment->product_id = 2;
+        $attachment->path = $attachment->upload($request->attachment);
+
+        $attachment->save();
+
+        return response()->json([
+            'message' => 'Attachment has been successfully uploaded.',
+        ]);
     }
 
     public function destroy(Request $request)
     {
-    	return Product::delete($request->id);
+    	return Product::find($request->id)->remove();
     }
 }

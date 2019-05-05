@@ -16,6 +16,8 @@ return [
             'product.create',
             'product.delete',
             'product.update',
+
+            'pyment.show'
         ]
     ],
     'permission_structure' => [

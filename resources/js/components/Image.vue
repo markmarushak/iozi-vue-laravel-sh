@@ -83,24 +83,35 @@
 
 <script>
     
+    import axios from 'axios'
+
     export default {
 
         props: [ 'imageSrc' ],
         methods: {
             previewThumbnail: function(event) {
                 var input = event.target;
-
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
                     var vm = this;
-
                     reader.onload = function(e) {
                         vm.imageSrc = e.target.result;
                     }
 
                     reader.readAsDataURL(input.files[0]);
+                    this.$emit("selected", input.files[0])
                 }
-            }
+            },
+            submit () {
+                const config = { 'content-type': 'multipart/form-data' }
+                const formData = new FormData()
+                formData.append('name', this.name)
+                formData.append('attachment', this.attachment)
+
+                axios.post(route('products.store'), formData, config)
+                    .then(response => console.log(response.data.message))
+                    .catch(error => console.log(error))
+            },
         }
 
     }

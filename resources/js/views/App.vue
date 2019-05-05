@@ -15,10 +15,11 @@
                         <router-link class="nav-link" :to="{ name: 'home' }">Галвная</router-link>
                     </li>
                    
-                    <li class="nav-item dropdown cabinet-menu" v-if="!$auth.check()">
+                    <li class="nav-item cabinet-menu" v-if="!$auth.check()">
                         <router-link class="nav-link" :to="{ name: 'login' }">Вход</router-link>
                       </li>
-                    <li v-if="$auth.check()" class="pull-right nav-item">
+                   <span  class="nav-item cabinet-menu">
+                        <li v-if="$auth.check()" class="pull-right nav-item">
                                 <router-link class="nav-link" :to="{ name: 'cabinet' }">Кабинет</router-link>
                             </li>
                     <li v-if="$auth.check()" class="pull-right nav-item">
@@ -30,13 +31,16 @@
                           <a v-on:click="unimpersonate()" href="javascript:void(0);">(logout {{ $auth.user().username }})</a>
                       </span>
                     </li>
+                   </span>
                 </ul>
               
               </div>
             </nav>
         </header>
         <div class="container">
-            <router-view></router-view>
+            <transition name="slide-fade">
+                <router-view></router-view>
+            </transition>
         </div>
         <!-- <div v-if="!$auth.ready() || !loaded">
             <div style="text-align:center; padding-top:50px;">

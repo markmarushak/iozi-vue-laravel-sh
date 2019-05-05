@@ -20,10 +20,6 @@
                 <label class="custom-control-label" for="customCheck1">Remember password</label>
               </div>
 
-              <div class="custom-control custom-input mb-3">
-                <label><input v-model="data.fetchUser" type="checkbox" /> Fetch User (test)</label>
-              </div>
-
               <button class="btn btn-success btn-block" type="submit">Войти</button>
             </form>
             <br>
@@ -45,18 +41,15 @@
                         password: '123456'
                     },
                     rememberMe: false,
-                    fetchUser: true
                 },
                 error: null
             };
         },
         mounted() {
             console.log(this.$auth.redirect());
-            // Can set query parameter here for auth redirect or just do it silently in login redirect.
         },
         methods: {
             login() {
-
                 this.$auth.login({
                     params: {
                       email: this.data.body.email,
@@ -65,7 +58,7 @@
                     success: function () {},
                     error: function () {},
                     rememberMe: true,
-                    redirect: '/home',
+                    redirect: '/cabinet',
                     fetchUser: true,
                 });       
             }

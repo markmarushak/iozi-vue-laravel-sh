@@ -1,3 +1,22 @@
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
+}
+
+.slide-fade-enter-active {
+  transition: all .8s ease;
+}
+.slide-fade-leave-active {
+  transition: all .1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active до версии 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
 #header {
 	margin-bottom: 40px;
 	background: #f5f5f5;
@@ -14,6 +33,11 @@
 	.cabinet-menu {
 		position: absolute;
 		right: 0;
+	}
+
+	.cabinet-menu li {
+		width: auto;
+		display: inline-block;
 	}
 }
 
@@ -87,3 +111,4 @@
     cursor: pointer;
     opacity: 1;
 }
+

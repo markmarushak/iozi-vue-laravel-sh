@@ -1,7 +1,7 @@
 <template>
 	<div class="row">
 		
-		<div class="col-sm-7">
+		<div class="col-sm-9">
 
             <router-view></router-view>
 			
@@ -14,15 +14,15 @@
 
 		</div>
 
-		<div class="col-sm-5">
+		<div class="col-sm-3">
 			
 			<ul class="list-group">
 				<li class="list-group-item list-group-item-action"><router-link :to="{ name: 'setting' }"> Персональные данные </router-link></li>
 				<li class="list-group-item list-group-item-action list-group-item-primary"><router-link :to="{ name: 'payment' }"> Пополнить счет </router-link></li>
 				<li class="list-group-item list-group-item-action list-group-item-success"><router-link :to="{ name: 'products' }"> Добавить анкету </router-link></li>
 				<li class="list-group-item list-group-item-action list-group-item-primary"><router-link :to="{ name: 'rent' }"> Оплатить Аренду </router-link></li>
-				<li class="list-group-item list-group-item-action">Посмотреть Тарифы</li>
-				<li class="list-group-item list-group-item-action">Настройка анкет</li>
+				<li class="list-group-item list-group-item-action"><router-link :to="{ name: 'tariff' }"> Настройка Тарифов </router-link></li>
+				<li class="list-group-item list-group-item-action"><router-link :to="{ name: 'product-settings' }"> Настройка анкет </router-link></li>
 			</ul>
 
 		</div>
