@@ -3029,7 +3029,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['imageSrc'],
+  props: ['index'],
+  data: function data() {
+    return {
+      imageSrc: ''
+    };
+  },
   methods: {
     previewThumbnail: function previewThumbnail(event) {
       var input = event.target;
@@ -3043,21 +3048,11 @@ __webpack_require__.r(__webpack_exports__);
         };
 
         reader.readAsDataURL(input.files[0]);
-        this.$emit("selected", input.files[0]);
+        this.$emit("image", {
+          file: input.files[0],
+          index: vm.index
+        });
       }
-    },
-    submit: function submit() {
-      var config = {
-        'content-type': 'multipart/form-data'
-      };
-      var formData = new FormData();
-      formData.append('name', this.name);
-      formData.append('attachment', this.attachment);
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(route('products.store'), formData, config).then(function (response) {
-        return console.log(response.data.message);
-      })["catch"](function (error) {
-        return console.log(error);
-      });
     }
   }
 });
@@ -3778,6 +3773,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3789,7 +3787,7 @@ __webpack_require__.r(__webpack_exports__);
       product: {
         attributes: [],
         options: [],
-        time: {
+        times: {
           one: '',
           two: '',
           night: ''
@@ -3828,19 +3826,18 @@ __webpack_require__.r(__webpack_exports__);
     },
     submit: function submit() {
       var config = {
-        'content-type': 'multipart/form-data'
+        'content-type': 'multipart/form-data' // const formData = new FormData()
+        // formData.append('product', this.product)
+
       };
-      var formData = new FormData();
-      formData.append('product', this.product);
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(route('products.store'), formData, config).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(route('products.store'), this.product, config).then(function (response) {
         return console.log(response.data.message);
       })["catch"](function (error) {
         return console.log(error);
       });
     },
     setImages: function setImages(file) {
-      console.log(target.value);
-      console.log(file);
+      this.product.images[file.index] = file.file;
     }
   },
   components: {
@@ -6643,7 +6640,22 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "crud-product col-sm-12" }, [
-      _c("h2", [_vm._v("Создание анкеты")]),
+      _vm._m(0),
+      _vm._v(" "),
+      _c("span", { staticClass: "text-right btn-block" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-success btn-lg",
+            on: {
+              click: function($event) {
+                return _vm.submit()
+              }
+            }
+          },
+          [_vm._v("Создать Анкету")]
+        )
+      ]),
       _vm._v(" "),
       _c("hr"),
       _vm._v(" "),
@@ -6842,14 +6854,14 @@ var render = function() {
                     _c(
                       "div",
                       { staticClass: "row" },
-                      _vm._l(_vm.product.images, function(i) {
+                      _vm._l(_vm.product.images, function(val, index) {
                         return _c(
                           "div",
                           { staticClass: "col-sm-4" },
                           [
                             _c("image-input", {
-                              attrs: { imageSrc: "" },
-                              on: { selected: _vm.setImages }
+                              attrs: { index: index },
+                              on: { image: _vm.setImages }
                             })
                           ],
                           1
@@ -6897,7 +6909,14 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("h2", [_vm._v("Создание анкеты")])])
+  }
+]
 render._withStripped = true
 
 

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\AttributeUser;
-use App\Models\Attribute;
+use App\Models\OptionUser;
 use App\Models\Image;
 
 class ProductController extends Controller
@@ -22,17 +22,54 @@ class ProductController extends Controller
     }
 
     public function store(Request $request)
-    {
-    	$attachment = new Image;
-        $attachment->name = $request->name;
-        $attachment->product_id = 2;
-        $attachment->path = $attachment->upload($request->attachment);
+    {   
+        $user = \Auth::user()->id;
+        
+        if($request->attribute)
+        {
+            foreach ($request->attribute as $atr) {
+                $attr = new AttributeUser;
+                $attr->attribute_id = $atr->id;
+                $attr->user_id = $user
+                $attr->value = $atr->value;
+                $attr->save();
+            }
+        }
 
-        $attachment->save();
+        if($request->options)
+        {
+            foreach ($request->options as $option_k) {
+                $option = new OptionUser;
+                $option->attribute_id = $option_k->id;
+                $option->user_id = $user
+                $option->value = $option_k->value;
+                $option->save();
+            }
+        }
 
-        return response()->json([
-            'message' => 'Attachment has been successfully uploaded.',
-        ]);
+        if($request->times)
+        {
+            foreach ($request->times as $key) {
+                $time = new OptionUser;
+                $time->product_id = $product_id;
+                $time->one = $key->one;
+                $time->two = $key->two;
+                $time->night = $key->night;
+                $time->save();
+            }
+        }
+
+        if($request->images)
+        {
+            $attachment = new Image;
+            $attachment->name = $request->name;
+            $attachment->product_id = 2;
+            $attachment->path = $attachment->upload($request->attachment);
+
+            $attachment->save();
+            
+        }
+    	return 0;
     }
 
     public function destroy(Request $request)

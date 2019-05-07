@@ -3,7 +3,10 @@
 
 		<div class="crud-product col-sm-12">
 			
-			<h2>Создание анкеты</h2>
+			<span>
+				<h2>Создание анкеты</h2>
+			</span>
+			<span class="text-right btn-block"><button @click="submit()" class="btn btn-success btn-lg">Создать Анкету</button></span>
 			<hr>
 			
 			<form @submit.prevent="productCreate" class="col-sm-12">
@@ -52,8 +55,8 @@
 
 								<div class="row">
 									
-									<div class="col-sm-4" v-for="i in product.images">
-										<image-input imageSrc="" @selected="setImages"></image-input>
+									<div class="col-sm-4" v-for="(val, index) in product.images">
+										<image-input :index="index" @image="setImages"></image-input>
 									</div>
 
 								</div>
@@ -161,7 +164,7 @@
 				product :{
 					attributes: [],
 					options: [],
-					time: {
+					times: {
 						one:'',
 						two:'',
 						night:''
@@ -203,17 +206,16 @@
 			},
 			submit () {
 			    const config = { 'content-type': 'multipart/form-data' }
-			    const formData = new FormData()
-			    formData.append('product', this.product)
+			    // const formData = new FormData()
+			    // formData.append('product', this.product)
 
-			    axios.post(route('products.store'), formData, config)
+			    axios.post(route('products.store'), this.product, config)
 			        .then(response => console.log(response.data.message))
 			        .catch(error => console.log(error))
 			},
 			setImages(file)
 			{
-				console.log(target.value);
-				console.log(file);
+				this.product.images[file.index] = file.file
 			}
 		},
 		components: {
