@@ -3816,7 +3816,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3975,7 +3974,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_carousel__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_carousel__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-//
 //
 //
 //
@@ -7055,8 +7053,6 @@ var render = function() {
         _c("nav", { staticClass: "navbar navbar-expand-lg" }, [
           _vm._m(0),
           _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
           _c(
             "div",
             {
@@ -7202,15 +7198,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("b", { staticClass: "navbar-brand", attrs: { href: "#" } }, [
-      _c("a", { attrs: { href: "" } }, [_vm._v("sex-52nn.com")]),
-      _vm._v("  ДЕВУШКИ НА ЛЮБОЙ ВКУС НИЖНИЙ НОВГОРОД ")
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -7496,7 +7483,7 @@ var render = function() {
                           staticClass: "btn btn-primary",
                           attrs: { href: "#" }
                         },
-                        [_vm._v("Узнать поближе")]
+                        [_vm._v("Узнать ")]
                       )
                     ])
                   ])
@@ -7518,55 +7505,51 @@ var render = function() {
         _c(
           "div",
           { staticClass: "form-group" },
-          [
-            _c("h6", [_vm._v("массаж")]),
-            _vm._v(" "),
-            _vm._l(_vm.filter, function(fil) {
-              return _c("label", [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: fil.value,
-                      expression: "fil.value"
-                    }
-                  ],
-                  attrs: { type: "checkbox" },
-                  domProps: {
-                    checked: Array.isArray(fil.value)
-                      ? _vm._i(fil.value, null) > -1
-                      : fil.value
-                  },
-                  on: {
-                    change: function($event) {
-                      var $$a = fil.value,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = null,
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 && _vm.$set(fil, "value", $$a.concat([$$v]))
-                        } else {
-                          $$i > -1 &&
-                            _vm.$set(
-                              fil,
-                              "value",
-                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                            )
-                        }
+          _vm._l(_vm.filter, function(fil) {
+            return _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: fil.value,
+                    expression: "fil.value"
+                  }
+                ],
+                attrs: { type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(fil.value)
+                    ? _vm._i(fil.value, null) > -1
+                    : fil.value
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = fil.value,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && _vm.$set(fil, "value", $$a.concat([$$v]))
                       } else {
-                        _vm.$set(fil, "value", $$c)
+                        $$i > -1 &&
+                          _vm.$set(
+                            fil,
+                            "value",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
                       }
+                    } else {
+                      _vm.$set(fil, "value", $$c)
                     }
                   }
-                }),
-                _vm._v(_vm._s(fil.name))
-              ])
-            })
-          ],
-          2
+                }
+              }),
+              _vm._v(_vm._s(fil.name))
+            ])
+          }),
+          0
         )
       ])
     ]),
@@ -7629,11 +7612,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Настя шлюха")]
-      ),
+      _c("h5", {
+        staticClass: "modal-title",
+        attrs: { id: "exampleModalLabel" }
+      }),
       _vm._v(" "),
       _c(
         "button",

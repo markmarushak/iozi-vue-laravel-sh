@@ -25,7 +25,7 @@
 								    <hr>
 								    <h5 class="card-title" >English teach</h5>
 								    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-								    <a href="#" class="btn btn-primary">Узнать поближе</a>
+								    <a href="#" class="btn btn-primary">Узнать </a>
 								  </div>
 								</div>
 							  </div>
@@ -44,7 +44,6 @@
 			<div class="form">
 				<h5> Расширенный поиск</h5>
 				<div class="form-group">
-					<h6>массаж</h6>
 					<label v-for="fil in filter"><input type="checkbox" v-model="fil.value">{{ fil.name }}</label>
 				</div>
 
@@ -57,7 +56,7 @@
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">Настя шлюха</h5>
+		        <h5 class="modal-title" id="exampleModalLabel"> </h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>

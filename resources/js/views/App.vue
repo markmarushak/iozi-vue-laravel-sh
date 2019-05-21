@@ -3,7 +3,6 @@
           <header id="header">
             
             <nav class="navbar navbar-expand-lg">
-              <b class="navbar-brand" href="#"><a href="">sex-52nn.com</a>  ДЕВУШКИ НА ЛЮБОЙ ВКУС НИЖНИЙ НОВГОРОД </b>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
