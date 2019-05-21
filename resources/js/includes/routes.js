@@ -4,10 +4,13 @@ import Products from '../views/Products.vue'
 import Payment from '../views/Payment.vue'
 import Setting from '../views/Setting.vue'
 import Rent from '../views/Rent.vue'
-import ProductSettings from '../views/ProductSettings.vue'
+import ProductSettings from '../views/ProductSetting.vue'
 import Tariff from '../views/Tariff.vue'
+
 import Attribute from '../views/productSetting/Attribute.vue'
 import Option from '../views/productSetting/Option.vue'
+import Time from '../views/productSetting/Time.vue'
+import Image from '../views/productSetting/Image.vue'
 
 
 import Dashboard from '../components/Dashboard.vue'
@@ -51,6 +54,8 @@ let routes = [{
                 children: [
                     { path: '/attribute', name: 'attribute', component: Attribute },
                     { path: '/option', name: 'option', component: Option },
+                    { path: '/time', name: 'time', component: Time },
+                    { path: '/image', name: 'image', component: Image },
                 ]
             },
             { path: '/setting', name: 'setting', component: Setting }

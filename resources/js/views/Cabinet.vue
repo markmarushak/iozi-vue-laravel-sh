@@ -1,6 +1,5 @@
 <template>
 	<div class="row">
-		
 		<div class="col-sm-9">
 
             <router-view></router-view>
@@ -26,9 +25,24 @@
 			</ul>
 
 		</div>
+		<div class="col-sm-12" v-if="$router.currentRoute.name == 'cabinet'">
 
-		<div class="col-sm-12">
-			
+			<div class="row">
+
+				<div class="col-sm-2" v-for="product in products">
+
+					<div class="card">
+						<img v-bind:src="'public/storage/'+ product.images[0].value" class="card-img-top" alt="">
+						<div class="card-body">
+							<h5 class="card-title">Card title</h5>
+							<p class="card-text"></p>
+							<a href="#" class="btn btn-primary btn-sm">редактировать</a>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
 
 		</div>
 
@@ -37,9 +51,33 @@
 
 
 <script>
+
+	import axios from 'axios'
 	
 	export default {
+	    data(){
+			return {
+			    products: [],
+				user_id: ''
+			}
+        },
 		mounted(){
+			this.fetchProduct()
+		},
+		methods: {
+		    fetchProduct()
+			{
+
+			    axios.get(route('get.user'))
+					.then(res => {
+					    this.user_id = res.data.id
+				})
+
+			    axios.get(route('products.index'), {id: this.user_id})
+					.then(res => {
+						this.products = res.data
+				})
+			}
 		}
 	}
 

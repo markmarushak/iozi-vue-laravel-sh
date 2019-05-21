@@ -47,16 +47,24 @@
                 Loading site...
             </div>
         </div> -->
+
+        <alert v-if="loader"></alert>
     </div>
 </template>
 
 <script>
+
+    import Alert from '../components/Alert'
+
     export default {
         data() {
             return {
                 context: 'app context',
-                loaded: false
+                loader: notific.load
             };
+        },
+        components: {
+          'alert': Alert
         },
         mounted() {
             var _this = this;
@@ -70,13 +78,6 @@
             this.$auth.ready(function () {
                 console.log('ready ' + this.context);
             });
-            // Vue.http.interceptors.push(function (req, next) {
-            //     next(function (res) {
-            //         if ( ! res.ok) {
-            //             _this.$router.push({name: 'error-502'})
-            //         }
-            //     });
-            // });
         },
         methods: {
             logout() {

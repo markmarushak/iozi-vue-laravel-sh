@@ -87,7 +87,12 @@
 
     export default {
 
-        props: [ 'imageSrc' ],
+        props: ['image_id' ],
+        data(){
+            return {
+                imageSrc: ''
+            }
+        },
         methods: {
             previewThumbnail: function(event) {
                 var input = event.target;
@@ -99,7 +104,7 @@
                     }
 
                     reader.readAsDataURL(input.files[0]);
-                    this.$emit("selected", input.files[0])
+                    this.$emit("selected", {file: input.files[0], index: this.image_id })
                 }
             },
             submit () {

@@ -1,38 +1,29 @@
 <template>
 
 	<div class="row">
-		
+
 		<div class="col-sm-10">
 			
 			<div class="products">
 				
 				<div class="row">
 					
-					<div class="col-sm-6" v-for="index in 10" :key="index">
-						
+					<div class="col-sm-6" v-for="product in products">
 						<div class="card">
 						 <div class="row no-gutters">
 						 	 <div class="col-sm-6">
-							  	<a href="" data-toggle="modal" data-target="#exampleModal"><img src="https://lamcdn.net/wonderzine.com/post-cover/DQqy_LGgARBSI5JhgAuPjg-default.jpg" class="card-img-top" alt=""></a>
+							  	<a href="" data-toggle="modal" data-target="#exampleModal" @click="modals = product.images"><img v-bind:src="'public/storage/'+ product.images[0].value" class="card-img-top" alt=""></a>
 							  </div>
 							  <div class="col-sm-6">
 							  	<div class="card-body">
 							  		<div class="price">
-								    	<div>
-								    		<span>час</span>
-								    		600 $
-								    	</div>
-								    	<div>
-								    		<span>2 часа</span>
-								    		1000 $
-								    	</div>
-								    	<div>
-								    		<span>ночь</span>
-								    		3000 $
+								    	<div v-for="time in product.time">
+								    		<span>{{ time.name }}</span>
+								    		{{ time.value }} $
 								    	</div>
 								    </div>
 								    <hr>
-								    <h5 class="card-title" >Настя Шлюха</h5>
+								    <h5 class="card-title" >English teach</h5>
 								    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 								    <a href="#" class="btn btn-primary">Узнать поближе</a>
 								  </div>
@@ -54,25 +45,8 @@
 				<h5> Расширенный поиск</h5>
 				<div class="form-group">
 					<h6>массаж</h6>
-					<label><input type="checkbox">Классический</label>
-					<label><input type="checkbox">Классический</label>
-					<label><input type="checkbox">Классический</label>
+					<label v-for="fil in filter"><input type="checkbox" v-model="fil.value">{{ fil.name }}</label>
 				</div>
-				<div class="form-group">
-					<h6>Выезд</h6>
-					<label><input type="checkbox">Классический</label>
-					<label><input type="checkbox">Классический</label>
-					<label><input type="checkbox">Классический</label>
-				</div>
-
-				<div class="form-group">
-					<h6>аппартаменты</h6>
-					<label><input type="checkbox">Классический</label>
-					<label><input type="checkbox">Классический</label>
-					<label><input type="checkbox">Классический</label>
-				</div>
-				<div class="form-group"><label>ЭЛИТНЫЕ VIP ДЕВОЧКИ ЭСКОРТ</label></div>
-				<div class="form-group"><label>ДЕВУШКИ С ПРОВЕРЕННЫМИ ФОТО</label></div>
 
 			</div>
 
@@ -90,8 +64,8 @@
 		      </div>
 		      <div class="modal-body profile-more-info">
 		        <carousel :navigationEnabled="true" :perPage="1">
-				  <slide >
-				    <img src="https://lamcdn.net/wonderzine.com/post-cover/DQqy_LGgARBSI5JhgAuPjg-default.jpg" class="card-img-top" alt="">
+				  <slide v-for="modal in modals" :key="modal.id">
+				    <img v-bind:src="'public/storage/' + modal.value" class="card-img-top" alt="">
 				  </slide>
 				</carousel>
 		      </div>
@@ -110,9 +84,32 @@
 <script>
 	
 	import { Carousel, Slide } from 'vue-carousel';
+	import axios from 'axios'
 
 	export default {
-		
+		data(){
+			return {
+                products: [],
+				filter: [],
+				modals: '123123'
+            }
+		},
+		methods: {
+		    fetchProduct()
+			{
+			    axios.get(route('products.index'))
+					.then(res => {
+					    this.products = res.data
+				})
+			},
+		},
+		mounted() {
+		    this.fetchProduct()
+            axios.get(route('attribute.index', {type: 'option'}))
+                .then(res => {
+                	this.filter = res.data
+        		});
+		},
 		components: {
 		    Carousel,
 		    Slide
