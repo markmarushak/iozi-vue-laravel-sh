@@ -10,6 +10,7 @@ use App\Models\AttributeProduct;
 use App\Models\Attribute;
 use App\Traits\Uploadable;
 
+
 class ProductController extends Controller
 {
     use Uploadable;

@@ -3409,7 +3409,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['image_id'],
+  props: ['index', 'image_id'],
   data: function data() {
     return {
       imageSrc: ''
@@ -3428,24 +3428,11 @@ __webpack_require__.r(__webpack_exports__);
         };
 
         reader.readAsDataURL(input.files[0]);
-        this.$emit("selected", {
+        this.$emit("image", {
           file: input.files[0],
-          index: this.image_id
+          index: vm.index
         });
       }
-    },
-    submit: function submit() {
-      var config = {
-        'content-type': 'multipart/form-data'
-      };
-      var formData = new FormData();
-      formData.append('name', this.name);
-      formData.append('attachment', this.attachment);
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(route('products.store'), formData, config).then(function (response) {
-        return console.log(response.data.message);
-      })["catch"](function (error) {
-        return console.log(error);
-      });
     }
   }
 });
@@ -4192,6 +4179,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Alert_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Alert.vue */ "./resources/js/components/Alert.vue");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
 //
 //
 //
