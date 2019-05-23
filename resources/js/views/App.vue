@@ -3,7 +3,6 @@
           <header id="header">
             
             <nav class="navbar navbar-expand-lg">
-              <b class="navbar-brand" href="#"><a href="">sex-52nn.com</a>  ДЕВУШКИ НА ЛЮБОЙ ВКУС НИЖНИЙ НОВГОРОД </b>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -42,22 +41,14 @@
                 <router-view></router-view>
             </transition>
         </div>
-        <!-- <div v-if="!$auth.ready() || !loaded">
-            <div style="text-align:center; padding-top:50px;">
-                Loading site...
-            </div>
-        </div> -->
+
     </div>
 </template>
 
 <script>
+
+
     export default {
-        data() {
-            return {
-                context: 'app context',
-                loaded: false
-            };
-        },
         mounted() {
             var _this = this;
             // Set up $auth.ready with other arbitrary loaders (ex: language file).
@@ -70,13 +61,6 @@
             this.$auth.ready(function () {
                 console.log('ready ' + this.context);
             });
-            // Vue.http.interceptors.push(function (req, next) {
-            //     next(function (res) {
-            //         if ( ! res.ok) {
-            //             _this.$router.push({name: 'error-502'})
-            //         }
-            //     });
-            // });
         },
         methods: {
             logout() {

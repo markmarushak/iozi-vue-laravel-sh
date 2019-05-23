@@ -43,7 +43,6 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -94,7 +93,7 @@ class AuthController extends Controller
             return response()->json(compact('user'));
     }
 
-    public function user(Request $request)
+    public function user()
     {
         $user = User::find(Auth::user()->id);
         return response([
@@ -155,6 +154,6 @@ class AuthController extends Controller
 
     public function guard()
     {
-    	return Auth::Guard('api');
+    	return \Auth::Guard('api');
     }
 }

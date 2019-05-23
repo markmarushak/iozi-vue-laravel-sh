@@ -41,10 +41,17 @@
 	}
 }
 
+/* card producct */
+.no-gutters {
+	height: 400px;
+	overflow: hidden;
+}
+
 .card-img-top {
 	cursor: zoom-in;
 	height: 100%;
 	object-fit: cover;
+	object-position: top;
 }
 
 #header ul li a,

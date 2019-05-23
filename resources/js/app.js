@@ -18,8 +18,13 @@ axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest',
 };
 
-axios.defaults.baseURL = 'http://learn.home/api'
+// axios.defaults.baseURL = 'http://learn.home/api'
+axios.defaults.baseURL = 'http://v124285.hosted-by-vdsina.ru/api'
 
+window.notific = {
+    load: false,
+    text: ''
+}
 
 Vue.mixin({
     methods: {

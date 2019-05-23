@@ -1,26 +1,41 @@
 <template>
 	<div class="row">
-
 		<div class="crud-product col-sm-12">
 			
-			<span>
-				<h2>Создание анкеты</h2>
-			</span>
-			<span class="text-right btn-block"><button @click="submit()" class="btn btn-success btn-lg">Создать Анкету</button></span>
-			<hr>
-			
-			<form @submit.prevent="productCreate" class="col-sm-12">
+			<div class="row">
+				<div class="col-sm-6">
+					<h2>Создание анкеты</h2>
+				</div>
+				<div class="col-sm-6 text-right	">
+					<button class="btn btn-success" form="form-product">Создать анкету</button>
+				</div>
+
+			</div>
+
+			<form @submit.prevent="submit" id="form-product" class="col-sm-12">
+
 				<div class="row">
 					
 					<div class="col-sm-7">
 						<h4>Общая информация</h4>
 						<div class="row">
-							
-							<div class="form-group col-sm-6" v-for="attr in product.attributes">
+
+							<div class="form-group col-sm-6">
+								<label>Полное Имя</label>
+								<input type="text" class="form-control" v-model="product.fullname" required>
+							</div>
+
+							<div class="form-group col-sm-6">
+								<label>Описание</label>
+								<textarea v-model="product.description" style="width: 100%" rows="3" class="form-control"></textarea>
+							</div>
+
+							<div class="form-group col-sm-6" v-for="attr in product.additional.attributes">
 								<label>{{ attr.name }}</label>
-								<input v-if="attr.type == 'input'" type="text" class="form-control" v-model="attr.value">
-								<select v-model="attr.value" v-if="attr.type != 'input'" class="form-control">
-									<option v-for="op in attr.option" v-bind:value="op.id">{{ op.name }}</option>
+								<input v-if="attr.format == 'input'" type="text" class="form-control" v-model="attr.value" required>
+								<select v-model="attr.value" v-if="attr.format != 'input'" class="form-control" required>
+									<option value=""> выбриете {{ attr.name }}</option>
+									<option v-for="op in attr.option" :value="op.name">{{ op.name }}</option>
 								</select>
 							</div>
 
@@ -31,20 +46,11 @@
 								<h4>цена и время</h4>
 								<div class="row">
 									
-									<div class="form-group col-sm-4">
-										<label>час</label>
-										<input type="text" v-model="product.time.one" class="form-control">
+									<div class="form-group col-sm-4" v-for="i in product.additional.time">
+										<label>{{ i.name }}</label>
+										<input type="text" v-model="i.value" class="form-control" required>
 									</div>
 
-									<div class="form-group col-sm-4">
-										<label>2 час</label>
-										<input type="text" v-model="product.time.two" class="form-control">
-									</div>
-
-									<div class="form-group col-sm-4">
-										<label>ночь</label>
-										<input type="text" v-model="product.time.night" class="form-control">
-									</div>
 
 								</div>
 
@@ -55,8 +61,8 @@
 
 								<div class="row">
 									
-									<div class="col-sm-4" v-for="(val, index) in product.images">
-										<image-input :index="index" @image="setImages"></image-input>
+									<div class="col-sm-4" v-for="(i, index) in images">
+										<image-input :image_id="index" @selected="setImages"></image-input>
 									</div>
 
 								</div>
@@ -76,8 +82,8 @@
 							<div class="col-sm-12 wrap-product-option">
 								
 
-								<label class="checkbox-product-option" v-for="option in product.options">
-									<input type="checkbox">
+								<label class="checkbox-product-option" v-for="option in product.additional.options">
+									<input type="checkbox" v-model="option.value">
 									<span class="text">{{ option.name }}</span>
 									<span></span>
 								</label>
@@ -97,8 +103,7 @@
 
 		</div>
 
-		
-		
+		<alert v-if="load"></alert>
 	</div>
 </template>
 
@@ -153,6 +158,7 @@
 <script>
 	
 	import Image  from '../components/Image.vue'
+	import Alert  from '../components/Alert.vue'
 	import axios from 'axios'
 
 	export default {
@@ -162,64 +168,82 @@
 		data() {
 			return {
 				product :{
-					attributes: [],
-					options: [],
-					times: {
-						one:'',
-						two:'',
-						night:''
+					additional: {
+                        attributes: [],
+                        options: [],
+                        time: [],
 					},
-					images: {
-						0: {
-							data: ''
-						},
-						1: {
-							data: ''
-						},
-						2: {
-							data: ''
-						},
-						3: {
-							data: ''
-						},
-						4: {
-							data: ''
-						},
-						
-					},
-				}
-			}
+					fullname: '',
+					description: ''
+				},
+                images: [],
+				load: false
+            }
 		},
 		methods: {
 			fetch() {
-				axios.get(route('option.index'))
+
+				axios.get(route('attribute.index',{type: 'option'}))
 				.then(response => {
-					this.product.options = response.data
+					this.product.additional.options = response.data
 				})
 
-				axios.get(route('attribute.index'))
+				axios.get(route('attribute.index',{type: 'attr'}))
 				.then(response => {
-					console.log(response.data)
 
-					this.product.attributes = response.data
+					this.product.additional.attributes = response.data
+				})
+
+                axios.get(route('attribute.index',{type: 'time'}))
+                    .then(response => {
+						this.product.additional.time = response.data
+				})
+
+                axios.get(route('attribute.index',{type: 'images'}))
+                    .then(response => {
+					this.images = response.data
 				})
 			},
 			submit () {
-			    const config = { 'content-type': 'multipart/form-data' }
-			    // const formData = new FormData()
-			    // formData.append('product', this.product)
-
-			    axios.post(route('products.store'), this.product, config)
-			        .then(response => console.log(response.data.message))
-			        .catch(error => console.log(error))
+			    this.load = true
+				notific.text = 'Сохранение информации'
+			    axios.post(route('products.store'), this.product)
+			        .then(response => {
+	                    notific.text = 'Обработка фото'
+						this.saveFile(response.data.product.id)
+            		})
+			        .catch(error => {
+                    	this.load = true
+			            console.log(error)
+			        })
 			},
+			saveFile(product_id){
+                const config = { 'content-type': 'multipart/form-data' }
+                for(var i in this.images)
+				{
+                    console.log(product_id)
+                    const formData = new FormData()
+                    formData.append('img', this.images[i].value)
+					formData.append('attr_id', this.images[i].id)
+					formData.append('product_id', product_id)
+
+                    axios.post(route('products.image'), formData	,config)
+                        .then(response => console.log(response.data))
+                		.catch(error => console.log(error))
+				}
+
+                notific.load = false
+
+            },
 			setImages(file)
 			{
-				this.product.images[file.index] = file.file
+				this.images[file.index].value = file.file
+				console.log(this.images[file.index])
 			}
 		},
 		components: {
-			'image-input': Image
+			'image-input': Image,
+			'alert': Alert
 		}
 	}
 

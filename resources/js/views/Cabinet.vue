@@ -1,6 +1,5 @@
 <template>
 	<div class="row">
-		
 		<div class="col-sm-9">
 
             <router-view></router-view>
@@ -26,9 +25,41 @@
 			</ul>
 
 		</div>
+		<div class="col-sm-12" v-if="$router.currentRoute.name == 'cabinet'">
 
-		<div class="col-sm-12">
-			
+			<div class="row">
+
+				<div class="col-sm-3" v-for="product in products">
+					<div class="card">
+						<div class="row no-gutters">
+							<div class="col-sm-12">
+								<a v-if="product.images != ''" data-toggle="modal" data-target="#exampleModal" @click="modals = product.images">
+									<img v-bind:src="'public/storage/'+ product.images[0].value" class="card-img-top" alt="">
+								</a>
+								<a v-if="product.images == ''" data-toggle="modal" data-target="#exampleModal" @click="modals = product.images">
+									<img v-bind:src="'public/storage/'+ product.images[0].value" class="card-img-top" alt="">
+								</a>
+							</div>
+							<div class="col-sm-12">
+								<div class="card-body">
+									<div class="price">
+										<div v-for="time in product.time">
+											<span>{{ time.name }}</span>
+											{{ time.value }} $
+										</div>
+									</div>
+									<hr>
+									<h5 class="card-title" >{{ product.fullname }}</h5>
+									<a href="#" class="btn btn-primary">Узнать </a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br>
+
+				</div>
+
+			</div>
 
 		</div>
 
@@ -37,9 +68,33 @@
 
 
 <script>
+
+	import axios from 'axios'
 	
 	export default {
+	    data(){
+			return {
+			    products: [],
+				user_id: ''
+			}
+        },
 		mounted(){
+			this.fetchProduct()
+		},
+		methods: {
+		    fetchProduct()
+			{
+
+			    axios.get(route('get.user'))
+					.then(res => {
+					    this.user_id = res.data.id
+				})
+
+			    axios.get(route('products.index'), {id: this.user_id})
+					.then(res => {
+						this.products = res.data
+				})
+			}
 		}
 	}
 

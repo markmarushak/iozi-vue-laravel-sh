@@ -87,6 +87,7 @@
 
     export default {
 
+
         props: ['index'],
         data(){
             return {
