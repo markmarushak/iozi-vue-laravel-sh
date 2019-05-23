@@ -29,16 +29,33 @@
 
 			<div class="row">
 
-				<div class="col-sm-2" v-for="product in products">
-
+				<div class="col-sm-3" v-for="product in products">
 					<div class="card">
-						<img v-if="product.images != ''" v-bind:src="'public/storage/'+ product.images[0].value" class="card-img-top" alt="">
-						<div class="card-body">
-							<h5 class="card-title">Card title</h5>
-							<p class="card-text"></p>
-							<a href="#" class="btn btn-primary btn-sm">редактировать</a>
+						<div class="row no-gutters">
+							<div class="col-sm-12">
+								<a v-if="product.images != ''" data-toggle="modal" data-target="#exampleModal" @click="modals = product.images">
+									<img v-bind:src="'public/storage/'+ product.images[0].value" class="card-img-top" alt="">
+								</a>
+								<a v-if="product.images == ''" data-toggle="modal" data-target="#exampleModal" @click="modals = product.images">
+									<img v-bind:src="'public/storage/'+ product.images[0].value" class="card-img-top" alt="">
+								</a>
+							</div>
+							<div class="col-sm-12">
+								<div class="card-body">
+									<div class="price">
+										<div v-for="time in product.time">
+											<span>{{ time.name }}</span>
+											{{ time.value }} $
+										</div>
+									</div>
+									<hr>
+									<h5 class="card-title" >{{ product.fullname }}</h5>
+									<a href="#" class="btn btn-primary">Узнать </a>
+								</div>
+							</div>
 						</div>
 					</div>
+					<br>
 
 				</div>
 
