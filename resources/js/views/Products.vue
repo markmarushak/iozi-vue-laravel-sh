@@ -63,7 +63,6 @@
 									
 									<div class="col-sm-4" v-for="(i, index) in images">
 										<image-input :image_id="index" @selected="setImages"></image-input>
-
 									</div>
 
 								</div>

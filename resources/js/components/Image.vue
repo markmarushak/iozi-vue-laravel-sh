@@ -86,8 +86,7 @@
     import axios from 'axios'
 
     export default {
-
-        props: ['index','image_id' ],
+        props: ['index'],
         data(){
             return {
                 imageSrc: ''
