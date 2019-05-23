@@ -20,6 +20,7 @@ axios.defaults.headers.common = {
 
 // axios.defaults.baseURL = 'http://learn.home/api'
 axios.defaults.baseURL = 'http://v124285.hosted-by-vdsina.ru/api'
+
 window.notific = {
     load: false,
     text: ''

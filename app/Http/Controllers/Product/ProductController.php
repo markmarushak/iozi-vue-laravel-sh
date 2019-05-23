@@ -16,13 +16,11 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        if($request->id)
-        {
+        if($request->id){
             $products = Products::where('user_id', $request->id)->get();
-        }else {
+        }else{
             $products = Products::all();
         }
-
         foreach ($products as &$product){
             $types = ['attr','option','images','time'];
             for($i = 0; $i< count($types); $i++){
@@ -48,20 +46,28 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $user_id = \Auth::user()->id;
+        $data = $request->all();
 
+        // создаем продукт
         $product = Products::create([
-            'user_id' => $user_id
+            'user_id'     => $user_id,
+            'fullname'    => $data['fullname'],
+            'description' => $data['description']
         ]);
+
+        // перебераем атрибуты и сохраняем к данному продукту
+        //  делаем проверку, создался ли продукт
         if($product->id)
         {
-            foreach ($request->all() as $attr => $item)
+            // перебераем заголовки
+            // attr, images, option, time
+            foreach ($data['additional'] as $attr => $item)
             {
                 foreach ($item as $val) {
 
                     if(empty($val['value']))
-                    {
                         $val['value'] = false;
-                    }
+
                     try{
                         AttributeProduct::create([
                             'attribute_id' => $val['id'],

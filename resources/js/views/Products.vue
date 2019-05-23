@@ -1,6 +1,5 @@
 <template>
 	<div class="row">
-
 		<div class="crud-product col-sm-12">
 			
 			<div class="row">
@@ -30,7 +29,7 @@
 								<textarea v-model="product.description" style="width: 100%" rows="3" class="form-control"></textarea>
 							</div>
 
-							<div class="form-group col-sm-6" v-for="attr in product.attributes">
+							<div class="form-group col-sm-6" v-for="attr in product.additional.attributes">
 								<label>{{ attr.name }}</label>
 								<input v-if="attr.format == 'input'" type="text" class="form-control" v-model="attr.value" required>
 								<select v-model="attr.value" v-if="attr.format != 'input'" class="form-control" required>
@@ -46,7 +45,7 @@
 								<h4>цена и время</h4>
 								<div class="row">
 									
-									<div class="form-group col-sm-4" v-for="i in product.time">
+									<div class="form-group col-sm-4" v-for="i in product.additional.time">
 										<label>{{ i.name }}</label>
 										<input type="text" v-model="i.value" class="form-control" required>
 									</div>
@@ -82,7 +81,7 @@
 							<div class="col-sm-12 wrap-product-option">
 								
 
-								<label class="checkbox-product-option" v-for="option in product.options">
+								<label class="checkbox-product-option" v-for="option in product.additional.options">
 									<input type="checkbox" v-model="option.value">
 									<span class="text">{{ option.name }}</span>
 									<span></span>
@@ -102,6 +101,8 @@
 			</form>
 
 		</div>
+
+		<alert v-if="load"></alert>
 	</div>
 </template>
 
@@ -156,6 +157,7 @@
 <script>
 	
 	import Image  from '../components/Image.vue'
+	import Alert  from '../components/Alert.vue'
 	import axios from 'axios'
 
 	export default {
@@ -165,13 +167,16 @@
 		data() {
 			return {
 				product :{
-					attributes: [],
-					options: [],
-					time: [],
+					additional: {
+                        attributes: [],
+                        options: [],
+                        time: [],
+					},
 					fullname: '',
 					description: ''
 				},
-                images: []
+                images: [],
+				load: false
             }
 		},
 		methods: {
@@ -179,18 +184,18 @@
 
 				axios.get(route('attribute.index',{type: 'option'}))
 				.then(response => {
-					this.product.options = response.data
+					this.product.additional.options = response.data
 				})
 
 				axios.get(route('attribute.index',{type: 'attr'}))
 				.then(response => {
 
-					this.product.attributes = response.data
+					this.product.additional.attributes = response.data
 				})
 
                 axios.get(route('attribute.index',{type: 'time'}))
                     .then(response => {
-						this.product.time = response.data
+						this.product.additional.time = response.data
 				})
 
                 axios.get(route('attribute.index',{type: 'images'}))
@@ -199,14 +204,17 @@
 				})
 			},
 			submit () {
-			    $root.notific.load = true
-                $root.notific.text = 'Сохранение информации'
+			    this.load = true
+				notific.text = 'Сохранение информации'
 			    axios.post(route('products.store'), this.product)
 			        .then(response => {
 	                    notific.text = 'Обработка фото'
 						this.saveFile(response.data.product.id)
-            })
-			        .catch(error => console.log(error))
+            		})
+			        .catch(error => {
+                    	this.load = true
+			            console.log(error)
+			        })
 			},
 			saveFile(product_id){
                 const config = { 'content-type': 'multipart/form-data' }
@@ -222,8 +230,10 @@
                         .then(response => console.log(response.data))
                 		.catch(error => console.log(error))
 				}
-				notific.load = false
-			},
+
+                notific.load = false
+
+            },
 			setImages(file)
 			{
 				this.images[file.index].value = file.file
@@ -231,7 +241,8 @@
 			}
 		},
 		components: {
-			'image-input': Image
+			'image-input': Image,
+			'alert': Alert
 		}
 	}
 

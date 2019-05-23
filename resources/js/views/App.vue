@@ -41,30 +41,14 @@
                 <router-view></router-view>
             </transition>
         </div>
-        <!-- <div v-if="!$auth.ready() || !loaded">
-            <div style="text-align:center; padding-top:50px;">
-                Loading site...
-            </div>
-        </div> -->
 
-        <alert v-if="loader"></alert>
     </div>
 </template>
 
 <script>
 
-    import Alert from '../components/Alert'
 
     export default {
-        data() {
-            return {
-                context: 'app context',
-                loader: notific.load
-            };
-        },
-        components: {
-          'alert': Alert
-        },
         mounted() {
             var _this = this;
             // Set up $auth.ready with other arbitrary loaders (ex: language file).

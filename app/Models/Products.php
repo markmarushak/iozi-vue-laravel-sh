@@ -12,7 +12,7 @@ class Products extends Model
 
     public $product_table = 'attribute_product';
 
-    protected $fillable = ['user_id'];
+    protected $fillable = ['user_id', 'fullname', 'description'];
 
     public function attribute()
     {

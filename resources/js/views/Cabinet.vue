@@ -32,7 +32,7 @@
 				<div class="col-sm-2" v-for="product in products">
 
 					<div class="card">
-						<img v-bind:src="'public/storage/'+ product.images[0].value" class="card-img-top" alt="">
+						<img v-if="product.images != ''" v-bind:src="'public/storage/'+ product.images[0].value" class="card-img-top" alt="">
 						<div class="card-body">
 							<h5 class="card-title">Card title</h5>
 							<p class="card-text"></p>

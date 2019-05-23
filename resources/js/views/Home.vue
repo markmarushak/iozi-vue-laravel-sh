@@ -12,7 +12,10 @@
 						<div class="card">
 						 <div class="row no-gutters">
 						 	 <div class="col-sm-6">
-							  	<a href="" data-toggle="modal" data-target="#exampleModal" @click="modals = product.images"><img v-bind:src="'public/storage/'+ product.images[0].value" class="card-img-top" alt=""></a>
+							  	<a v-if="product.images != ''" data-toggle="modal" data-target="#exampleModal" @click="modals = product.images">
+									<img v-bind:src="'public/storage/'+ product.images[0].value" class="card-img-top" alt="">
+								</a>
+							  	<!--<a href="" data-toggle="modal" data-target="#exampleModal" @click="modals = product.images"><img v-bind:src="'public/storage/'+ product.images[0].value" class="card-img-top" alt=""></a>-->
 							  </div>
 							  <div class="col-sm-6">
 							  	<div class="card-body">
@@ -23,8 +26,8 @@
 								    	</div>
 								    </div>
 								    <hr>
-								    <h5 class="card-title" >English teach</h5>
-								    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+								    <h5 class="card-title" >{{ product.fullname }}</h5>
+								    <p class="card-text">{{ product.description }}</p>
 								    <a href="#" class="btn btn-primary">Узнать </a>
 								  </div>
 								</div>
@@ -90,7 +93,8 @@
 			return {
                 products: [],
 				filter: [],
-				modals: '123123'
+				modals: '123123',
+				user_id: ''
             }
 		},
 		methods: {
