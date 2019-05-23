@@ -13,6 +13,7 @@
 			</div>
 
 			<form @submit.prevent="submit" id="form-product" class="col-sm-12">
+
 				<div class="row">
 					
 					<div class="col-sm-7">

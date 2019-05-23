@@ -87,7 +87,8 @@
 
     export default {
 
-        props: ['image_id' ],
+
+        props: ['index'],
         data(){
             return {
                 imageSrc: ''
@@ -104,18 +105,8 @@
                     }
 
                     reader.readAsDataURL(input.files[0]);
-                    this.$emit("selected", {file: input.files[0], index: this.image_id })
+                    this.$emit("image", {file: input.files[0], index: vm.index})
                 }
-            },
-            submit () {
-                const config = { 'content-type': 'multipart/form-data' }
-                const formData = new FormData()
-                formData.append('name', this.name)
-                formData.append('attachment', this.attachment)
-
-                axios.post(route('products.store'), formData, config)
-                    .then(response => console.log(response.data.message))
-                    .catch(error => console.log(error))
             },
         }
 
