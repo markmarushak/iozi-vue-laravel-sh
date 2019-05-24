@@ -102,7 +102,7 @@
 			</form>
 
 		</div>
-
+		{{ images }}
 		<alert v-if="load"></alert>
 	</div>
 </template>
@@ -209,15 +209,15 @@
 				notific.text = 'Сохранение информации'
 			    axios.post(route('products.store'), this.product)
 			        .then(response => {
-	                    notific.text = 'Обработка фото'
 						this.saveFile(response.data.product.id)
             		})
 			        .catch(error => {
-                    	this.load = true
-			            console.log(error)
+                    	this.load = false
 			        })
 			},
 			saveFile(product_id){
+                notific.text = 'Сохранение информации'
+
                 const config = { 'content-type': 'multipart/form-data' }
                 for(var i in this.images)
 				{
@@ -232,7 +232,7 @@
                 		.catch(error => console.log(error))
 				}
 
-                notific.load = false
+                this.load = false
 
             },
 			setImages(file)

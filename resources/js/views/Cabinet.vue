@@ -34,14 +34,14 @@
 						<div class="row no-gutters">
 							<div class="col-sm-12">
 								<a v-if="product.images != ''" data-toggle="modal" data-target="#exampleModal" @click="modals = product.images">
-									<img v-bind:src="'public/storage/'+ product.images[0].value" class="card-img-top" alt="">
+									<img v-bind:src="'public/storage/'+ product.images[0].value" class="card-img-top">
 								</a>
 								<a v-if="product.images == ''" data-toggle="modal" data-target="#exampleModal" @click="modals = product.images">
-									<img v-bind:src="'public/storage/'+ product.images[0].value" class="card-img-top" alt="">
+									<img src="public/img/notFound.png" class="card-img-top" alt="test">
 								</a>
 							</div>
 							<div class="col-sm-12">
-								<div class="card-body">
+								<div class="card-body text-center">
 									<div class="price">
 										<div v-for="time in product.time">
 											<span>{{ time.name }}</span>
@@ -50,7 +50,7 @@
 									</div>
 									<hr>
 									<h5 class="card-title" >{{ product.fullname }}</h5>
-									<a href="#" class="btn btn-primary">Узнать </a>
+									<button class="btn btn-warning" @click="editProduct(product.id)">Редактировать </button>
 								</div>
 							</div>
 						</div>
@@ -62,6 +62,8 @@
 			</div>
 
 		</div>
+
+		<modal v-if="showModal" :tag_id="tag_id" :name="tag_name" @close="showModal = false"></modal>
 
 	</div>
 </template>
@@ -94,6 +96,10 @@
 					.then(res => {
 						this.products = res.data
 				})
+			},
+			editProduct(id)
+			{
+
 			}
 		}
 	}

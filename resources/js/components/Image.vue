@@ -88,7 +88,7 @@
     export default {
 
 
-        props: ['index'],
+        props: ['image_id'],
         data(){
             return {
                 imageSrc: ''
@@ -105,7 +105,7 @@
                     }
 
                     reader.readAsDataURL(input.files[0]);
-                    this.$emit("image", {file: input.files[0], index: vm.index})
+                    this.$emit("selected", {file: input.files[0], index: vm.image_id})
                 }
             },
         }

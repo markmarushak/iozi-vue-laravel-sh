@@ -4,16 +4,16 @@
 
         <ul class="nav  nav-pills">
             <li class="nav-item">
-                <router-link class="nav-link" :to="{ name: 'attribute' }">Атрибуты</router-link>
+                <router-link class=" btn btn-outline-dark" :to="{ name: 'attribute' }">Атрибуты</router-link>
             </li>
             <li class="nav-item">
-                <router-link class="nav-link" :to="{ name: 'option' }">Услуги</router-link>
+                <router-link class=" btn btn-outline-dark" :to="{ name: 'option' }">Услуги</router-link>
             </li>
             <li class="nav-item">
-                <router-link class="nav-link" :to="{ name: 'time' }">Время</router-link>
+                <router-link class=" btn btn-outline-dark" :to="{ name: 'time' }">Время</router-link>
             </li>
             <li class="nav-item">
-                <router-link class="nav-link" :to="{ name: 'image' }">Картинки</router-link>
+                <router-link class=" btn btn-outline-dark" :to="{ name: 'image' }">Картинки</router-link>
             </li>
         </ul>
 

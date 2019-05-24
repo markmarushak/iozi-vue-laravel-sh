@@ -119,3 +119,10 @@
     opacity: 1;
 }
 
+.nav-item {
+	margin-right: 5px;
+}
+
+.nav-item:last-child {
+	margin-right: auto;
+}
