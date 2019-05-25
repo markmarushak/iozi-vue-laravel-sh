@@ -20,10 +20,10 @@
       <file leaf-file-name="Cabinet.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/js/views/Cabinet.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+            <state relative-caret-position="85">
+              <caret line="107" column="21" lean-forward="false" selection-start-line="107" selection-start-column="21" selection-end-line="107" selection-end-column="21" />
               <folding>
-                <element signature="e#3257#3282#0" expanded="true" />
+                <element signature="e#3295#3320#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -52,8 +52,8 @@
       <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2142">
-              <caret line="126" column="23" lean-forward="false" selection-start-line="126" selection-start-column="23" selection-end-line="126" selection-end-column="23" />
+            <state relative-caret-position="215">
+              <caret line="51" column="16" lean-forward="false" selection-start-line="51" selection-start-column="16" selection-end-line="51" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -130,8 +130,8 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>remove</find>
-      <find>show</find>
       <find>set</find>
+      <find>show</find>
       <find>attributes</find>
     </findStrings>
   </component>
@@ -144,7 +144,6 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" />
         <option value="$PROJECT_DIR$/resources/js/includes/ziggy.js" />
         <option value="$PROJECT_DIR$/.env" />
-        <option value="$PROJECT_DIR$/public/css/main.css" />
         <option value="$PROJECT_DIR$/resources/js/views/ProductSetting.vue" />
         <option value="$PROJECT_DIR$/resources/js/components/Attribute.vue" />
         <option value="$PROJECT_DIR$/.gitignore" />
@@ -157,6 +156,7 @@
         <option value="$PROJECT_DIR$/resources/js/components/Image.vue" />
         <option value="$PROJECT_DIR$/resources/js/views/Cabinet/EditProduct.vue" />
         <option value="$PROJECT_DIR$/resources/js/app.js" />
+        <option value="$PROJECT_DIR$/public/css/main.css" />
         <option value="$PROJECT_DIR$/resources/js/views/Cabinet.vue" />
       </list>
     </option>
@@ -350,6 +350,38 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="iozi.loc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="iozi.loc" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="iozi.loc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="iozi.loc" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
@@ -508,12 +540,12 @@
       <option name="presentableId" value="Default" />
       <updated>1555682334301</updated>
       <workItem from="1558630318331" duration="6743000" />
-      <workItem from="1558688799562" duration="13033000" />
+      <workItem from="1558688799562" duration="13314000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19776000" />
+    <option name="totallyTimeSpent" value="20057000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="13" y="5" width="1382" height="744" extended-state="0" />
@@ -571,7 +603,7 @@
         <state relative-caret-position="1122">
           <caret line="66" column="0" lean-forward="false" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
           <folding>
-            <element signature="e#3257#3282#0" expanded="true" />
+            <element signature="e#3295#3320#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -664,14 +696,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="18" lean-forward="false" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2142">
-          <caret line="126" column="23" lean-forward="false" selection-start-line="126" selection-start-column="23" selection-end-line="126" selection-end-column="23" />
           <folding />
         </state>
       </provider>
@@ -811,12 +835,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="51" column="16" lean-forward="false" selection-start-line="51" selection-start-column="16" selection-end-line="51" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/views/Cabinet.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+        <state relative-caret-position="85">
+          <caret line="107" column="21" lean-forward="false" selection-start-line="107" selection-start-column="21" selection-end-line="107" selection-end-column="21" />
           <folding>
-            <element signature="e#3257#3282#0" expanded="true" />
+            <element signature="e#3295#3320#0" expanded="true" />
           </folding>
         </state>
       </provider>

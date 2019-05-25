@@ -103,6 +103,10 @@
 			width: 80%;
 		}
 	}
+
+	.card-img-top {
+		height: 280px;
+	}
 </style>
 
 
