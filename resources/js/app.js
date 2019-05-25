@@ -18,8 +18,8 @@ axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest',
 };
 
-axios.defaults.baseURL = 'http://iozi.loc/api'
-// axios.defaults.baseURL = 'http://v124285.hosted-by-vdsina.ru/api'
+
+axios.defaults.baseURL = location.origin+'/api';
 
 window.notific = {
     load: false,
