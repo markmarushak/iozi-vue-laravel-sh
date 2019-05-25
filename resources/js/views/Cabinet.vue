@@ -66,13 +66,6 @@
 									</div>
 									<div class="col-sm-12">
 										<div class="card-body text-center">
-											<div class="price">
-												<div v-for="time in product.time">
-													<span>{{ time.name }}</span>
-													{{ time.value }} $
-												</div>
-											</div>
-											<hr>
 											<h5 class="card-title">{{ product.fullname }}</h5>
 											<div class="row">
 												<div class="col-sm-8">
