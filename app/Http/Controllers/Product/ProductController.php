@@ -29,7 +29,7 @@ class ProductController extends Controller
                     ->where('attribute_product.product_id', $product->id)
                     ->where('attributes.types','LIKE', $types[$i])
                     ->leftJoin('attributes', 'attribute_product.attribute_id', 'attributes.id')
-                    ->select('attribute_product.*','attributes.types', 'attributes.name')
+                    ->select('attribute_product.*','attributes.types', 'attributes.name','attributes.format')
                     ->get();
             }
 
@@ -93,7 +93,12 @@ class ProductController extends Controller
 
     public function destroy(Request $request)
     {
-    	return Product::find($request->id)->remove();
+    	AttributeProduct::where('product_id', $request->id)->delete();
+
+    	Products::where('id', $request->id)->delete();
+    	return response()->json([
+    	    'message' => 'product and all attribute delete'
+        ]);
     }
 
     public function saveImage(Request $request)

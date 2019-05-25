@@ -12,10 +12,12 @@
 						<div class="card">
 						 <div class="row no-gutters">
 						 	 <div class="col-sm-6">
-							  	<a v-if="product.images != ''" data-toggle="modal" data-target="#exampleModal" @click="modals = product.images">
-									<img v-bind:src="'public/storage/'+ product.images[0].value" class="card-img-top" alt="">
-								</a>
-							  	<!--<a href="" data-toggle="modal" data-target="#exampleModal" @click="modals = product.images"><img v-bind:src="'public/storage/'+ product.images[0].value" class="card-img-top" alt=""></a>-->
+								 <a v-if="product.images != ''" data-toggle="modal" data-target="#exampleModal" @click="modals = product.images">
+									 <img v-bind:src="'public/storage/'+ product.images[0].value" class="card-img-top">
+								 </a>
+								 <a v-if="product.images == ''" @click="modals = product.images">
+									 <img src="public/img/notFound.png" class="card-img-top" alt="test">
+								 </a>
 							  </div>
 							  <div class="col-sm-6">
 							  	<div class="card-body">

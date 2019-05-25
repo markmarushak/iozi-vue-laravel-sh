@@ -15,7 +15,7 @@
 			<form @submit.prevent="submit" id="form-product" class="col-sm-12">
 
 				<div class="row">
-					
+
 					<div class="col-sm-7">
 						<h4>Общая информация</h4>
 						<div class="row">
@@ -39,13 +39,13 @@
 								</select>
 							</div>
 
-							
+
 							<!-- main info -->
 
 							<div class="col-sm-12">
 								<h4>цена и время</h4>
 								<div class="row">
-									
+
 									<div class="form-group col-sm-4" v-for="i in product.additional.time">
 										<label>{{ i.name }}</label>
 										<input type="text" v-model="i.value" class="form-control" required>
@@ -60,7 +60,7 @@
 							<div class="col-sm-12">
 
 								<div class="row">
-									
+
 									<div class="col-sm-4" v-for="(i, index) in images">
 										<image-input :image_id="index" @selected="setImages"></image-input>
 									</div>
@@ -73,14 +73,14 @@
 					</div>
 
 					<div class="col-sm-5">
-						
+
 						<h4>Выберите услуги</h4>
 						<hr>
 
 						<div class="row">
-							
+
 							<div class="col-sm-12 wrap-product-option">
-								
+
 
 								<label class="checkbox-product-option" v-for="option in product.additional.options">
 									<input type="checkbox" v-model="option.value">
@@ -94,15 +94,14 @@
 
 					</div>
 
-					
+
 
 				</div>
-				
+
 
 			</form>
 
 		</div>
-		{{ images }}
 		<alert v-if="load"></alert>
 	</div>
 </template>

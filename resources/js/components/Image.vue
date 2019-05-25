@@ -88,10 +88,15 @@
     export default {
 
 
-        props: ['image_id'],
+        props: ['image_id', 'image'],
         data(){
             return {
                 imageSrc: ''
+            }
+        },
+        mounted(){
+            if(this.image != ''){
+                this.imageSrc = this.image
             }
         },
         methods: {
