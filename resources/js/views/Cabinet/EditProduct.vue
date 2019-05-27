@@ -34,12 +34,8 @@
 
                                             <div class="form-group col-sm-6" v-for="(attr, index) in newProduct.additional.attributes">
                                                 <label>{{ attr.name }}</label>
-                                                <input v-if="attr.format == 'input' && typeof product.attr[index].value === 'undefined'" type="text" class="form-control" v-model="attr.value" required>
-                                                <input v-if="attr.format == 'input' && typeof product.attr[index].value != 'undefined'" type="text" class="form-control" v-model="attr.value = product.attr[index].value" required>
-                                                <select v-model="attr.value" v-if="attr.format != 'input'" class="form-control" required>
-                                                    <option value=""> выбриете {{ attr.name }}</option>
-                                                    <option v-for="op in attr.option" :value="op.name">{{ op.name }}</option>
-                                                </select>
+                                                <input v-if="typeof product.attr[index] == 'undefined'" type="text" class="form-control" v-model="attr.value" required>
+                                                <input v-if="typeof product.attr[index] != 'undefined'" type="text" class="form-control" v-model="attr.value = product.attr[index].value" required>
                                             </div>
 
 
@@ -51,8 +47,8 @@
 
                                                     <div class="form-group col-sm-4" v-for="(i, index) in newProduct.additional.time">
                                                         <label>{{ i.name }}</label>
-                                                        <input v-if="typeof product.time[index].value === 'undefined'" type="text" v-model="i.value" class="form-control" required>
-                                                        <input v-if="typeof product.time[index].value != 'undefined'" type="text" v-model="i.value" class="form-control" required>
+                                                        <input v-if="typeof product.time[index] == 'undefined'" type="text" v-model="i.value" class="form-control" required>
+                                                        <input v-if="typeof product.time[index] != 'undefined'" type="text" v-model="i.value = product.time[index].value" class="form-control" required>
                                                     </div>
 
 
@@ -66,8 +62,8 @@
                                                 <div class="row">
 
                                                     <div class="col-sm-4" v-for="(i, index) in images">
-                                                        <image-input v-if="typeof product.images[index].value != 'undefined'" :image="'public/storage/' + product.images[index].value" :image_id="index" @selected="setImages"></image-input>
-                                                        <image-input v-if="typeof product.images[index].value === 'undefined'" :image_id="index" @selected="setImages"></image-input>
+                                                        <image-input v-if="typeof product.images[index] != 'undefined'" :image="'public/storage/' + product.images[index].value" :image_id="index" @selected="setImages"></image-input>
+                                                        <image-input v-if="typeof product.images[index] == 'undefined'" :image_id="index" @selected="setImages"></image-input>
                                                     </div>
 
                                                 </div>
@@ -88,8 +84,8 @@
 
 
                                                 <label class="checkbox-product-option" v-for="(option, index) in newProduct.additional.options">
-                                                    <input v-if="typeof typeof product.option[index].value === 'undefined'" type="checkbox" v-model="newProduct.option.value">
-                                                    <input v-else type="checkbox" v-model="newProduct.option.value = product.option[index]">
+                                                    <input v-if="typeof product.option[index] == 'undefined'" type="checkbox" v-model="option.value">
+                                                    <input v-else-if="typeof product.option[index] != 'undefined'" type="checkbox" v-model="option.value" :value="!!parseInt(product.option[index].value)">
                                                     <span class="text">{{ option.name }}</span>
                                                     <span></span>
                                                 </label>
@@ -120,6 +116,7 @@
                             </button>
                         </slot>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -146,6 +143,7 @@
                 options: [],
 
                 newProduct :{
+                    id: this.product.id,
                     additional: {
                         attributes: [],
                         options: [],
@@ -183,30 +181,27 @@
             submit () {
                 this.load = true
                 notific.text = 'Сохранение информации'
-                axios.post(route('products.store'), this.product)
+
+                axios.put(route('products.update'), this.newProduct)
                     .then(response => {
-                    this.saveFile(response.data.product.id)
                 })
             .catch(error => {
                     this.load = false
                 })
             },
-            saveFile(product_id){
+            saveFile(index){
                 notific.text = 'Сохранение информации'
 
                 const config = { 'content-type': 'multipart/form-data' }
-                for(var i in this.images)
-                {
-                    console.log(product_id)
-                    const formData = new FormData()
-                    formData.append('img', this.images[i].value)
-                    formData.append('attr_id', this.images[i].id)
-                    formData.append('product_id', product_id)
 
-                    axios.post(route('products.image'), formData	,config)
-                        .then(response => console.log(response.data))
+                const formData = new FormData()
+                formData.append('img', this.images[index].value)
+                formData.append('attr_id', this.images[index].id)
+                formData.append('id', this.product.id)
+
+                axios.post(route('products.image.upload'), formData	,config)
+                    .then(response => console.log(response.data))
                 .catch(error => console.log(error))
-                }
 
                 this.load = false
 
@@ -215,6 +210,7 @@
             {
                 this.images[file.index].value = file.file
                 console.log(this.images[file.index])
+                this.saveFile(file.index)
             }
         },
         components: {

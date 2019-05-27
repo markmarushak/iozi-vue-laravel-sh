@@ -126,13 +126,17 @@
 		visibility: hidden
 	}
 
-	input:checked + .text {
+	input:checked + .text ,
+	input[value=true] + .text
+	{
 		position: relative;
 		z-index: 2;
 		color: #fff;
 	}
 
-	input:checked + .text + span {
+	input:checked + .text + span,
+	input[value=true] + .text + span
+	{
 	    background: rgba(23, 162, 184, 0.64);
 	    width: 100%;
 	    display: block;

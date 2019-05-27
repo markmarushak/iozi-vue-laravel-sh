@@ -1,6 +1,6 @@
 <template>
 	<div class="row">
-		<div class="col-sm-12" v-if="!showModel">
+		<div class="col-sm-12" v-if="!showModal">
 			<div class="row">
 
 				<div class="col-sm-9">
@@ -91,7 +91,7 @@
 				</div>
 			</div>
 		</div>
-		<edit-product :product="product" v-if="showModel" @close="showModel = !showModel"></edit-product>
+		<edit-product :product="product" v-if="showModal" @close="closeModal()"></edit-product>
 	</div>
 </template>
 
@@ -121,7 +121,7 @@
                 products: [],
                 product: '',
                 user_id: '',
-                showModel: false
+                showModal: false
             }
         },
         mounted(){
@@ -141,16 +141,20 @@
             })
             },
             editProduct(product){
-                this.showModel = !this.showModel
+                this.showModal = !this.showModal
                 this.product = product
             },
             deleteProduct(id){
                 axios.delete(route('products.destroy', {id: id}))
                     .then(res => {
                     console.log(res.data)
-                this.fetchProduct()
-            })
-            }
+                	this.fetchProduct()
+            	})
+            },
+			closeModal(){
+                this.showModal = !this.showModal
+				this.fetchProduct()
+			}
         },
         components: {
             'edit-product': EditProduct
