@@ -41,9 +41,15 @@
 	}
 }
 
+/* card producct */
+.no-gutters {
+	height: 400px;
+	overflow: hidden;
+}
+
 .card-img-top {
 	cursor: zoom-in;
-	height: 150px;
+	height: 100%;
 	object-fit: cover;
 	object-position: top;
 }
@@ -113,3 +119,10 @@
     opacity: 1;
 }
 
+.nav-item {
+	margin-right: 5px;
+}
+
+.nav-item:last-child {
+	margin-right: auto;
+}

@@ -28,6 +28,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 
     Route::group(['namespace' => 'Product'], function () {
         Route::get('/products','ProductController@index')->name('products.index');
+        Route::post('/search','ProductController@search')->name('products.search');
     });
 
     Route::group(['namespace' => 'Attribute'], function () {
@@ -53,7 +54,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
             
             Route::post('/','ProductController@store')->name('products.store');
             Route::post('/image','ProductController@saveImage')->name('products.image');
-            Route::delete('/{id}','ProductController@destroy')->name('products.delete');
+            Route::post('/image/upload','ProductController@uploadImage')->name('products.image.upload');
+            Route::delete('/{id}','ProductController@destroy')->name('products.destroy');
             Route::put('/','ProductController@update')->name('products.update');
 
         });

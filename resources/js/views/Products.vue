@@ -15,7 +15,7 @@
 			<form @submit.prevent="submit" id="form-product" class="col-sm-12">
 
 				<div class="row">
-					
+
 					<div class="col-sm-7">
 						<h4>Общая информация</h4>
 						<div class="row">
@@ -39,13 +39,13 @@
 								</select>
 							</div>
 
-							
+
 							<!-- main info -->
 
 							<div class="col-sm-12">
 								<h4>цена и время</h4>
 								<div class="row">
-									
+
 									<div class="form-group col-sm-4" v-for="i in product.additional.time">
 										<label>{{ i.name }}</label>
 										<input type="text" v-model="i.value" class="form-control" required>
@@ -60,7 +60,11 @@
 							<div class="col-sm-12">
 
 								<div class="row">
+<<<<<<< HEAD
 									
+=======
+
+>>>>>>> e7d744f7d84dc0dfeb8e3e326d42649fc64b3046
 									<div class="col-sm-4" v-for="(i, index) in images">
 										<image-input :image_id="index" @selected="setImages"></image-input>
 									</div>
@@ -73,14 +77,14 @@
 					</div>
 
 					<div class="col-sm-5">
-						
+
 						<h4>Выберите услуги</h4>
 						<hr>
 
 						<div class="row">
-							
+
 							<div class="col-sm-12 wrap-product-option">
-								
+
 
 								<label class="checkbox-product-option" v-for="option in product.additional.options">
 									<input type="checkbox" v-model="option.value">
@@ -94,15 +98,14 @@
 
 					</div>
 
-					
+
 
 				</div>
-				
+
 
 			</form>
 
 		</div>
-
 		<alert v-if="load"></alert>
 	</div>
 </template>
@@ -127,13 +130,17 @@
 		visibility: hidden
 	}
 
-	input:checked + .text {
+	input:checked + .text ,
+	input[value=true] + .text
+	{
 		position: relative;
 		z-index: 2;
 		color: #fff;
 	}
 
-	input:checked + .text + span {
+	input:checked + .text + span,
+	input[value=true] + .text + span
+	{
 	    background: rgba(23, 162, 184, 0.64);
 	    width: 100%;
 	    display: block;
@@ -209,15 +216,15 @@
 				notific.text = 'Сохранение информации'
 			    axios.post(route('products.store'), this.product)
 			        .then(response => {
-	                    notific.text = 'Обработка фото'
 						this.saveFile(response.data.product.id)
             		})
 			        .catch(error => {
-                    	this.load = true
-			            console.log(error)
+                    	this.load = false
 			        })
 			},
 			saveFile(product_id){
+                notific.text = 'Сохранение информации'
+
                 const config = { 'content-type': 'multipart/form-data' }
                 for(var i in this.images)
 				{
@@ -232,7 +239,7 @@
                 		.catch(error => console.log(error))
 				}
 
-                notific.load = false
+                this.load = false
 
             },
 			setImages(file)

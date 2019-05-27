@@ -86,10 +86,21 @@
     import axios from 'axios'
 
     export default {
+<<<<<<< HEAD
         props: ['index'],
+=======
+
+
+        props: ['image_id', 'image'],
+>>>>>>> e7d744f7d84dc0dfeb8e3e326d42649fc64b3046
         data(){
             return {
                 imageSrc: ''
+            }
+        },
+        mounted(){
+            if(this.image != ''){
+                this.imageSrc = this.image
             }
         },
         methods: {
@@ -103,7 +114,11 @@
                     }
 
                     reader.readAsDataURL(input.files[0]);
+<<<<<<< HEAD
                     this.$emit("image", {file: input.files[0], index: vm.index})
+=======
+                    this.$emit("selected", {file: input.files[0], index: vm.image_id})
+>>>>>>> e7d744f7d84dc0dfeb8e3e326d42649fc64b3046
                 }
             },
         }

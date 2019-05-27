@@ -125,7 +125,7 @@
 <script>
 
     import axios from 'axios'
-    import Modal from './Modal'
+    import Modal from './ListModal'
 
     export default {
         props: [

@@ -25,4 +25,11 @@ class AttributeProduct extends Model
         ])->get();
     }
 
+    public function isHas($data, $product_id)
+    {
+        return $this->where('product_id', $product_id)
+            ->where('attribute_id', $data['id'])
+            ->first();
+    }
+
 }
