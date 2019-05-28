@@ -2,25 +2,64 @@
 
 return [
     'role_structure' => [
-        
-        'admin' => [
-            'product.show',
-            'product.delete',
-        ],
 
-        'user' => [
-            'login',
-            'register',
-
+        'account' => [
             'product.show',
-            'product.create',
-            'product.delete',
+            'products.store',
+            'products.destroy',
             'product.update',
+            'products.image',
+            'products.image.upload',
+
+            'attribute.store',
+            'attribute.destroy',
+            'attribute.update',
+            'payment.show',
+
+            'get.user',
 
             'pyment.show'
+        ],
+
+        'admin' => [
+
+            'product.show',
+            'products.store',
+            'products.destroy',
+            'product.update',
+            'products.image',
+            'products.image.upload',
+
+            'attribute.store',
+            'attribute.destroy',
+            'attribute.update',
+            'payment.show',
+
+            'get.user'
+        ],
+
+        'super-admin' => [
+            'product.show',
+            'products.store',
+            'products.destroy',
+            'product.update',
+            'products.image',
+            'products.image.upload',
+
+            'attribute.store',
+            'attribute.destroy',
+            'attribute.update',
+            'payment.show',
+
+            'get.user'
         ]
+
     ],
-    'permission_structure' => [
-        
-    ]
+    'permission_structure' => [],
+
+    'access_levels' => [
+        'super-admin' => 1,
+        'admin' => 2,
+        'account' => 3,
+    ],
 ];

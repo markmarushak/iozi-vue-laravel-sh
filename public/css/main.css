@@ -47,6 +47,13 @@
 	overflow: hidden;
 }
 
+@media screen and (max-width: 425px){
+	.no-gutters {
+		height: auto;
+		overflow: hidden;
+	}
+}
+
 .card-img-top {
 	cursor: zoom-in;
 	height: 100%;
@@ -66,7 +73,6 @@
 	display: -ms-flex;
 	display: -o-flex;
 	display: flex;
-	background: #ff5c94;
 	right: 20px;
 	padding: 10px;
 	border-radius: 10px;
@@ -75,6 +81,7 @@
 .filter .form {
 	color: #fff;
 }
+
 .filter .form-group {
 	display: -webkit-flex;
 	display: -moz-flex;
@@ -82,11 +89,72 @@
 	display: -o-flex;
 	display: flex;
 	flex-direction: column;
+	overflow: auto;
+	max-height: calc(100vh - 180px);
 }
 
 .filter .form label {
 	text-transform: uppercase;
 }
+
+.filter-list {
+	background: #ff5c94;
+	color: #fff;
+	position: fixed;
+	width: 16%;
+	padding: 10px;
+	border-radius: 10px;
+	top: 40px;
+	right: 35px;
+	top: 95px;
+}
+
+@media screen and (max-width: 768px){
+	.filter {
+		position: fixed;
+		right: 15px;
+		top: 35px;
+		padding: 10px;
+		border-radius: 10px;
+		width: calc(100% - 30px);
+	}
+
+	.filter-list {
+		background: #ff5c94;
+		color: #fff;
+		position: relative;
+		width: 100%;
+		padding: 10px;
+		border-radius: 10px;
+		top: 40px;
+	}
+}
+
+.filter-button {
+	width: 80%;
+	display: flex;
+	left: 50%;
+	margin-left: -40%;
+	background: #ff5c94;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	border-radius: 5px;
+	padding: 5px 0;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	z-index: 123123213;
+	position: fixed;
+	box-shadow: 0 0 4px 0px #000;
+	border: none;
+	transition: all .5s;
+	opacity: .6;
+}
+.filter-button:hover {
+	background: #ff5c44;
+	opacity: 1;
+}
+
 
 .VueCarousel-slide{ position: relative; }
 .price {
@@ -119,10 +187,20 @@
     opacity: 1;
 }
 
+p.card-text {
+	height: 170px;
+	overflow: hidden;
+}
+
 .nav-item {
 	margin-right: 5px;
 }
 
 .nav-item:last-child {
 	margin-right: auto;
+}
+
+.navbar-toggler {
+	background-color: #ff5c94;
+	color: #fff;
 }

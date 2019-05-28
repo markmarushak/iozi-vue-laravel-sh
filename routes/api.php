@@ -16,15 +16,14 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-    
 
-Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 
-    Route::get('/', 'HomeController@index');
-    Route::post('login', 'AuthController@login')->name('login');
-    Route::post('register', 'AuthController@register');
+Route::post('/login', 'AuthController@login')->name('login');
+Route::post('/register', 'AuthController@register')->name('register');
+Route::post('/logout', 'AuthController@logout')->name('logout');
 
-    Route::post('logout', 'AuthController@logout');
+Route::get('/', 'HomeController@index')->name('home');
+
 
     Route::group(['namespace' => 'Product'], function () {
         Route::get('/products','ProductController@index')->name('products.index');
@@ -40,12 +39,12 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     // this auth routes
     //
 
-    Route::group(['middleware' => 'jwt.refresh'], function(){
+    Route::group(['middleware' => 'api'], function(){
         Route::post('authrefresh', 'AuthController@getAuthenticatedUser');
 
     });
 
-    Route::group(['middleware' => 'jwt.auth'], function(){
+    Route::group(['middleware' => ['jwt']], function(){
 
         Route::get('/get-user', 'AuthController@user')->name('get.user');
 
@@ -77,7 +76,6 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 
     });
     
-});
 
 
 

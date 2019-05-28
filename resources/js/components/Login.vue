@@ -55,7 +55,12 @@
                       email: this.data.body.email,
                       password: this.data.body.password
                     }, 
-                    success: function () {},
+                    success: function () {
+                        axios.get(route('get.user')).then(res => {
+                            this.$auth.user_role = res.data.data.roleLevel
+                            this.$auth.name = res.data.data.name
+                    })
+                    },
                     error: function () {},
                     rememberMe: true,
                     redirect: '/cabinet',

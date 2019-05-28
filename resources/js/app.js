@@ -19,7 +19,7 @@ axios.defaults.headers.common = {
 };
 
 
-axios.defaults.baseURL = location.origin+'/api';
+axios.defaults.baseURL = location.origin;
 
 window.notific = {
     load: false,

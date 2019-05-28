@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Laratrust\Models\LaratrustRole;
+use OwenIt\Auditing\Contracts\Auditable;
 
 class Role extends LaratrustRole
 {
+    use \OwenIt\Auditing\Auditable;
 
-	public $appends = ['initial'];
+
+    public $appends = ['initial'];
 
     private $initialRoles;
 

@@ -1,26 +1,31 @@
 import Home from '../views/Home'
-import Cabinet from '../views/Cabinet.vue'
-import Products from '../views/Products.vue'
-import Payment from '../views/Payment.vue'
-import Setting from '../views/Setting.vue'
-import Rent from '../views/Rent.vue'
-import ProductSettings from '../views/ProductSetting.vue'
-import Tariff from '../views/Tariff.vue'
+import Product from '../views/Home/Product'
+import Cabinet from '../views/Cabinet'
+import Products from '../views/Products'
+import Payment from '../views/Payment'
+import Setting from '../views/Setting'
+import Rent from '../views/Rent'
+import ProductSettings from '../views/ProductSetting'
+import Tariff from '../views/Tariff'
 
-import Attribute from '../views/productSetting/Attribute.vue'
-import Option from '../views/productSetting/Option.vue'
-import Time from '../views/productSetting/Time.vue'
-import Image from '../views/productSetting/Image.vue'
+import Attribute from '../views/productSetting/Attribute'
+import Option from '../views/productSetting/Option'
+import Time from '../views/productSetting/Time'
+import Image from '../views/productSetting/Image'
 
 
-import Dashboard from '../components/Dashboard.vue'
-import Register from '../components/Register.vue'
-import Login from '../components/Login.vue'
+import Dashboard from '../components/Dashboard'
+import Register from '../components/Register'
+import Login from '../components/Login'
 
 let routes = [{
         path: '/',
         name: 'home',
         component: Home
+    },{
+        path: '/product',
+        name: 'product',
+        component: Product
     },{
         path: '/register',
         name: 'register',

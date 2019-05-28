@@ -1,10 +1,26 @@
 <?php
+
+use App\Models\Permission;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class LaratrustSeeder extends Seeder
 {
+
+    private $permission_role;
+    private $permission_user;
+    private $role_user;
+
+    public function __construct()
+    {
+        $this->permission_role = config('laratrust.tables.permission_user');
+        $this->permission_user = config('laratrust.tables.permission_role');
+        $this->role_user = config('laratrust.tables.role_user');
+    }
+
     /**
      * Run the database seeds.
      *
@@ -32,26 +48,26 @@ class LaratrustSeeder extends Seeder
             $this->command->info('Creating Role '. strtoupper($key));
 
             // Reading role permission modules
-            foreach ($modules as $module => $value) {
-
-                foreach (explode(',', $value) as $p => $perm) {
-
-                    $permissionValue = $mapPermission->get($perm);
-
-                    $permissions[] = \App\Models\Permission::firstOrCreate([
-                        'name' => $permissionValue . '-' . $module,
-                        'display_name' => ucfirst($permissionValue) . ' ' . ucfirst($module),
-                        'description' => ucfirst($permissionValue) . ' ' . ucfirst($module),
-                    ])->id;
-
-                    $this->command->info('Creating Permission to '.$permissionValue.' for '. $module);
-                }
-            }
+//            foreach ($modules as $module => $value) {
+//
+//                foreach (explode(',', $value) as $p => $perm) {
+//
+//                    $permissionValue = $mapPermission->get($perm);
+//
+//                        $permissions[] = \App\Models\Permission::firstOrCreate([
+//                            'name' => $permissionValue . '-' . $module,
+//                            'display_name' => ucfirst($permissionValue) . ' ' . ucfirst($module),
+//                            'description' => ucfirst($permissionValue) . ' ' . ucfirst($module),
+//                        ])->id;
+//
+//                    $this->command->info('Creating Permission to '.$permissionValue.' for '. $module);
+//                }
+//            }
 
             // Attach all permissions to the role
-            $role->permissions()->sync($permissions);
-
-            $this->command->info("Creating '{$key}' user");
+//            $role->permissions()->sync($permissions);
+//
+//            $this->command->info("Creating '{$key}' user");
 
             // Create default user for each role
             $user = \App\Models\User::create([

@@ -2,9 +2,11 @@
 	
 	<div class="row">
 		
-		<h3>
-			Настройки Аккаунта
-		</h3>
+		<div class="col-12">
+			<h3>
+				Настройки Аккаунта
+			</h3>s
+		</div>
 
 		<form @submit.prevent="account" class="col-sm-12">
 			

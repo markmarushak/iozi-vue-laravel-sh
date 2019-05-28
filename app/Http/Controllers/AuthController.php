@@ -19,7 +19,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+//        $this->middleware('auth', ['except' => ['login', 'register']]);
     }
 
     /**
@@ -95,7 +95,12 @@ class AuthController extends Controller
 
     public function user()
     {
-        $user = User::find(Auth::user()->id);
+        try{
+            $user = User::find(Auth::user()->id);
+        }catch (\Exception $e){
+            return $e->getMessage();
+        }
+//        $user = Auth::user();
         return response([
                 'status' => 'success',
                 'data' => $user
