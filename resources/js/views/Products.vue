@@ -1,6 +1,6 @@
 <template>
 	<div class="row">
-		<div class="crud-product col-sm-12">
+		<div class="crud-product col-12">
 			
 			<div class="row">
 				<div class="col-sm-6">

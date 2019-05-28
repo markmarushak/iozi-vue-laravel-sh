@@ -1,9 +1,46 @@
 <template>
 	<div class="row">
+		{{ $auth.name }}
 		<div class="col-sm-12" v-if="!showModal">
-			<div class="row">
+			<div class="row d-flex flex-row">
 
-				<div class="col-sm-9">
+				<div class="col-md-3 order-md-last">
+
+					<ul class="list-group">
+						<li class="list-group-item list-group-item-action ">
+							<router-link
+									:to="{ name: 'cabinet' }"> Свои анкеты
+							</router-link>
+						</li>
+						<li class="list-group-item list-group-item-action">
+							<router-link :to="{ name: 'setting' }"> Персональные данные</router-link>
+						</li>
+						<li class="list-group-item list-group-item-action ">
+							<router-link
+									:to="{ name: 'payment' }"> Пополнить счет
+							</router-link>
+						</li>
+						<li class="list-group-item list-group-item-action ">
+							<router-link
+									:to="{ name: 'products' }"> Добавить анкету
+							</router-link>
+						</li>
+						<li class="list-group-item list-group-item-action ">
+							<router-link
+									:to="{ name: 'rent' }"> Оплатить Аренду
+							</router-link>
+						</li>
+						<li class="list-group-item list-group-item-action" v-if="$auth.user_role <= 1">
+							<router-link :to="{ name: 'tariff' }"> Настройка Тарифов</router-link>
+						</li>
+						<li class="list-group-item list-group-item-action" v-if="$auth.user_role <= 1">
+							<router-link :to="{ name: 'product-settings' }"> Настройка анкет</router-link>
+						</li>
+					</ul>
+
+				</div>
+
+				<div class="col-md-9 order-md-first">
 
 					<router-view></router-view>
 
@@ -16,36 +53,10 @@
 
 				</div>
 
-				<div class="col-sm-3">
+			</div>
 
-					<ul class="list-group">
-						<li class="list-group-item list-group-item-action">
-							<router-link :to="{ name: 'setting' }"> Персональные данные</router-link>
-						</li>
-						<li class="list-group-item list-group-item-action list-group-item-primary">
-							<router-link
-									:to="{ name: 'payment' }"> Пополнить счет
-							</router-link>
-						</li>
-						<li class="list-group-item list-group-item-action list-group-item-success">
-							<router-link
-									:to="{ name: 'products' }"> Добавить анкету
-							</router-link>
-						</li>
-						<li class="list-group-item list-group-item-action list-group-item-primary">
-							<router-link
-									:to="{ name: 'rent' }"> Оплатить Аренду
-							</router-link>
-						</li>
-						<li class="list-group-item list-group-item-action">
-							<router-link :to="{ name: 'tariff' }"> Настройка Тарифов</router-link>
-						</li>
-						<li class="list-group-item list-group-item-action">
-							<router-link :to="{ name: 'product-settings' }"> Настройка анкет</router-link>
-						</li>
-					</ul>
+			<div class="row" v-if="!showModal">
 
-				</div>
 				<div class="col-sm-12" v-if="$router.currentRoute.name == 'cabinet'">
 
 					<div class="row">
@@ -57,23 +68,23 @@
 										<a v-if="product.images != ''" data-toggle="modal" data-target="#exampleModal"
 										   @click="modals = product.images">
 											<img v-bind:src="'public/storage/'+ product.images[0].value"
-												 class="card-img-top">
+												 class="card-img-top" style="height:280px;">
 										</a>
 										<a v-if="product.images == ''" data-toggle="modal" data-target="#exampleModal"
 										   @click="modals = product.images">
-											<img src="public/img/notFound.png" class="card-img-top" alt="test">
+											<img src="public/img/notFound.png" class="card-img-top" alt="test" style="height:280px;">
 										</a>
 									</div>
 									<div class="col-sm-12">
 										<div class="card-body text-center">
 											<h5 class="card-title">{{ product.fullname }}</h5>
 											<div class="row">
-												<div class="col-sm-8">
+												<div class="col-8">
 													<button class="btn btn-warning"
 															@click="editProduct(product)">Редактировать
 													</button>
 												</div>
-												<div class="col-sm-4">
+												<div class="col-4">
 													<button class="btn btn-danger" @click="deleteProduct(product.id)"><i
 															class="fas fa-trash-alt"></i></button>
 												</div>
@@ -89,7 +100,9 @@
 					</div>
 
 				</div>
+
 			</div>
+
 		</div>
 		<edit-product :product="product" v-if="showModal" @close="closeModal()"></edit-product>
 	</div>
@@ -102,10 +115,6 @@
 		.modal-container {
 			width: 80%;
 		}
-	}
-
-	.card-img-top {
-		height: 280px;
 	}
 </style>
 
@@ -120,22 +129,17 @@
             return {
                 products: [],
                 product: '',
-                user_id: '',
                 showModal: false
             }
         },
         mounted(){
             this.fetchProduct()
+			console.log(this)
         },
         methods: {
             fetchProduct(){
 
-                axios.get(route('get.user'))
-                    .then(res => {
-                    this.user_id = res.data.id
-            })
-
-                axios.get(route('products.index'), {id: this.user_id})
+                axios.get(route('products.index'), {id: 1})
                     .then(res => {
                     this.products = res.data
             })

@@ -8,16 +8,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Laratrust\Traits\LaratrustUserTrait;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements  JWTSubject
 {
     use LaratrustUserTrait;
     use Notifiable;
 
     // Rest omitted for brevity
 
-    public $appends = ['maxUserLevel'];
+    public $appends = ['maxUserLevel', 'roleLevel'];
 
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -36,7 +36,7 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
-    
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
@@ -57,21 +57,16 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function roles()
-    {
-      return $this->belongsToMany(Role::class);
-    }
-
     /**
     * @param string|array $roles
     */
     public function authorizeRoles($roles)
     {
       if (is_array($roles)) {
-          return $this->hasAnyRole($roles) || 
+          return $this->hasAnyRole($roles) ||
                  abort(401, 'This action is unauthorized.');
       }
-      return $this->hasRole($roles) || 
+      return $this->hasRole($roles) ||
              abort(401, 'This action is unauthorized.');
     }
     /**
@@ -108,4 +103,23 @@ class User extends Authenticatable implements JWTSubject
             return $maxUserRoleLevel;
         }
     }
+
+    public function getRoleLevelAttribute()
+    {
+        if ($this) {
+            $rawRoles = config('laratrust_seeder.access_levels');
+            $name = (strtolower($this->name));
+            if(empty($rawRoles[$name])){
+                return $rawRoles['account'];
+            }
+
+            return $rawRoles[$name];
+        }
+    }
+
+//    public function getRoleLevelAttribute()
+//    {
+//        dd( $this->roles());
+//        return $this->roles[0]['level'] ?? null;
+//    }
 }

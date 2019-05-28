@@ -54,7 +54,7 @@ return [
         | NOTE: Currently the database check does not use cache.
         |
         */
-        'enabled' => true,
+        'enabled' => false,
 
         /*
         |--------------------------------------------------------------------------
@@ -104,7 +104,7 @@ return [
     |
     */
     'user_models' => [
-        'users' => 'App\Models\User',
+        'users' => App\Models\User::class,
     ],
 
     /*
@@ -121,17 +121,17 @@ return [
         /**
          * Role model
          */
-        'role' => 'App\Models\Role',
+        'role' => App\Models\Role::class,
 
         /**
          * Permission model
          */
-        'permission' => 'App\Models\Permission',
+        'permission' => App\Models\Permission::class,
 
         /**
          * Team model
          */
-        'team' => 'App\Models\Team',
+        'team' => App\Models\Team::class,
 
     ],
 
@@ -220,7 +220,6 @@ return [
          * Define if the laratrust middleware are registered automatically in the service provider
          */
         'register' => true,
-        'login' => true,
 
         /**
          * Method to be called in the middleware return case.
@@ -229,30 +228,10 @@ return [
         'handling' => 'abort',
 
         /**
-         * Handlers for the unauthorized method in the middlewares.
-         * The name of the handler must be the same as the handling.
+         * Parameter passed to the middleware_handling method
          */
-        'handlers' => [
-            /**
-             * Aborts the execution with a 403 code.
-             */
-            'abort' => [
-                'code' => 403
-            ],
-            /**
-             * Redirects the user to the given url.
-             * If you want to flash a key to the session,
-             * you can do it by setting the key and the content of the message
-             * If the message content is empty it won't be added to the redirection.
-             */
-            'redirect' => [
-                'url' => '/home',
-                'message' => [
-                    'key' => 'error',
-                    'content' => ''
-                ]
-            ]
-        ]
+        'params' => '403',
+
     ],
 
     /*

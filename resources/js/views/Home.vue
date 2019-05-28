@@ -6,7 +6,6 @@
 
             <div class="products">
 
-
                 <transition-group name="fade" tag="div" class="row">
                     <div class="col-sm-6" v-for="product in products" :key="product.id">
 
@@ -33,7 +32,11 @@
                                             <hr>
                                             <h5 class="card-title">{{ product.fullname }}</h5>
                                             <p class="card-text">{{ product.description }}</p>
-                                            <a href="#" class="btn btn-primary">Узнать </a>
+                                            <!--<a href="#" class="btn btn-primary">Узнать </a>-->
+                                            <router-link
+                                                    class="btn btn-prinary"
+                                                    :to="{ name: 'product', params: { product: product } }"> Узнать
+                                            </router-link>
                                         </div>
                                     </div>
                                 </div>
@@ -49,13 +52,21 @@
         </div>
 
         <div class="filter">
-            <div class="form">
-                <h5> Расширенный поиск</h5>
-                <div class="form-group">
-                    <label v-for="fil in options"><input type="checkbox" @click="search(fil.id)">{{ fil.name }}</label>
-                </div>
 
-            </div>
+            <button class="filter-button" v-if="window.width <= 768" @click="filterTrigger = !filterTrigger">
+                <span v-if="!filterTrigger"><i class="fas fa-search-dollar"></i> фильтр анкет</span>
+                <span v-else><i class="fas fa-window-close"></i> закрыть фильтр</span>
+            </button>
+            <transition name="model">
+                <div class="filter-list" v-if="window.width > 768">
+                    <div class="form">
+                        <h5> Расширенный поиск</h5>
+                        <div class="form-group">
+                            <label v-for="fil in options"><input type="checkbox" @click="search(fil.id)">{{ fil.name }}</label>
+                        </div>
+                    </div>
+                </div>
+            </transition>
 
         </div>
 
@@ -101,7 +112,11 @@
                 options: [],
                 filters: [],
                 modals: '123123',
-                user_id: ''
+                window: {
+                    width: 0,
+                    height: 0
+                },
+                filterTrigger: false
             }
         },
         methods: {
@@ -120,8 +135,12 @@
                 }
                 axios.post(route('products.search'), this.filters)
                     .then(res => {
-                    this.products = res.data
-            })
+                        this.products = res.data
+                })
+            },
+            handleResize() {
+                this.window.width = window.innerWidth;
+                this.window.height = window.innerHeight;
             }
         },
         mounted() {
@@ -132,6 +151,13 @@
             ;
             this.fetchProduct()
 
+        },
+        created() {
+            window.addEventListener('resize', this.handleResize)
+            this.handleResize();
+        },
+        destroyed() {
+            window.removeEventListener('resize', this.handleResize)
         },
         components: {
             Carousel,

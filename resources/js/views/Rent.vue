@@ -2,11 +2,11 @@
 	
 	<div class="row">
 		
-		<h2>Оплата аренды</h2>
-		<hr>
-
 		<div class="col-sm-12">
-			
+
+			<h2>Оплата аренды</h2>
+			<hr>
+
 			<div class="row">
 				
 				<div class="col-sm-4" v-for="a in 3">
