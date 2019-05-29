@@ -21,11 +21,6 @@ axios.defaults.headers.common = {
 
 axios.defaults.baseURL = location.origin;
 
-window.notific = {
-    load: false,
-    text: ''
-}
-
 Vue.mixin({
     methods: {
         route: route
@@ -48,6 +43,11 @@ const router = new VueRouter({
 Vue.router = router
 
 Vue.use(VueAuth, authParams)
+
+App.loader = {
+    load: false,
+    text: ''
+}
 
 App.router = Vue.router
 

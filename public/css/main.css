@@ -1,3 +1,21 @@
+.wrap {
+	background-attachment: fixed;
+	height: 100vh;
+	overflow-y: scroll;
+	position: relative;
+}
+
+.wrap .wrap-bg {
+	background: url(http://www.playcast.ru/uploads/2017/01/14/21276565.gif);
+	background-attachment: fixed;
+	height: 100vh;
+	width: 100%;
+	z-index: -1;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }

@@ -47,7 +47,21 @@ class ProductController extends Controller
 
     public function show(Request $request)
     {
-    	return Products::all($request->id);
+        $product = Products::find($request->id);
+
+            $types = ['attr','option','images','time'];
+            for($i = 0; $i< count($types); $i++){
+                $product[$types[$i]] = DB::table('attribute_product')
+                    ->where('attribute_product.product_id', $product->id)
+                    ->where('attributes.types','LIKE', $types[$i])
+                    ->leftJoin('attributes', 'attribute_product.attribute_id', 'attributes.id')
+                    ->select('attribute_product.*','attributes.types', 'attributes.name','attributes.format')
+                    ->get();
+
+            $product['storage'] = storage_path('public');
+        }
+
+        return $product;
     }
 
     public function store(Request $request)

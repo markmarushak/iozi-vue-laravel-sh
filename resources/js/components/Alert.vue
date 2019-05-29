@@ -128,7 +128,7 @@
     export default {
         data(){
             return {
-                text: notific.text
+                text:''
             }
         }
     }

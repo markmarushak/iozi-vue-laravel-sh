@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="wrap">
+
           <header id="header">
             
             <nav class="navbar navbar-expand-lg">
@@ -43,11 +44,13 @@
             </transition>
         </div>
 
+        <div class="wrap-bg"></div>
     </div>
 </template>
 
 <script>
 
+    import Alert  from '../components/Alert.vue'
 
     export default {
         mounted() {
@@ -85,6 +88,9 @@
                     }
                 });
             }
+        },
+        components: {
+            'alert': Alert
         }
     }
 </script>
