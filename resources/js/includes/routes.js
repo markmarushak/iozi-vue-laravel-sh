@@ -21,7 +21,8 @@ import Login from '../components/Login'
 let routes = [{
         path: '/',
         name: 'home',
-        component: Home
+        component: Home,
+        bg: 'http://www.playcast.ru/uploads/2017/01/14/21276565.gif'
     },{
         path: '/product/:id',
         name: 'product',

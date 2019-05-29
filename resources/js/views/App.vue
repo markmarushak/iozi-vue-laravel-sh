@@ -44,7 +44,8 @@
             </transition>
         </div>
 
-        <div class="wrap-bg"></div>
+        <div v-if="$router.currentRoute.name = cabinet " class="wrap-bg" style="background: url();"></div>
+        <div class="wrap-bg" style="background: url();"></div>
     </div>
 </template>
 
@@ -59,6 +60,7 @@
             setTimeout(function () {
                 _this.loaded = true;
             }, 500);
+
         },
         created() {
             var _this = this;
