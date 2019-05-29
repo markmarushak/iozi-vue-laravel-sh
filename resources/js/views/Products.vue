@@ -102,7 +102,6 @@
 			</form>
 
 		</div>
-		<alert v-if="load"></alert>
 	</div>
 </template>
 
@@ -161,7 +160,6 @@
 <script>
 	
 	import Image  from '../components/Image.vue'
-	import Alert  from '../components/Alert.vue'
 	import axios from 'axios'
 
 	export default {
@@ -180,7 +178,6 @@
 					description: ''
 				},
                 images: [],
-				load: false
             }
 		},
 		methods: {
@@ -208,23 +205,20 @@
 				})
 			},
 			submit () {
-			    this.load = true
 				notific.text = 'Сохранение информации'
 			    axios.post(route('products.store'), this.product)
 			        .then(response => {
 						this.saveFile(response.data.product.id)
             		})
 			        .catch(error => {
-                    	this.load = false
 			        })
 			},
 			saveFile(product_id){
-                notific.text = 'Сохранение информации'
+                notific.text = 'проверка фото'
 
                 const config = { 'content-type': 'multipart/form-data' }
                 for(var i in this.images)
 				{
-                    console.log(product_id)
                     const formData = new FormData()
                     formData.append('img', this.images[i].value)
 					formData.append('attr_id', this.images[i].id)
@@ -235,7 +229,7 @@
                 		.catch(error => console.log(error))
 				}
 
-                this.load = false
+				this.$router.push('/product/'+product_id)
 
             },
 			setImages(file)
@@ -246,7 +240,6 @@
 		},
 		components: {
 			'image-input': Image,
-			'alert': Alert
 		}
 	}
 

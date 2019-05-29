@@ -26,7 +26,7 @@
                                             <div class="price">
                                                 <div v-for="time in product.time">
                                                     <span>{{ time.name }}</span>
-                                                    {{ time.value }} $
+                                                    {{ time.value }} P
                                                 </div>
                                             </div>
                                             <hr>
@@ -34,8 +34,8 @@
                                             <p class="card-text">{{ product.description }}</p>
                                             <!--<a href="#" class="btn btn-primary">Узнать </a>-->
                                             <router-link
-                                                    class="btn btn-prinary"
-                                                    :to="{ name: 'product', params: { product: product } }"> Узнать
+                                                    class="btn btn-primary btn-block"
+                                                    :to="{ name: 'product', params: { id: product.id, products: product } }"> Узнать
                                             </router-link>
                                         </div>
                                     </div>
@@ -136,7 +136,7 @@
                 axios.post(route('products.search'), this.filters)
                     .then(res => {
                         this.products = res.data
-                })
+            })
             },
             handleResize() {
                 this.window.width = window.innerWidth;

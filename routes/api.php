@@ -27,6 +27,7 @@ Route::get('/', 'HomeController@index')->name('home');
 
     Route::group(['namespace' => 'Product'], function () {
         Route::get('/products','ProductController@index')->name('products.index');
+        Route::get('/products/{id}','ProductController@show')->name('products.show');
         Route::post('/search','ProductController@search')->name('products.search');
     });
 
