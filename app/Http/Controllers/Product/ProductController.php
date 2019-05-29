@@ -21,13 +21,30 @@ class ProductController extends Controller
         $this->ap = $ap;
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        if($request->id){
-            $products = Products::where('user_id', $request->id)->get();
-        }else{
-            $products = Products::all();
+        $products = Products::all();
+        foreach ($products as &$product){
+            $types = ['attr','option','images','time'];
+            for($i = 0; $i< count($types); $i++){
+                $product[$types[$i]] = DB::table('attribute_product')
+                    ->where('attribute_product.product_id', $product->id)
+                    ->where('attributes.types','LIKE', $types[$i])
+                    ->leftJoin('attributes', 'attribute_product.attribute_id', 'attributes.id')
+                    ->select('attribute_product.*','attributes.types', 'attributes.name','attributes.format')
+                    ->get();
+            }
+
+            $product['storage'] = storage_path('public');
         }
+
+        return $products;
+    }
+
+    public function cabinet(Request $request)
+    {
+        $products = Products::where('user_id',$request->id)->get();
+
         foreach ($products as &$product){
             $types = ['attr','option','images','time'];
             for($i = 0; $i< count($types); $i++){

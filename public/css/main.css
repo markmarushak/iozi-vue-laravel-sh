@@ -1,3 +1,6 @@
+body {
+	color: #fff;
+}
 .wrap {
 	background-attachment: fixed;
 	height: 100vh;
@@ -180,6 +183,7 @@
     top: 0;
     left: 0;
     display: flex;
+	flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -187,15 +191,15 @@
     transition: all .5s;
 }
 .price div {
-    width: 33.3%;
-    background: #E91E63;
-    margin: 0px 3px;
-    padding: 2px;
-    border-radius: 10px;
-    color: #fff;
-    text-align: center;
-    transition: all .5s;
-    /*opacity: 0;*/
+	width: 100%;
+	background: #E91E63;
+	margin: 2px 0px;
+	padding: 2px;
+	border-radius: 10px;
+	color: #fff;
+	text-align: center;
+	transition: all .5s;
+	opacity: 0.7;
 }
 .price:hover div { opacity: .7; }
 
@@ -205,8 +209,11 @@
     opacity: 1;
 }
 
+.card {
+	color: #222;
+}
 p.card-text {
-	height: 170px;
+	height: 130px;
 	overflow: hidden;
 }
 

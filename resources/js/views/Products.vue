@@ -205,7 +205,6 @@
 				})
 			},
 			submit () {
-				notific.text = 'Сохранение информации'
 			    axios.post(route('products.store'), this.product)
 			        .then(response => {
 						this.saveFile(response.data.product.id)
@@ -214,7 +213,6 @@
 			        })
 			},
 			saveFile(product_id){
-                notific.text = 'проверка фото'
 
                 const config = { 'content-type': 'multipart/form-data' }
                 for(var i in this.images)

@@ -53,6 +53,7 @@ Route::get('/', 'HomeController@index')->name('home');
         Route::group(['prefix' => 'products', 'namespace' => 'Product', 'middleware' => 'jwt.auth'], function () {
             
             Route::post('/','ProductController@store')->name('products.store');
+            Route::get('/cabinet/{id}','ProductController@cabinet')->name('products.cabinet');
             Route::post('/image','ProductController@saveImage')->name('products.image');
             Route::post('/image/upload','ProductController@uploadImage')->name('products.image.upload');
             Route::delete('/{id}','ProductController@destroy')->name('products.destroy');

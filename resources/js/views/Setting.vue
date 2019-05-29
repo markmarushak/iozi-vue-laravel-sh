@@ -5,7 +5,7 @@
 		<div class="col-12">
 			<h3>
 				Настройки Аккаунта
-			</h3>s
+			</h3>
 		</div>
 
 		<form @submit.prevent="account" class="col-sm-12">
