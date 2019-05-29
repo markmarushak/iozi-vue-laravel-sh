@@ -20,7 +20,7 @@
 
                 <div class="col-md-4 col-12">
 
-                    <div class="btn btn-block btn-primary" v-for="p in product.attr">
+                    <div class="btn btn-block btn-main-color" v-for="p in product.attr">
                         <h4>{{ p.name }} <i>{{ p.value }}</i></h4>
                     </div>
 

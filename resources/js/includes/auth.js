@@ -16,6 +16,7 @@ export default {
     parseUserData: function (data) {
        axios.get(route('get.user')).then(res => {
            this.user_role = res.data.data.roleLevel
+           this.user_id = res.data.data.id
            this.name = res.data.data.name
        })
     }

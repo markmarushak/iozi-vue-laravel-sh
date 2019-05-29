@@ -1,6 +1,6 @@
 <template>
 	<div class="row">
-		{{ $auth.name }}
+
 		<div class="col-sm-12" v-if="!showModal">
 			<div class="row d-flex flex-row">
 
@@ -138,8 +138,7 @@
         },
         methods: {
             fetchProduct(){
-
-                axios.get(route('products.index'), {id: 1})
+                axios.get(route('products.cabinet', {id: this.$auth.user_id}))
                     .then(res => {
                     this.products = res.data
             })

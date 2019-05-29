@@ -1,6 +1,6 @@
 <template>
 
-    <div class="row">
+    <div class="row bg-white">
 
        <div class="col-12">
            <ul class="nav  nav-pills">

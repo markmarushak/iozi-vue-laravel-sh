@@ -92,3 +92,16 @@
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
+
+.bg-white {
+  background: #eee;
+  padding: 10px 0;
+  border-radius: 10px;
+
+  color: #000;
+}
+
+.btn-main-color {
+  background: #E91d63;
+  color: #fff;
+}
