@@ -84,7 +84,7 @@
                     <div class="modal-body profile-more-info">
                         <carousel :navigationEnabled="true" :perPage="1">
                             <slide v-for="modal in modals" :key="modal.id">
-                                <img v-bind:src="'public/storage/' + modal.value" class="card-img-top" alt="">
+                                <img v-bind:src="'/public/storage/' + modal.value" class="card-img-top" alt="">
                             </slide>
                         </carousel>
                     </div>

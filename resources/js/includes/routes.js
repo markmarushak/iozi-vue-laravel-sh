@@ -22,12 +22,13 @@ let routes = [{
         path: '/',
         name: 'home',
         component: Home,
-        bg: 'http://www.playcast.ru/uploads/2017/01/14/21276565.gif'
-    },{
+    },
+    {
         path: '/product/:id',
         name: 'product',
         component: Product
-    },{
+    },
+    {
         path: '/register',
         name: 'register',
         component: Register,
@@ -40,7 +41,7 @@ let routes = [{
         component: Login,
         meta: {
             auth: false
-        },
+        }
     },{
         path: '/cabinet',
         name: 'cabinet',
@@ -49,19 +50,19 @@ let routes = [{
             auth: true
         },
         children: [
-            { path: '/products', name: 'products', component: Products },
-            { path: '/payment', name: 'payment', component: Payment },
-            { path: '/rent', name: 'rent', component: Rent },
-            { path: '/tariff', name: 'tariff', component: Tariff },
+            { path: 'products', name: 'products', component: Products },
+            { path: 'payment', name: 'payment', component: Payment },
+            { path: 'rent', name: 'rent', component: Rent },
+            { path: 'tariff', name: 'tariff', component: Tariff },
             { 
-                path: '/product-settings', 
+                path: 'product-settings',
                 name: 'product-settings', 
                 component:  ProductSettings,
                 children: [
-                    { path: '/attribute', name: 'attribute', component: Attribute },
-                    { path: '/option', name: 'option', component: Option },
-                    { path: '/time', name: 'time', component: Time },
-                    { path: '/image', name: 'image', component: Image },
+                    { path: 'attribute', name: 'attribute', component: Attribute },
+                    { path: 'option', name: 'option', component: Option },
+                    { path: 'time', name: 'time', component: Time },
+                    { path: 'image', name: 'image', component: Image },
                 ]
             },
             { path: '/setting', name: 'setting', component: Setting }

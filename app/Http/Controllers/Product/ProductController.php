@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Product;
 
+use App\Libraries\Utils\Utils;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -41,9 +42,11 @@ class ProductController extends Controller
         return $products;
     }
 
-    public function cabinet(Request $request)
+    public function cabinet()
     {
-        $products = Products::where('user_id',$request->id)->get();
+        $user_id = Utils::getCurrentUserId();
+
+        $products = Products::where('user_id', $user_id)->get();
 
         foreach ($products as &$product){
             $types = ['attr','option','images','time'];

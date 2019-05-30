@@ -134,14 +134,13 @@
         },
         mounted(){
             this.fetchProduct()
-			console.log(this)
         },
         methods: {
             fetchProduct(){
-                axios.get(route('products.cabinet', {id: this.$auth.user_id}))
+                axios.get(route('products.cabinet'))
                     .then(res => {
-                    this.products = res.data
-            })
+                    	this.products = res.data
+            	})
             },
             editProduct(product){
                 this.showModal = !this.showModal

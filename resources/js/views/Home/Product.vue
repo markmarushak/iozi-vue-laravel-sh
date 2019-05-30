@@ -44,6 +44,7 @@
         },
         mounted(){
             this.fetch()
+            console.log(/(home)/.exec(this.$router.currentRoute.path)[0] == 'home')
         },
         methods: {
             fetch(){
