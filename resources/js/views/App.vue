@@ -44,8 +44,8 @@
             </transition>
         </div>
 
-        <div class="wrap-bg" style="background: url(https://cdnb.artstation.com/p/assets/images/images/005/249/851/original/ashley-mckenzie-www-gifcreator-me-i3coy9.gif?1489621308);"></div>
-        <!--<div v-else class="wrap-bg" style="background: url(https://mir-s3-cdn-cf.behance.net/project_modules/1400/c353e059748241.5a33b0da6f1dd.gif);"></div>-->
+        <div class="wrap-bg" v-bind:class="{cabinet: $store.getters.bg}"></div>
+        <alert v-if="$store.getters.preloader.load"></alert>
     </div>
 </template>
 
@@ -60,7 +60,6 @@
             setTimeout(function () {
                 _this.loaded = true;
             }, 500);
-
         },
         created() {
             var _this = this;

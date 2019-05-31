@@ -134,6 +134,8 @@
         },
         mounted(){
             this.fetchProduct()
+            this.$store.commit('set',{type:'bg', items: true})
+			console.log(this.$store.getters.bg)
         },
         methods: {
             fetchProduct(){

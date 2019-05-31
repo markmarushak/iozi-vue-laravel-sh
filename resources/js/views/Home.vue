@@ -1,13 +1,15 @@
 <template>
 
+    <!--<div class="row" v-show="!$store.getters.preloader.load">-->
     <div class="row">
-
         <div class="col-sm-10">
 
             <div class="products">
+                <transition-group
+                        enter-active-class="animated fadeInUp"
+                        leave-active-class="animated bounceOutRight" tag="div" class="row product-home">
+                    <div class="col-sm-6" v-for="product in list" :key="product.id">
 
-                <transition-group name="fade" tag="div" class="row">
-                    <div class="col-sm-6" v-for="product in products" :key="product.id">
 
                             <div class="card">
                                 <div class="row no-gutters">
@@ -33,18 +35,15 @@
                                             <h5 class="card-title">{{ product.fullname }}</h5>
                                             <p class="card-text">{{ product.description }}</p>
                                             <!--<a href="#" class="btn btn-primary">Узнать </a>-->
-                                            <router-link
-                                                    class="btn btn-primary btn-block"
-                                                    :to="{ name: 'product', params: { id: product.id, products: product } }"> Узнать
-                                            </router-link>
+                                            <button class="btn btn-block btn-main-color" data-toggle="modal" data-target="#exampleModal" @click="openProduct = product">Узнать</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                         <br>
-
                     </div>
+
                 </transition-group>
 
             </div>
@@ -81,12 +80,22 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body profile-more-info">
-                        <carousel :navigationEnabled="true" :perPage="1">
-                            <slide v-for="modal in modals" :key="modal.id">
-                                <img v-bind:src="'/public/storage/' + modal.value" class="card-img-top" alt="">
-                            </slide>
-                        </carousel>
+                    <div class="modal-body profile-more-info bg-white">
+                        <div class="carousel">
+                            <carousel :navigationEnabled="true"
+                                      :perPage="1"
+                                      :autoplay="true"
+                                      :loop="true">
+                                <slide v-for="image in openProduct.images" :key="image.id">
+                                    <img v-bind:src="'/public/storage/' + image.value" class="card-img-top" alt="">
+                                </slide>
+                            </carousel>
+                        </div>
+
+                        <h3>{{ openProduct.fullname }}</h3>
+
+                        <p>{{ openProduct.description }}</p>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -109,9 +118,9 @@
         data(){
             return {
                 products: [],
+                openProduct: '',
                 options: [],
                 filters: [],
-                modals: '123123',
                 window: {
                     width: 0,
                     height: 0
@@ -124,8 +133,10 @@
             {
                 axios.get(route('products.index'))
                     .then(res => {
-                    this.products = (res.data)
-            })
+                        this.products = (res.data)
+                        this.openProduct = res.data[0]
+                        this.$store.commit('set',{type: 'preloader', items: {load: false, text: ''}})
+                    })
             },
             search(filter){
                 if (this.filters.indexOf(filter) >= 0) {
@@ -133,10 +144,10 @@
                 } else {
                     this.filters.push(filter)
                 }
-                axios.post(route('products.search'), this.filters)
-                    .then(res => {
-                        this.products = res.data
-            })
+//                axios.post(route('products.search'), this.filters)
+//                    .then(res => {
+//                        this.products = res.data
+//                })
             },
             handleResize() {
                 this.window.width = window.innerWidth;
@@ -146,9 +157,9 @@
         mounted() {
             axios.get(route('attribute.index', {type: 'option'}))
                 .then(res => {
-                this.options = res.data
-        })
-            ;
+                    this.options = res.data
+            })
+            this.$store.commit('set',{type: 'bg', items: false})
             this.fetchProduct()
 
         },
@@ -158,6 +169,33 @@
         },
         destroyed() {
             window.removeEventListener('resize', this.handleResize)
+        },
+        computed: {
+            list: function(){
+                let f = this.filters
+                return this.products.filter(function (product) {
+                    if(f != ''){
+                        let o = product.option;
+                        let check = 0
+                        for(let i = 0; i < f.length; i++){
+                            for(let x = 0; x < o.length; x++){
+                                if(f[i] == o[x].attribute_id){
+                                    check++
+                                }
+                            }
+                        }
+                        console.log(f.length+' '+check)
+                        if(check >= f.length)
+                        {
+                            return product
+                        }
+                        return false
+                    }else{
+                        return product
+                    }
+
+                })
+            }
         },
         components: {
             Carousel,

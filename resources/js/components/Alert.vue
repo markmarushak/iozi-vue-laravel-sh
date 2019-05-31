@@ -10,7 +10,7 @@
                 <div class='loader--dot'></div>
                 <div class='loader--dot'></div>
                 <div class='loader--dot'></div>
-                <div class='loader--text'>{{ text }}</div>
+                <div class='loader--text'>{{ $store.getters.preloader.text }}</div>
             </div>
         </div>
 
@@ -122,15 +122,3 @@
     }
 
 </style>
-
-<script>
-
-    export default {
-        data(){
-            return {
-                text:''
-            }
-        }
-    }
-
-</script>

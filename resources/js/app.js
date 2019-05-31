@@ -7,6 +7,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueCarousel from 'vue-carousel'
 import VueAuth from '@websanova/vue-auth'
+import store from './store'
 
 import App from './views/App'
 import authParams from './includes/auth'
@@ -18,19 +19,17 @@ axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest',
 };
 
-
-axios.defaults.baseURL = location.origin;
-
 Vue.mixin({
     methods: {
         route: route
     }
 })
 
+axios.defaults.baseURL = location.origin;
+
 Vue.use(VueRouter)
 Vue.use(VueAxios, axios)
 Vue.use(VueCarousel)
-
 
 const router = new VueRouter({
     hashbang: false,
@@ -51,4 +50,7 @@ App.loader = {
 
 App.router = Vue.router
 
-new Vue(App).$mount('#app')
+window.Vue = new Vue({
+    store,
+    render: h => h(App)
+}).$mount('#app')

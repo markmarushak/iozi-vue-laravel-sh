@@ -24,11 +24,6 @@ let routes = [{
         component: Home,
     },
     {
-        path: '/product/:id',
-        name: 'product',
-        component: Product
-    },
-    {
         path: '/register',
         name: 'register',
         component: Register,
