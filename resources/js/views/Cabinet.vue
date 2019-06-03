@@ -78,17 +78,26 @@
 									<div class="col-sm-12">
 										<div class="card-body text-center">
 											<h5 class="card-title">{{ product.fullname }}</h5>
+											<p><b>Действительна до </b></p>
+											<p>{{ product.time_left }}</p>
 											<div class="row">
-												<div class="col-8">
-													<button class="btn btn-warning"
-															@click="editProduct(product)">Редактировать
+												<div class="col-3">
+													<button class="btn btn-warning" @click="editProduct(product)"><i class="far fa-edit"></i></button>
+												</div>
+												<div class="col-3">
+													<button class="btn btn-info" @click="confirmProduct(product.id)"><i class="fas fa-clipboard-check"></i>
 													</button>
 												</div>
-												<div class="col-4">
-													<button class="btn btn-danger" @click="deleteProduct(product.id)"><i
-															class="fas fa-trash-alt"></i></button>
+												<div class="col-3">
+													<button class="btn btn-danger" @click="deleteProduct(product.id)"><i class="fas fa-trash-alt"></i>
+													</button>
+												</div>
+												<div class="col-3">
+													<button class="btn btn-success" @click="payProduct(product.id)"><i class="fas fa-ruble-sign"></i>
+													</button>
 												</div>
 											</div>
+
 										</div>
 									</div>
 								</div>
@@ -155,6 +164,18 @@
                 	this.fetchProduct()
             	})
             },
+			confirmProduct(id){
+                axios.post(route('products.confirm'), {id: id})
+					.then(res => {
+					    alert('продукт с id - ' + id + ' отправлен на проверку')
+				})
+			},
+			payProduct(id){
+			    axios.post(route('products.pay'), {id: id})
+					.then(res => {
+					    alert("Продукт проплачен на сутки с до этого времени")
+				})
+			},
 			closeModal(){
                 this.showModal = !this.showModal
 				this.fetchProduct()

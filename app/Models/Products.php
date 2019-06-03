@@ -12,24 +12,14 @@ class Products extends Model
 
     public $product_table = 'attribute_product';
 
-    protected $fillable = ['user_id', 'fullname', 'description'];
+    protected $fillable = ['user_id', 'fullname', 'description', 'time_left'];
+
+    protected $attributes = [
+        'status' => 'off',
+        'rating' => 0
+    ];
 
     public function attribute()
-    {
-        return $this->hasMany('App\Models\AttributeProduct', 'product_id');
-    }
-
-    public function images()
-    {
-        return $this->hasMany('App\Models\AttributeProduct', 'product_id');
-    }
-
-    public function options()
-    {
-        return $this->hasMany('App\Models\AttributeProduct', 'product_id');
-    }
-
-    public function times()
     {
         return $this->hasMany('App\Models\AttributeProduct', 'product_id');
     }

@@ -35,11 +35,15 @@ use Illuminate\Http\Request;
         Route::group(['prefix' => 'products', 'namespace' => 'Product', 'middleware' => 'jwt.auth'], function () {
             
             Route::post('/','ProductController@store')->name('products.store');
+            Route::put('/','ProductController@update')->name('products.update');
             Route::get('/products','ProductController@cabinet')->name('products.cabinet');
             Route::post('/image','ProductController@saveImage')->name('products.image');
             Route::post('/image/upload','ProductController@uploadImage')->name('products.image.upload');
+            Route::post('/confirm','ProductController@confirm')->name('products.confirm');
+            Route::post('/pay','ProductController@pay')->name('products.pay');
+            Route::get('/confirm-list','ProductController@confirmList')->name('products.confirm.list');
             Route::delete('/{id}','ProductController@destroy')->name('products.destroy');
-            Route::put('/','ProductController@update')->name('products.update');
+
 
         });
 

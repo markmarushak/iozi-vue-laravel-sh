@@ -1,7 +1,7 @@
 import Home from '../views/Home'
-import Product from '../views/Home/Product'
 import Cabinet from '../views/Cabinet'
 import Products from '../views/Products'
+import Check from '../views/Products/Check'
 import Payment from '../views/Payment'
 import Setting from '../views/Setting'
 import Rent from '../views/Rent'
@@ -14,7 +14,6 @@ import Time from '../views/productSetting/Time'
 import Image from '../views/productSetting/Image'
 
 
-import Dashboard from '../components/Dashboard'
 import Register from '../components/Register'
 import Login from '../components/Login'
 
@@ -46,10 +45,11 @@ let routes = [{
         },
         children: [
             { path: 'products', name: 'products', component: Products },
+            { path: 'products-check', name: 'products-check', component: Check },
             { path: 'payment', name: 'payment', component: Payment },
             { path: 'rent', name: 'rent', component: Rent },
             { path: 'tariff', name: 'tariff', component: Tariff },
-            { 
+            {
                 path: 'product-settings',
                 name: 'product-settings', 
                 component:  ProductSettings,

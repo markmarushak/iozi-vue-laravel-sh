@@ -228,7 +228,7 @@
                 		.catch(error => console.log(error))
 				}
 
-				this.$router.push('/product/'+product_id)
+				this.$router.push('/cabinet')
 
             },
 			setImages(file)

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Libraries\Utils\Utils;
+use App\Models\Confirm;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -240,40 +241,24 @@ class ProductController extends Controller
         ]);
     }
 
-    public function search(Request $request)
+    public function confirm(Request $request)
     {
-        $c = count($request->all());
-        if($c <= 0){
-            $products = Products::all();
-        }else{
-            $query =  Products::select('products.id')
-                ->leftJoin('attribute_product','products.id', 'attribute_product.product_id')
-                ->whereIn('attribute_product.attribute_id', $request->all())
-                ->groupBy('attribute_product.id')
-                ->havingRaw("count(*) = $c")
-                ->get()->toArray();
-//          dd($query);
-            $products = Products::whereIn('id', $query)->get();
+        if($request->id){
+            Confirm::firstOrCreate(['product_id' => $request->id], ['produtc_id' => $request->id]);
+            return response()->json([
+                'message' => 'Анкета отправлена на проверку'
+            ]);
         }
+    }
 
+    public function confirmList()
+    {
+        return Confirm::with(['product'])->get();
+    }
 
-            foreach ($products as &$product){
-                $types = ['attr','option','images','time'];
-                for($i = 0; $i< count($types); $i++){
-                    $product[$types[$i]] = DB::table('attribute_product')
-                        ->where('attribute_product.product_id', $product->id)
-                        ->where('attributes.types','LIKE', $types[$i])
-                        ->leftJoin('attributes', 'attribute_product.attribute_id', 'attributes.id')
-                        ->select('attribute_product.*','attributes.types', 'attributes.name','attributes.format')
-                        ->get();
-                }
-
-                $product['storage'] = storage_path('public');
-            }
-
-            return $products;
-
-
+    public function pay(Request $request)
+    {
+        return Products::where('product_id',$request->id)->updata(['time_left' => '']);
     }
 
 }
