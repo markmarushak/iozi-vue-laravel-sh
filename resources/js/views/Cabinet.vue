@@ -12,6 +12,11 @@
 									:to="{ name: 'cabinet' }"> Свои анкеты
 							</router-link>
 						</li>
+						<li class="list-group-item list-group-item-action "  v-if="$auth.user_role <= 1">>
+							<router-link
+									:to="{ name: 'products-check' }"> Проверка анкет
+							</router-link>
+						</li>
 						<li class="list-group-item list-group-item-action">
 							<router-link :to="{ name: 'setting' }"> Персональные данные</router-link>
 						</li>

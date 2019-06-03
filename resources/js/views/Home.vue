@@ -34,8 +34,8 @@
                                             <hr>
                                             <h5 class="card-title">{{ product.fullname }}</h5>
                                             <p class="card-text">{{ product.description }}</p>
-                                            <!--<a href="#" class="btn btn-primary">Узнать </a>-->
-                                            <button class="btn btn-block btn-main-color" data-toggle="modal" data-target="#exampleModal" @click="openProduct = product">Узнать</button>
+                                            <button class="btn btn-block btn-primary" data-toggle="modal" data-target="#exampleModal" @click="openProduct = product">Узнать</button>
+                                            <button class="btn btn-block btn-success"><i class="fas fa-phone-square"></i> Вызвать</button>
                                         </div>
                                     </div>
                                 </div>
@@ -61,7 +61,12 @@
                     <div class="form">
                         <h5> Расширенный поиск</h5>
                         <div class="form-group">
-                            <label v-for="fil in options"><input type="checkbox" @click="search(fil.id)">{{ fil.name }}</label>
+                            <!--<label v-for="fil in options"><input type="checkbox" @click="search(fil.id)">{{ fil.name }}</label>-->
+                            <label class="checkbox-product-option" v-for="fil in options">
+                                <input type="checkbox" @click="search(fil.id)">
+                                <span class="text">{{ fil.name }}</span>
+                                <span></span>
+                            </label>
                         </div>
                     </div>
                 </div>

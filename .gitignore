@@ -5,12 +5,11 @@
 /public/css/compile
 /storage/*.key
 /vendor
+/.idea
+/resources/js/includes/ziggy.js
 .env
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-/.idea
-/resources/js/includes/ziggy.js
-resources/js/includes/ziggy.js
