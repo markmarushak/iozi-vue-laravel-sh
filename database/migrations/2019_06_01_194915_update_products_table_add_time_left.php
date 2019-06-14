@@ -14,7 +14,7 @@ class UpdateProductsTableAddTimeLeft extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table){
-            $table->timestamp('time_left')->default(null);
+            $table->timestamp('time_left')->nullable();
         });
     }
 
@@ -25,6 +25,8 @@ class UpdateProductsTableAddTimeLeft extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('products', function (Blueprint $table){
+            $table->dropColumn('time_left');
+        });
     }
 }

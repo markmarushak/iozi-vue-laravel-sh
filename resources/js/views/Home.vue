@@ -16,7 +16,7 @@
                                     <div class="col-sm-6">
                                         <a v-if="product.images != ''" data-toggle="modal" data-target="#exampleModal"
                                            @click="modals = product.images">
-                                            <img v-bind:src="'public/storage/'+ product.images[0].value"
+                                            <img v-bind:src="product.images[0].value"
                                                  class="card-img-top">
                                         </a>
                                         <a v-if="product.images == ''" @click="modals = product.images">
@@ -92,7 +92,7 @@
                                       :autoplay="true"
                                       :loop="true">
                                 <slide v-for="image in openProduct.images" :key="image.id">
-                                    <img v-bind:src="'/public/storage/' + image.value" class="card-img-top" alt="">
+                                    <img v-bind:src="image.value" class="card-img-top" alt="">
                                 </slide>
                             </carousel>
                         </div>
@@ -103,8 +103,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">закрыть</button>
                     </div>
                 </div>
             </div>
@@ -149,10 +148,6 @@
                 } else {
                     this.filters.push(filter)
                 }
-//                axios.post(route('products.search'), this.filters)
-//                    .then(res => {
-//                        this.products = res.data
-//                })
             },
             handleResize() {
                 this.window.width = window.innerWidth;
@@ -189,7 +184,6 @@
                                 }
                             }
                         }
-                        console.log(f.length+' '+check)
                         if(check >= f.length)
                         {
                             return product

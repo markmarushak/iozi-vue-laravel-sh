@@ -165,7 +165,6 @@
 	export default {
 		mounted(){
 			this.fetch()
-            console.log(/(home)/.exec($router.currentRoute.path)[0] == 'home')
         },
 		data() {
 			return {

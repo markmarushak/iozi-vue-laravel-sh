@@ -9,36 +9,36 @@
 					<ul class="list-group">
 						<li class="list-group-item list-group-item-action ">
 							<router-link
-									:to="{ name: 'cabinet' }"> Свои анкеты
+									:to="{ name: 'cabinet' }"><i class="fas fa-images"></i> Свои анкеты
 							</router-link>
 						</li>
-						<li class="list-group-item list-group-item-action "  v-if="$auth.user_role <= 1">>
+						<li class="list-group-item list-group-item-action "  v-if="isAdmin">
 							<router-link
-									:to="{ name: 'products-check' }"> Проверка анкет
+									:to="{ name: 'products-check' }"><i class="fas fa-clipboard-check"></i> Проверка анкет
 							</router-link>
 						</li>
 						<li class="list-group-item list-group-item-action">
-							<router-link :to="{ name: 'setting' }"> Персональные данные</router-link>
+							<router-link :to="{ name: 'setting' }"><i class="fas fa-users-cog"></i> Персональные данные</router-link>
 						</li>
 						<li class="list-group-item list-group-item-action ">
 							<router-link
-									:to="{ name: 'payment' }"> Пополнить счет
+									:to="{ name: 'payment' }"><i class="fas fa-wallet"></i> Пополнить счет
 							</router-link>
 						</li>
 						<li class="list-group-item list-group-item-action ">
 							<router-link
-									:to="{ name: 'products' }"> Добавить анкету
+									:to="{ name: 'products' }"><i class="fas fa-plus-square"></i> Добавить анкету
 							</router-link>
 						</li>
-						<li class="list-group-item list-group-item-action ">
+						<!-- <li class="list-group-item list-group-item-action ">
 							<router-link
 									:to="{ name: 'rent' }"> Оплатить Аренду
 							</router-link>
+						</li> -->
+						<li class="list-group-item list-group-item-action" v-if="isAdmin">
+							<router-link :to="{ name: 'tariff' }">Стоимость Размещения</router-link>
 						</li>
-						<li class="list-group-item list-group-item-action" v-if="$auth.user_role <= 1">
-							<router-link :to="{ name: 'tariff' }"> Настройка Тарифов</router-link>
-						</li>
-						<li class="list-group-item list-group-item-action" v-if="$auth.user_role <= 1">
+						<li class="list-group-item list-group-item-action" v-if="isAdmin">
 							<router-link :to="{ name: 'product-settings' }"> Настройка анкет</router-link>
 						</li>
 					</ul>
@@ -49,9 +49,9 @@
 
 					<router-view></router-view>
 
-					<div class="jumbotron jumbotron-fluid" v-if="$router.currentRoute.name == 'cabinet'">
+					<div class="jumbotron jumbotron-fluid text-black" v-if="$router.currentRoute.name == 'cabinet'">
 						<div class="container">
-							<h1 class="display-4">Приветствуем в личном кабинете!!</h1>
+							<h1 class="display-4">Приветствуем в личном кабинете {{ person.fullname }}</h1>
 							<p class="lead">следите за новостями и контролируйте Ваш личный кабинет</p>
 						</div>
 					</div>
@@ -72,7 +72,7 @@
 									<div class="col-sm-12">
 										<a v-if="product.images != ''" data-toggle="modal" data-target="#exampleModal"
 										   @click="modals = product.images">
-											<img v-bind:src="'public/storage/'+ product.images[0].value"
+											<img v-bind:src="product.images[0].value"
 												 class="card-img-top" style="height:280px;">
 										</a>
 										<a v-if="product.images == ''" data-toggle="modal" data-target="#exampleModal"
@@ -90,7 +90,7 @@
 													<button class="btn btn-warning" @click="editProduct(product)"><i class="far fa-edit"></i></button>
 												</div>
 												<div class="col-3">
-													<button class="btn btn-info" @click="confirmProduct(product.id)"><i class="fas fa-clipboard-check"></i>
+													<button class="btn btn-info" @click="confirmProduct(product)"><i class="fas fa-clipboard-check"></i>
 													</button>
 												</div>
 												<div class="col-3">
@@ -118,7 +118,9 @@
 			</div>
 
 		</div>
-		<edit-product :product="product" v-if="showModal" @close="closeModal()"></edit-product>
+		<edit-product :product="product" v-if="editModal" @close="closeModal()"></edit-product>
+
+		<confirm-modal :product="product" v-if="confirmModal" @close="closeModal()"></confirm-modal>
 	</div>
 </template>
 
@@ -137,30 +139,50 @@
 
     import axios from 'axios'
     import EditProduct from './Cabinet/EditProduct'
+	import ConfirmModal from './Cabinet/ConfirmModal'
 
     export default {
+		created(){
+            this.person.fullname = window.user.name
+            this.$auth.role.roleLevel <= 1 ? this.isAdmin = true : false
+        },
         data(){
-            return {
-                products: [],
-                product: '',
-                showModal: false
+
+
+			return {
+				products: [],
+				product: '',
+				showModal: false,
+				editModal: false,
+				confirmModal: false,
+				isAdmin: false,
+				person: {
+                    fullname: ''
+				}
             }
         },
         mounted(){
             this.fetchProduct()
             this.$store.commit('set',{type:'bg', items: true})
-			console.log(this.$store.getters.bg)
         },
         methods: {
             fetchProduct(){
-                axios.get(route('products.cabinet'))
-                    .then(res => {
-                    	this.products = res.data
-            	})
+               if(this.isAdmin){
+                   axios.get(route('products.index'))
+                       .then(res => {
+						   this.products = res.data
+				   })
+			   }else {
+                   axios.get(route('products.cabinet'))
+                       .then(res => {
+						   this.products = res.data
+				   })
+			   }
             },
             editProduct(product){
-                this.showModal = !this.showModal
                 this.product = product
+				this.editModal = true
+                this.showModal = true
             },
             deleteProduct(id){
                 axios.delete(route('products.destroy', {id: id}))
@@ -169,25 +191,28 @@
                 	this.fetchProduct()
             	})
             },
-			confirmProduct(id){
-                axios.post(route('products.confirm'), {id: id})
-					.then(res => {
-					    alert('продукт с id - ' + id + ' отправлен на проверку')
-				})
+			confirmProduct(product){
+                this.product = product
+                this.confirmModal = true
+                this.showModal = true
 			},
 			payProduct(id){
 			    axios.post(route('products.pay'), {id: id})
 					.then(res => {
 					    alert("Продукт проплачен на сутки с до этого времени")
+					    this.fetchProduct()
 				})
 			},
 			closeModal(){
-                this.showModal = !this.showModal
+			    this.editModal = false
+			    this.confirmModal = false
+                this.showModal = false
 				this.fetchProduct()
 			}
         },
         components: {
-            'edit-product': EditProduct
+            'edit-product': EditProduct,
+			'confirm-modal': ConfirmModal
         }
     }
 

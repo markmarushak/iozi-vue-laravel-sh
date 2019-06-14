@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Libraries\Utils\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -96,11 +97,10 @@ class AuthController extends Controller
     public function user()
     {
         try{
-            $user = User::find(Auth::user()->id);
+            $user = Utils::getCurrentUser();
         }catch (\Exception $e){
             return $e->getMessage();
         }
-//        $user = Auth::user();
         return response([
                 'status' => 'success',
                 'data' => $user

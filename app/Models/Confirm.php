@@ -8,11 +8,7 @@ class Confirm extends Model
 {
     protected $table = 'confirm';
 
-    protected $fillable = ['product_id'];
-
-    protected $attributes = [
-        'img' => ''
-    ];
+    protected $fillable = ['product_id', 'img'];
 
     public $timestamps = false;
 

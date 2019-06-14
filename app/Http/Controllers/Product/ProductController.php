@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Product;
 
 use App\Libraries\Utils\Utils;
 use App\Models\Confirm;
+use Carbon\Traits\Date;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +12,7 @@ use App\Models\Products;
 use App\Models\AttributeProduct;
 use App\Models\Attribute;
 use App\Traits\Uploadable;
+use Illuminate\Support\Facades\Storage;
 use League\Flysystem\Exception;
 
 class ProductController extends Controller
@@ -79,7 +81,7 @@ class ProductController extends Controller
                     ->select('attribute_product.*','attributes.types', 'attributes.name','attributes.format')
                     ->get();
 
-            $product['storage'] = storage_path('public');
+            $product['storage'] = Storage::getFacadeApplication();
         }
 
         return $product;
@@ -87,14 +89,14 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $user_id = \Auth::user()->id;
+        $user_id = Utils::getCurrentUserId();
         $data = $request->all();
 
         // создаем продукт
         $product = Products::create([
             'user_id'     => $user_id,
             'fullname'    => $data['fullname'],
-            'description' => $data['description']
+            'description' => $data['description'],
         ]);
 
         // перебераем атрибуты и сохраняем к данному продукту
@@ -151,23 +153,26 @@ class ProductController extends Controller
         foreach ($data['additional'] as $attr => $item)
         {
             foreach ($item as $val) {
+            
+                if(!empty($val['value'])){
 
-                if(empty($val['value'])){
-                    $val['value'] = false;
-                }
-
-                if($this->ap->isHas($val, $request->id)){
-                    AttributeProduct::where('product_id', $request->id)
-                        ->where('attribute_id', $val['id'])
-                        ->update([
-                        'value' => $val['value']
-                    ]);
-                }else{
-                    AttributeProduct::create([
-                        'attribute_id' => $val['id'],
-                        'product_id'   => $request->id,
-                        'value'        => $val['value']
-                    ]);
+                    if($this->ap->isHas($val, $request->id)){
+                        AttributeProduct::where('product_id', $request->id)
+                            ->where('attribute_id', $val['id'])
+                            ->update([
+                            'value' => $val['value']
+                        ]);
+                    }else{
+                        AttributeProduct::create([
+                            'attribute_id' => $val['id'],
+                            'product_id'   => $request->id,
+                            'value'        => $val['value']
+                        ]);
+                    }
+                }else {
+                     AttributeProduct::where('product_id', $request->id)
+                            ->where('attribute_id',$val['id'])
+                            ->delete();
                 }
             }
         }
@@ -179,7 +184,9 @@ class ProductController extends Controller
 
     public function destroy(Request $request)
     {
-    	AttributeProduct::where('product_id', $request->id)->delete();
+
+    	$attribute = AttributeProduct::where('product_id', $request->id)->with(['attribute'])->get();
+
 
     	Products::where('id', $request->id)->delete();
     	return response()->json([
@@ -221,9 +228,11 @@ class ProductController extends Controller
             $img = $this->upload($request->img);
 
             try{
-                $image = AttributeProduct::where('product_id', $request->id)
-                    ->where('attribute_id',$request->attr_id)
-                    ->update([
+                AttributeProduct::where('product_id', $request->id)
+                    ->where('attribute_id', $request->attr_id)
+                    ->updateOrCreate(['value' => $img],[
+                    'attribute_id' => $request->attr_id,
+                    'product_id'   => $request->id,
                     'value'        => $img
                 ]);
             }catch (\Exception $e){
@@ -244,11 +253,22 @@ class ProductController extends Controller
     public function confirm(Request $request)
     {
         if($request->id){
-            Confirm::firstOrCreate(['product_id' => $request->id], ['produtc_id' => $request->id]);
+            $img = $this->upload($request->img);
+            if($img){
+                Confirm::where('product_id', $request->id)->updateOrCreate(['img' => $img], [
+                    'product_id' => $request->id,
+                    'img' => $img]);
+                return response()->json([
+                    'message' => 'Анкета отправлена на проверку'
+                ]);
+            }
             return response()->json([
-                'message' => 'Анкета отправлена на проверку'
+                'message' => 'Фото не получено'
             ]);
         }
+        return response()->json([
+            'message' => 'ID продукта не передано'
+        ]);
     }
 
     public function confirmList()
@@ -258,7 +278,7 @@ class ProductController extends Controller
 
     public function pay(Request $request)
     {
-        return Products::where('product_id',$request->id)->updata(['time_left' => '']);
+        return Products::where('product_id',$request->id)->updata(['time_left' => Date::now()]);
     }
 
 }

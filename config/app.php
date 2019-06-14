@@ -229,7 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'Laratrust'   => Laratrust\LaratrustFacade::class,
-
+        'Utils' => App\Libraries\Utils\Utils::class,
     ],
 
 ];

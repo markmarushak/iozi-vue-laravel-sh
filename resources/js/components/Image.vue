@@ -108,7 +108,6 @@
                     }
 
                     reader.readAsDataURL(input.files[0]);
-
                     this.$emit("selected", {file: input.files[0], index: vm.image_id})
                 }
             },

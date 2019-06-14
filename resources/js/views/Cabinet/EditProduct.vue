@@ -1,9 +1,9 @@
-<template>
+a<template>
 
     <transition name="modal">
         <div class="modal-mask">
             <div class="modal-wrapper">
-                <div class="modal-container">
+                <div class="modal-container text-black">
 
                     <div class="modal-header">
                         <slot name="header">
@@ -62,7 +62,7 @@
                                                 <div class="row">
 
                                                     <div class="col-sm-4" v-for="(i, index) in images">
-                                                        <image-input v-if="typeof product.images[index] != 'undefined'" :image="'public/storage/' + product.images[index].value" :image_id="index" @selected="setImages"></image-input>
+                                                        <image-input v-if="typeof product.images[index] != 'undefined'" :image="product.images[index].value" :image_id="index" @selected="setImages"></image-input>
                                                         <image-input v-if="typeof product.images[index] == 'undefined'" :image_id="index" @selected="setImages"></image-input>
                                                     </div>
 
@@ -83,9 +83,9 @@
                                             <div class="col-sm-12 wrap-product-option">
 
 
-                                                <label class="checkbox-product-option" v-for="(option, index) in newProduct.additional.options">
-                                                    <input v-if="typeof product.option[index] == 'undefined'" type="checkbox" v-model="option.value">
-                                                    <input v-else-if="typeof product.option[index] != 'undefined'" type="checkbox" v-model="option.value" :value="!!parseInt(product.option[index].value)">
+                                                <label class="checkbox-product-option" v-for="(option, index) in listOption">
+                                                    <!-- <input type="checkbox" v-model="option.value" :value="Boolean(option.value)"> -->
+                                                    <input type="checkbox" v-model="option.value" :value="option.value">
                                                     <span class="text">{{ option.name }}</span>
                                                     <span></span>
                                                 </label>
@@ -140,8 +140,6 @@
         },
         data(){
             return {
-                options: [],
-
                 newProduct :{
                     id: this.product.id,
                     additional: {
@@ -153,7 +151,6 @@
                     description: this.product.description
                 },
                 images: [],
-                load: false
             }
         },
         methods: {
@@ -179,19 +176,14 @@
                 })
             },
             submit () {
-                this.load = true
-                notific.text = 'Сохранение информации'
-
                 axios.put(route('products.update'), this.newProduct)
                     .then(response => {
                 })
             .catch(error => {
-                    this.load = false
                 })
             },
             saveFile(index){
-                notific.text = 'Сохранение информации'
-
+                console.log(this.product.id)
                 const config = { 'content-type': 'multipart/form-data' }
 
                 const formData = new FormData()
@@ -202,15 +194,28 @@
                 axios.post(route('products.image.upload'), formData	,config)
                     .then(response => console.log(response.data))
                 .catch(error => console.log(error))
-
-                this.load = false
-
             },
             setImages(file)
             {
                 this.images[file.index].value = file.file
-                console.log(this.images[file.index])
                 this.saveFile(file.index)
+            }
+        },
+        computed: {
+            listOption(){
+                let op = this.product.option
+                let options = this.newProduct.additional.options
+                return options.filter(function(option) {
+                    var i = 0
+                    while(i < op.length ){
+                        if(option.id == op[i].attribute_id){
+                            option.value = true
+                            return option
+                        }
+                        i++
+                    }
+                    return option
+                })
             }
         },
         components: {

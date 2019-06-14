@@ -48,8 +48,8 @@ App.loader = {
     text: ''
 }
 
-App.router = Vue.router
 
+App.router = Vue.router
 window.Vue = new Vue({
     store,
     render: h => h(App)

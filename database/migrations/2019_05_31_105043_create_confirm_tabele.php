@@ -28,6 +28,6 @@ class CreateConfirmTabele extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('confirm_tabele');
+        Schema::dropIfExists('confirm');
     }
 }

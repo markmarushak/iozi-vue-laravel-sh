@@ -5,7 +5,7 @@
 /public/css/compile
 /storage/*.key
 /vendor
-/.idea
+/.idea/
 /resources/js/includes/ziggy.js
 .env
 .phpunit.result.cache
