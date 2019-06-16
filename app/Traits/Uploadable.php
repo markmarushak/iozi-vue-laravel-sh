@@ -12,7 +12,7 @@ trait Uploadable
         $path = Storage::disk($storage)->putFileAs($folder, $file, $filename);
 
         if (Storage::disk($storage)->exists($path)) {
-            return '/storage/'.$path;
+            return $path;
         }
 
         return null;

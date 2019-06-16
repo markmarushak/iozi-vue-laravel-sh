@@ -10,7 +10,8 @@ const store = new Vuex.Store({
         preloader: {
             load: false,
             text: 'загрузка..'
-        }
+        },
+        user: ''
     },
     getters: {
         bg(state){
@@ -20,6 +21,10 @@ const store = new Vuex.Store({
         preloader(state){
             let preloader = state.preloader
             return preloader
+        },
+        user(state){
+            let user = state.user
+            return user
         }
     },
     mutations: {

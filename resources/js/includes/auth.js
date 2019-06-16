@@ -12,10 +12,5 @@ export default {
     logoutData:         { url: route('logout').url() },
     registerData:       { url: route('register').url() },
     refreshData:        { enabled: false },
-    parseUserData: function (data) {
-       axios.get(route('get.user')).then(res => {
-           window.user = res.data.data
-           this.role = res.data.data
-       })
-    }
+
 }

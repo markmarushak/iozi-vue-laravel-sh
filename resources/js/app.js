@@ -13,15 +13,23 @@ import App from './views/App'
 import authParams from './includes/auth'
 import routes from './includes/routes'
 
+import 'viewerjs/dist/viewer.css'
+import Viewer from 'v-viewer'
+Vue.use(Viewer)
 
 axios.defaults.headers.common = {
     'X-CSRF-TOKEN': window.Laravel.csrfToken,
     'X-Requested-With': 'XMLHttpRequest',
 };
 
+
+
 Vue.mixin({
     methods: {
-        route: route
+        route: route,
+        assets: function (path) {
+            return '/storage/'+path
+        }
     }
 })
 
@@ -42,11 +50,6 @@ const router = new VueRouter({
 Vue.router = router
 
 Vue.use(VueAuth, authParams)
-
-App.loader = {
-    load: false,
-    text: ''
-}
 
 
 App.router = Vue.router

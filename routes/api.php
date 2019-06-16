@@ -12,15 +12,10 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-
-
-        //
-    // this auth routes
-    //
+// this auth routes
 
     Route::group(['middleware' => 'api'], function(){
         Route::post('authrefresh', 'AuthController@getAuthenticatedUser');
@@ -31,7 +26,6 @@ use Illuminate\Http\Request;
 
         Route::get('/get-user', 'AuthController@user')->name('get.user');
 
-
         Route::group(['prefix' => 'products', 'namespace' => 'Product', 'middleware' => 'jwt.auth'], function () {
             
             Route::post('/','ProductController@store')->name('products.store');
@@ -39,11 +33,15 @@ use Illuminate\Http\Request;
             Route::get('/products','ProductController@cabinet')->name('products.cabinet');
             Route::post('/image','ProductController@saveImage')->name('products.image');
             Route::post('/image/upload','ProductController@uploadImage')->name('products.image.upload');
-            Route::post('/confirm','ProductController@confirm')->name('products.confirm');
             Route::post('/pay','ProductController@pay')->name('products.pay');
-            Route::get('/confirm-list','ProductController@confirmList')->name('products.confirm.list');
+
             Route::delete('/{id}','ProductController@destroy')->name('products.destroy');
 
+            Route::group(['prefix' => 'confirm'], function (){
+                Route::post('/','ProductController@confirm')->name('confirm.store');
+                Route::post('/success','ProductController@confirmSuccess')->name('confirm.success');
+                Route::get('/list','ProductController@confirmList')->name('confirm.list');
+            });
 
         });
 

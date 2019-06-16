@@ -2,12 +2,12 @@
 
     <div class="row">
 
-        <table>
+        <table class="table table-dark text-center">
             <thead>
                 <tr>
                     <th>Имя</th>
                     <th>Статус</th>
-                    <th>Рейтинг</th>
+                    <th>Фото</th>
                     <th></th>
                 </tr>
             </thead>
@@ -15,10 +15,16 @@
             <tbody>
 
                 <tr v-for="product in products">
-                    <td>{{ product.product.fullname }}</td>
-                    <td>{{ product.product.status }}</td>
-                    <td>{{ product.product.rating }}</td>
-                    <td></td>
+                    <td>{{ product.products.fullname }}</td>
+                    <td>{{ product.products.confirm }}</td>
+                    <td>
+                        <div class="images" v-viewer="{movable: false}">
+                            <img :src="assets(product.img)" style="width: 25px;">
+                        </div>
+                    </td>
+                    <td>
+                        <button @click="confirm(product)" class="btn btn-success">Подтвердить</button>
+                    </td>
                 </tr>
 
             </tbody>
@@ -37,10 +43,28 @@
             }
         },
         mounted(){
-            axios.get('products.confirm.list')
-                .then(res => {
-                this.products = res.data
-            })
+            this.fetch()
+        },
+        methods: {
+            confirm(product){
+                axios.post(route('confirm.success'), product)
+                    .then(response => {
+                        this.fetch()
+                })
+            },
+            fetch(){
+                axios.get(route('confirm.list'))
+                    .then(res => {
+                        this.products = res.data
+                })
+            }
+        },
+        computed: {
+            list(){
+                return this.products.filter((product) => {
+                    return product
+                })
+            }
         }
     }
 

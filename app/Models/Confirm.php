@@ -14,6 +14,6 @@ class Confirm extends Model
 
     public function products()
     {
-        return $this->hasOne('App/Models/Products','product_id', 'id');
+        return $this->hasOne('App\Models\Products','id', 'product_id');
     }
 }

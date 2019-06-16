@@ -19,9 +19,10 @@ class Products extends Model
         'rating' => 0
     ];
 
-    public function attribute()
+    public function attributes()
     {
-        return $this->hasMany('App\Models\AttributeProduct', 'product_id');
+        return $this->hasMany('App\Models\AttributeProduct', 'product_id', 'id');
     }
+
 
 }

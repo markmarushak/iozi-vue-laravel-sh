@@ -6032,6 +6032,11 @@ terser@^3.11.0, terser@^3.16.1:
     source-map "~0.6.1"
     source-map-support "~0.5.10"
 
+throttle-debounce@^2.0.1:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/throttle-debounce/-/throttle-debounce-2.1.0.tgz#257e648f0a56bd9e54fe0f132c4ab8611df4e1d5"
+  integrity sha512-AOvyNahXQuU7NN+VVvOOX+uW6FPaWdAOdRP5HfwYxAfCzXTFKRMoIMk+n+po318+ktcChx+F1Dd91G3YHeMKyg==
+
 through2@^2.0.0:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.5.tgz#01c1e39eb31d07cb7d03a96a70823260b23132cd"
@@ -6293,6 +6298,14 @@ uuid@^3.0.1, uuid@^3.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
   integrity sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==
 
+v-viewer@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/v-viewer/-/v-viewer-1.4.1.tgz#f8f0830d3d250f49feb05aa3ebce14f14fb7ca2e"
+  integrity sha512-hKm5qrLLGT0Fn1bmjhjHyA7QH5a4nooJTjhhZ8S1pIoqwnh7RWdC05a690ODDvXNQ7/08ZezjdZp2LWastiwqQ==
+  dependencies:
+    throttle-debounce "^2.0.1"
+    viewerjs "^1.3.2"
+
 v8-compile-cache@^2.0.2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.0.3.tgz#00f7494d2ae2b688cfe2899df6ed2c54bef91dbe"
@@ -6307,6 +6320,11 @@ vendors@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/vendors/-/vendors-1.0.3.tgz#a6467781abd366217c050f8202e7e50cc9eef8c0"
   integrity sha512-fOi47nsJP5Wqefa43kyWSg80qF+Q3XA6MUkgi7Hp1HQaKDQW4cQrK2D0P7mmbFtsV1N89am55Yru/nyEwRubcw==
+
+viewerjs@^1.3.2:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/viewerjs/-/viewerjs-1.3.3.tgz#62a3301824c5f79f0d50a288f936fdceb93d5ee7"
+  integrity sha512-zmdgdrRnE3wL90MNdxGYNfRV5imqdsg38PlXD1Y90XkhTD+62p2gCkZCBQjE4FdbGqlSfCLNEz+ihm1EYM/0Kg==
 
 vm-browserify@0.0.4:
   version "0.0.4"

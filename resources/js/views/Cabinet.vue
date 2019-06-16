@@ -51,7 +51,7 @@
 
 					<div class="jumbotron jumbotron-fluid text-black" v-if="$router.currentRoute.name == 'cabinet'">
 						<div class="container">
-							<h1 class="display-4">Приветствуем в личном кабинете {{ person.fullname }}</h1>
+							<h1 class="display-4">Приветствуем в личном кабинете {{ user.name }}</h1>
 							<p class="lead">следите за новостями и контролируйте Ваш личный кабинет</p>
 						</div>
 					</div>
@@ -66,13 +66,14 @@
 
 					<div class="row">
 
-						<div class="col-sm-3" v-for="product in products">
+						<div class="col-sm-3" v-for="product in list">
 							<div class="card">
 								<div class="row no-gutters">
 									<div class="col-sm-12">
 										<a v-if="product.images != ''" data-toggle="modal" data-target="#exampleModal"
 										   @click="modals = product.images">
-											<img v-bind:src="product.images[0].value"
+											<img
+												:src="assets(product.images[0].value)"
 												 class="card-img-top" style="height:280px;">
 										</a>
 										<a v-if="product.images == ''" data-toggle="modal" data-target="#exampleModal"
@@ -137,15 +138,10 @@
 
 <script>
 
-    import axios from 'axios'
     import EditProduct from './Cabinet/EditProduct'
 	import ConfirmModal from './Cabinet/ConfirmModal'
 
     export default {
-		created(){
-            this.person.fullname = window.user.name
-            this.$auth.role.roleLevel <= 1 ? this.isAdmin = true : false
-        },
         data(){
 
 
@@ -155,15 +151,7 @@
 				showModal: false,
 				editModal: false,
 				confirmModal: false,
-				isAdmin: false,
-				person: {
-                    fullname: ''
-				}
             }
-        },
-        mounted(){
-            this.fetchProduct()
-            this.$store.commit('set',{type:'bg', items: true})
         },
         methods: {
             fetchProduct(){
@@ -208,8 +196,58 @@
 			    this.confirmModal = false
                 this.showModal = false
 				this.fetchProduct()
-			}
+			},
+            parseUserData() {
+                axios.get(route('get.user')).then(response => {
+                    this.$store.commit('set', {type: 'user', items: response.data.data})
+				})
+            }
         },
+		created(){
+            this.parseUserData()
+            this.fetchProduct()
+        },
+        mounted(){
+            this.$store.commit('set',{type:'bg', items: true})
+        },
+		computed: {
+            user: function () {
+                return this.$store.getters.user
+            },
+			isAdmin: function () {
+				return !!(this.user.roleLevel <= 1)
+            },
+            list: function () {
+				return this.products.filter(function (prodcut) {
+				    let attr =  prodcut['attributes']
+					try {
+                        prodcut['attr'] = []
+                        prodcut['options'] = []
+                        prodcut['images'] = []
+                        prodcut['time'] = []
+                        for(var i = 0; i < attr.length; i++){
+                            switch (attr[i].type){
+                                case 'attr':
+                                    prodcut['attr'].push(attr[i])
+                                    break;
+                                case 'option':
+                                    prodcut['options'].push(attr[i])
+                                    break;
+                                case 'images':
+                                    prodcut['images'].push(attr[i])
+                                    break;
+                                case 'time':
+                                    prodcut['time'].push(attr[i])
+                                    break;
+                            }
+                        }
+                        return prodcut
+					}catch (error){
+				        console.log(error)
+					}
+                })
+            }
+		},
         components: {
             'edit-product': EditProduct,
 			'confirm-modal': ConfirmModal

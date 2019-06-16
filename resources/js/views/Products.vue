@@ -227,7 +227,7 @@
                 		.catch(error => console.log(error))
 				}
 
-				this.$router.push('/cabinet')
+				this.$router.push({name: 'cabinet'})
 
             },
 			setImages(file)

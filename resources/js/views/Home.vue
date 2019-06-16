@@ -1,6 +1,5 @@
 <template>
 
-    <!--<div class="row" v-show="!$store.getters.preloader.load">-->
     <div class="row">
         <div class="col-sm-10">
 
@@ -8,7 +7,7 @@
                 <transition-group
                         enter-active-class="animated fadeInUp"
                         leave-active-class="animated bounceOutRight" tag="div" class="row product-home">
-                    <div class="col-sm-6" v-for="product in list" :key="product.id">
+                    <div class="col-sm-6" v-for="product in sidebar" :key="product.id">
 
 
                             <div class="card">
@@ -16,7 +15,7 @@
                                     <div class="col-sm-6">
                                         <a v-if="product.images != ''" data-toggle="modal" data-target="#exampleModal"
                                            @click="modals = product.images">
-                                            <img v-bind:src="product.images[0].value"
+                                            <img v-bind:src="assets(product.images[0].value)"
                                                  class="card-img-top">
                                         </a>
                                         <a v-if="product.images == ''" @click="modals = product.images">
@@ -92,14 +91,26 @@
                                       :autoplay="true"
                                       :loop="true">
                                 <slide v-for="image in openProduct.images" :key="image.id">
-                                    <img v-bind:src="image.value" class="card-img-top" alt="">
+                                    <img v-bind:src="assets(image.value)" class="card-img-top" alt="">
                                 </slide>
                             </carousel>
                         </div>
 
-                        <h3>{{ openProduct.fullname }}</h3>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <h3>{{ openProduct.fullname }}</h3>
 
-                        <p>{{ openProduct.description }}</p>
+                                    <p>{{ openProduct.description }}</p>
+
+                                    <ul>
+                                        <li v-for="attr in openProduct.attr">
+                                            {{ attr.value }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                     <div class="modal-footer">
@@ -171,11 +182,11 @@
             window.removeEventListener('resize', this.handleResize)
         },
         computed: {
-            list: function(){
+            sidebar: function(){
                 let f = this.filters
-                return this.products.filter(function (product) {
+                return this.list.filter(function (product) {
                     if(f != ''){
-                        let o = product.option;
+                        let o = product.options;
                         let check = 0
                         for(let i = 0; i < f.length; i++){
                             for(let x = 0; x < o.length; x++){
@@ -192,7 +203,36 @@
                     }else{
                         return product
                     }
-
+                })
+            },
+            list: function () {
+                return this.products.filter(function (prodcut) {
+                    let attr =  prodcut['attributes']
+                    try {
+                        prodcut['attr'] = []
+                        prodcut['options'] = []
+                        prodcut['images'] = []
+                        prodcut['time'] = []
+                        for(var i = 0; i < attr.length; i++){
+                            switch (attr[i].type){
+                                case 'attr':
+                                    prodcut['attr'].push(attr[i])
+                                    break;
+                                case 'option':
+                                    prodcut['options'].push(attr[i])
+                                    break;
+                                case 'images':
+                                    prodcut['images'].push(attr[i])
+                                    break;
+                                case 'time':
+                                    prodcut['time'].push(attr[i])
+                                    break;
+                            }
+                        }
+                        return prodcut
+                    }catch (error){
+                        console.log(error)
+                    }
                 })
             }
         },

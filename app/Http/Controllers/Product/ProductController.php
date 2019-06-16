@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Product;
 
 use App\Libraries\Utils\Utils;
 use App\Models\Confirm;
+use Carbon\Carbon;
 use Carbon\Traits\Date;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,18 +30,14 @@ class ProductController extends Controller
     {
         $products = Products::all();
         foreach ($products as &$product){
-            $types = ['attr','option','images','time'];
-            for($i = 0; $i< count($types); $i++){
-                $product[$types[$i]] = DB::table('attribute_product')
-                    ->where('attribute_product.product_id', $product->id)
-                    ->where('attributes.types','LIKE', $types[$i])
-                    ->leftJoin('attributes', 'attribute_product.attribute_id', 'attributes.id')
-                    ->select('attribute_product.*','attributes.types', 'attributes.name','attributes.format')
-                    ->get();
+
+            foreach ($product->attributes as $attr)
+            {
+                $attr->type = $attr->types($attr->attribute_id)->types;
             }
 
-            $product['storage'] = storage_path('public');
         }
+        return $products;
 
         return $products;
     }
@@ -52,19 +49,13 @@ class ProductController extends Controller
         $products = Products::where('user_id', $user_id)->get();
 
         foreach ($products as &$product){
-            $types = ['attr','option','images','time'];
-            for($i = 0; $i< count($types); $i++){
-                $product[$types[$i]] = DB::table('attribute_product')
-                    ->where('attribute_product.product_id', $product->id)
-                    ->where('attributes.types','LIKE', $types[$i])
-                    ->leftJoin('attributes', 'attribute_product.attribute_id', 'attributes.id')
-                    ->select('attribute_product.*','attributes.types', 'attributes.name','attributes.format')
-                    ->get();
+
+            foreach ($product->attributes as $attr)
+            {
+                $attr->type = $attr->types($attr->attribute_id)->types;
             }
 
-            $product['storage'] = storage_path('public');
         }
-
         return $products;
     }
 
@@ -92,49 +83,53 @@ class ProductController extends Controller
         $user_id = Utils::getCurrentUserId();
         $data = $request->all();
 
-        // создаем продукт
-        $product = Products::create([
-            'user_id'     => $user_id,
-            'fullname'    => $data['fullname'],
-            'description' => $data['description'],
-        ]);
+        $isHas = Products::where('fullname','LIKE',$data['fullname'])->first();
 
-        // перебераем атрибуты и сохраняем к данному продукту
-        //  делаем проверку, создался ли продукт
-        if($product->id)
-        {
-            // перебераем заголовки
-            // attr, images, option, time
-            foreach ($data['additional'] as $attr => $item)
+        if(!$isHas){
+            // создаем продукт
+            $product = Products::create([
+                'user_id'     => $user_id,
+                'fullname'    => $data['fullname'],
+                'description' => $data['description'],
+            ]);
+
+            // перебераем атрибуты и сохраняем к данному продукту
+            //  делаем проверку, создался ли продукт
+            if($product->id)
             {
-                foreach ($item as $val) {
+                // перебераем заголовки
+                // attr, images, option, time
+                foreach ($data['additional'] as $attr => $item)
+                {
+                    foreach ($item as $val) {
 
-                    if(!empty($val['value'])){
-                        try{
-                            AttributeProduct::create([
-                                'attribute_id' => $val['id'],
-                                'product_id'   => $product->id,
-                                'value'        => $val['value']
-                            ]);
-                        }catch (\Exception $e){
-                            dd($val['value']);
-                            AttributeProduct::where('product_id', $product->id)->delete();
-                            Products::where('id', $product->id)->delete();
-                            return $e->getMessage();
+                        if(!empty($val['value'])){
+                            try{
+                                AttributeProduct::create([
+                                    'attribute_id' => $val['id'],
+                                    'product_id'   => $product->id,
+                                    'value'        => $val['value']
+                                ]);
+                            }catch (\Exception $e){
+                                dd($val['value']);
+                                AttributeProduct::where('product_id', $product->id)->delete();
+                                Products::where('id', $product->id)->delete();
+                                return $e->getMessage();
+                            }
+                        }else{
+                            AttributeProduct::where('product_id', $product->id)
+                                ->where('attribute_id',$val['id'])
+                                ->delete();
                         }
-                    }else{
-                        AttributeProduct::where('product_id', $product->id)
-                            ->where('attribute_id',$val['id'])
-                            ->delete();
                     }
                 }
             }
-        }
 
-        return response()->json([
-            'message' => 'Attachment has been successfully uploaded.',
-            'product' => $product
-        ]);
+            return response()->json([
+                'message' => 'Attachment has been successfully uploaded.',
+                'product' => $product
+            ]);
+        }
     }
 
     public function update(Request $request)
@@ -184,9 +179,15 @@ class ProductController extends Controller
 
     public function destroy(Request $request)
     {
-
-    	$attribute = AttributeProduct::where('product_id', $request->id)->with(['attribute'])->get();
-
+    	$attrProduct = AttributeProduct::where('product_id', $request->id)->get();
+    	foreach ($attrProduct as &$key){
+    	    $type = $key->types($key['attribute_id']);
+    	    if($type->types == 'images'){
+    	        Storage::disk('public')->delete($key['value']);
+                $key->delete();
+            }
+            $key->delete();
+        }
 
     	Products::where('id', $request->id)->delete();
     	return response()->json([
@@ -227,22 +228,31 @@ class ProductController extends Controller
         if($request->img != null){
             $img = $this->upload($request->img);
 
-            try{
+            if(isset($request->old)){
+                Storage::disk('public')->delete($request->old);
+
                 AttributeProduct::where('product_id', $request->id)
                     ->where('attribute_id', $request->attr_id)
-                    ->updateOrCreate(['value' => $img],[
+                    ->update(['value' => $img]);
+
+                return response()->json([
+                    'message' => 'Image has been successfully saved.',
+                    'old' => $request->old
+                ]);
+            }else{
+                AttributeProduct::create([
                     'attribute_id' => $request->attr_id,
                     'product_id'   => $request->id,
                     'value'        => $img
                 ]);
-            }catch (\Exception $e){
-                return $e->getMessage();
+                return response()->json([
+                    'message' => 'Create Images.',
+                    'old' => $img
+                ]);
             }
 
-            return response()->json([
-                'message' => 'Image has been successfully saved.',
-                'image-product' => $image
-            ]);
+
+
         }
 
         return response()->json([
@@ -255,11 +265,12 @@ class ProductController extends Controller
         if($request->id){
             $img = $this->upload($request->img);
             if($img){
-                Confirm::where('product_id', $request->id)->updateOrCreate(['img' => $img], [
+                $info = Confirm::where('product_id', $request->id)->updateOrCreate(['img' => $img], [
                     'product_id' => $request->id,
                     'img' => $img]);
                 return response()->json([
-                    'message' => 'Анкета отправлена на проверку'
+                    'message' => 'Анкета отправлена на проверку',
+                    'info'    => $info
                 ]);
             }
             return response()->json([
@@ -273,12 +284,30 @@ class ProductController extends Controller
 
     public function confirmList()
     {
-        return Confirm::with(['product'])->get();
+        return Confirm::with(['products'])->get();
+    }
+
+    public function confirmSuccess(Request $request)
+    {
+        Products::where('id', $request->product_id)->update(['confirm' => 1]);
+        Storage::disk('public')->delete($request->img);
+        Confirm::find($request->id)->delete();
+
+        return response()->json([
+            'message' => 'Product Confirmed',
+        ]);
     }
 
     public function pay(Request $request)
     {
-        return Products::where('product_id',$request->id)->updata(['time_left' => Date::now()]);
+        $data = Products::where('id',$request->id)->update([
+            'time_left' => Carbon::now()->addMinute(),
+            'status'    => 'on'
+        ]);
+        return response()->json([
+            'message' => 'Product payed',
+            'data'    => $data,
+        ]);
     }
 
 }

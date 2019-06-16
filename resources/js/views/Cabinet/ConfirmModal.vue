@@ -70,7 +70,7 @@
                 formData.append('img', this.img)
                 formData.append('id', this.product.id)
 
-                axios.post(route('products.confirm'), formData ,config)
+                axios.post(route('confirm.store'), formData ,config)
                     .then(response => console.log(response.data))
                     .catch(error => console.log(error))
 
