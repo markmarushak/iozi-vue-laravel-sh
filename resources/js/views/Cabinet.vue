@@ -36,6 +36,9 @@
 						<li class="list-group-item list-group-item-action" v-if="isAdmin">
 							<router-link :to="{ name: 'product-settings' }"> Настройка анкет</router-link>
 						</li>
+						<li v-if="$auth.check()" class="list-group-item list-group-item-action">
+							<a href="#" @click.prevent="$auth.logout()">Выход</a>
+						</li>
 					</ul>
 
 				</div>

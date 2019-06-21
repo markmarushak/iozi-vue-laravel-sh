@@ -3,7 +3,7 @@
 
         <header id="header">
 
-            <nav class="navbar navbar-expand-lg navbar-dark bg-main">
+            <nav class="navbar navbar-expand-lg navbar-dark ">
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -11,14 +11,18 @@
                     <i class="fas fa-bars"></i>
                 </button>
 
-                <a class="navbar-brand d-none d-sm-block" href="#">ДЕВУШКИ НА ЛЮБОЙ ВКУС НИЖНИЙ НОВГОРОД</a>
 
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
                     <ul class="navbar-nav ">
+                        <li class="nav-item logo-in-menu">
+                            <a class="nav-link d-none d-sm-block bg-main text-uppercase text-right" href="#">ДЕВУШКИ НА ЛЮБОЙ ВКУС
+                                <br> НИЖНИЙ НОВГОРОД</a>
+                        </li>
+
                         <li class="nav-item">
-                            <router-link class="nav-link" :to="{ name: 'home' }">Галвная</router-link>
+                            <router-link class="nav-link bg-main text-uppercase" :to="{ name: 'home' }">Галвная</router-link>
                         </li>
 
                         <li class="nav-item cabinet-menu" v-if="!$auth.check()">
@@ -26,11 +30,9 @@
                         </li>
                         <span class="nav-item cabinet-menu">
                         <li v-if="$auth.check()" class="pull-right nav-item">
-                                <router-link class="nav-link" :to="{ name: 'cabinet' }">Кабинет</router-link>
+                                <router-link class="nav-link bg-main text-uppercase text-left" :to="{ name: 'cabinet' }">личный кабинет <br> для девушек</router-link>
                             </li>
-                    <li v-if="$auth.check()" class="pull-right nav-item">
-                        <a href="#" class="nav-link" @click.prevent="$auth.logout()">Выход</a>
-                    </li>
+
                     <li>
                       <span v-show="$auth.impersonating()">
                           &bull;
