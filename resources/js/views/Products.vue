@@ -116,12 +116,13 @@
 	display: block;
 	overflow: hidden;
 	margin: 5px 0;
-	padding: 7px 0;
+	padding: 7px 5px;
 	position: relative;
 	border: 1px solid #fff;
 
 	input {
-		visibility: hidden
+		visibility: hidden;
+		display: none;
 	}
 
 	input:checked + .text ,
