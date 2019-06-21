@@ -114,7 +114,6 @@
 
 .checkbox-product-option {
 	display: block;
-	overflow: hidden;
 	margin: 5px 0;
 	padding: 7px 5px;
 	position: relative;

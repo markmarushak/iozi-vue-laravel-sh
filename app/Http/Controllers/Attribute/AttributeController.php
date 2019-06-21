@@ -42,7 +42,7 @@ class AttributeController extends Controller
     public function store(Request $request)
     {
         $rule = [
-            'name' => 'required',
+            'name' => 'required:unique:attributes',
             'types' => 'required',
             'format' => 'required'
         ];
