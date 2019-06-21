@@ -33,7 +33,7 @@
                                             <hr>
                                             <h5 class="card-title">{{ product.fullname }}</h5>
                                             <p class="card-text">{{ product.description }}</p>
-                                            <button class="btn btn-block btn-primary" data-toggle="modal" data-target="#exampleModal" @click="openProduct = product">Узнать</button>
+                                            <button class="btn btn-block btn-primary animate-text" data-toggle="modal" data-target="#exampleModal" @click="openProduct = product">Узнать</button>
                                             <button class="btn btn-block btn-success"><i class="fas fa-phone-square"></i> Вызвать</button>
                                         </div>
                                     </div>
@@ -49,7 +49,7 @@
 
         </div>
 
-        <div class="filter">
+        <div class="filter wrap-option">
 
             <button class="filter-button" v-if="window.width <= 768" @click="filterTrigger = !filterTrigger">
                 <span v-if="!filterTrigger"><i class="fas fa-search-dollar"></i> фильтр анкет</span>
@@ -61,7 +61,7 @@
                         <h5> Расширенный поиск</h5>
                         <div class="form-group">
                             <!--<label v-for="fil in options"><input type="checkbox" @click="search(fil.id)">{{ fil.name }}</label>-->
-                            <label class="checkbox-product-option" v-for="fil in options">
+                            <label class="checkbox-product-option animate-block draw" v-for="fil in options">
                                 <input type="checkbox" @click="search(fil.id)">
                                 <span class="text">{{ fil.name }}</span>
                                 <span></span>

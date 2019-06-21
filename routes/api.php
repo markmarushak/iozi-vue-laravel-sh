@@ -24,7 +24,7 @@ use Illuminate\Http\Request;
 
     Route::group(['middleware' => ['jwt']], function(){
 
-        Route::get('/get-user', 'AuthController@user')->name('get.user');
+        Route::get('/current', 'AuthController@user')->name('get.user');
 
         Route::group(['prefix' => 'products', 'namespace' => 'Product', 'middleware' => 'jwt.auth'], function () {
             
