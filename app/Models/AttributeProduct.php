@@ -12,6 +12,8 @@ class AttributeProduct extends Model
 
     protected $fillable = ['attribute_id','product_id','value'];
 
+    protected $primaryKey = 'product_id';
+
     protected $appends = [
         'old'
     ];

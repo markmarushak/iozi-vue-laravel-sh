@@ -30,11 +30,6 @@
 									:to="{ name: 'products' }"><i class="fas fa-plus-square"></i> Добавить анкету
 							</router-link>
 						</li>
-						<!-- <li class="list-group-item list-group-item-action ">
-							<router-link
-									:to="{ name: 'rent' }"> Оплатить Аренду
-							</router-link>
-						</li> -->
 						<li class="list-group-item list-group-item-action" v-if="isAdmin">
 							<router-link :to="{ name: 'tariff' }">Стоимость Размещения</router-link>
 						</li>
@@ -143,8 +138,6 @@
 
     export default {
         data(){
-
-
 			return {
 				products: [],
 				product: '',
@@ -155,25 +148,18 @@
         },
         methods: {
             fetchProduct(){
-               if(this.isAdmin){
-                   axios.get(route('products.index'))
-                       .then(res => {
-						   this.products = res.data
-				   })
-			   }else {
-                   axios.get(route('products.cabinet'))
-                       .then(res => {
-						   this.products = res.data
-				   })
-			   }
+			   axios.get(route('products.cabinet'))
+				   .then(res => {
+					   this.products = res.data
+			   })
             },
             editProduct(product){
                 this.product = product
 				this.editModal = true
                 this.showModal = true
             },
-            deleteProduct(id){
-                axios.delete(route('products.destroy', {id: id}))
+            deleteProduct(product_id){
+                axios.delete(route('products.destroy', {id: product_id}))
                     .then(res => {
                     console.log(res.data)
                 	this.fetchProduct()
@@ -197,26 +183,19 @@
                 this.showModal = false
 				this.fetchProduct()
 			},
-            parseUserData() {
-                axios.get(route('get.user')).then(response => {
-                    this.$store.commit('set', {type: 'user', items: response.data.data})
-				})
-            }
-        },
-		created(){
-            this.parseUserData()
-            this.fetchProduct()
-        },
-        mounted(){
-            this.$store.commit('set',{type:'bg', items: true})
+
         },
 		computed: {
-            user: function () {
-                return this.$store.getters.user
-            },
+			user: function () {
+				return this.$store.getters.user
+			},
 			isAdmin: function () {
-				return !!(this.user.roleLevel <= 1)
-            },
+				if(!!(this.user.roleLevel)){
+					return !!(this.user.roleLevel <= 1)
+				}else{
+					return false
+				}
+			},
             list: function () {
 				return this.products.filter(function (prodcut) {
 				    let attr =  prodcut['attributes']
@@ -251,7 +230,16 @@
         components: {
             'edit-product': EditProduct,
 			'confirm-modal': ConfirmModal
-        }
+        },
+		mounted(){
+			this.fetchProduct()
+			this.$store.commit('set',{type:'bg', items: true})
+		},
+		watch: {
+            isAdmin: function (val) {
+                console.log(val)
+            },
+		}
     }
 
 </script>

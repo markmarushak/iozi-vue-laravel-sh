@@ -1,5 +1,6 @@
 import {Ziggy} from './ziggy'
-
+import axios from 'axios'
+import store from '../store/index'
 window.Ziggy  = Ziggy;
 window.route = require('../../../vendor/tightenco/ziggy/dist/js/route');
 
@@ -12,5 +13,10 @@ export default {
     logoutData:         { url: route('logout').url() },
     registerData:       { url: route('register').url() },
     refreshData:        { enabled: false },
+    parseUserData: function () {
+        axios.get(route('get.user')).then(response => {
+            store.commit('set', {type: 'user', items: response.data.data})
 
+        })
+    }
 }

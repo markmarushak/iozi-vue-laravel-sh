@@ -29,6 +29,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Products::all();
+        
         foreach ($products as &$product){
 
             foreach ($product->attributes as $attr)
@@ -38,15 +39,17 @@ class ProductController extends Controller
 
         }
         return $products;
-
-        return $products;
     }
 
     public function cabinet()
     {
-        $user_id = Utils::getCurrentUserId();
+        $user = Utils::getCurrentUser();
 
-        $products = Products::where('user_id', $user_id)->get();
+        if($user->roleLevel <= 1){
+            $products = Products::all();
+        }else{
+            $products = Products::where('user_id', $user->id)->get();
+        }
 
         foreach ($products as &$product){
 
@@ -177,9 +180,10 @@ class ProductController extends Controller
         ]);
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-    	$attrProduct = AttributeProduct::where('product_id', $request->id)->get();
+        $product_id = $id;
+    	$attrProduct = AttributeProduct::where('product_id', $product_id)->get();
     	foreach ($attrProduct as &$key){
     	    $type = $key->types($key['attribute_id']);
     	    if($type->types == 'images'){
@@ -189,7 +193,7 @@ class ProductController extends Controller
             $key->delete();
         }
 
-    	Products::where('id', $request->id)->delete();
+    	Products::where('id', $product_id)->delete();
     	return response()->json([
     	    'message' => 'product and all attribute delete'
         ]);

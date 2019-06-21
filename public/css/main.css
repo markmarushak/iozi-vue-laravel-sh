@@ -53,6 +53,7 @@ body {
 .no-gutters {
 	height: auto;
 	overflow: hidden;
+	box-shadow: 0 0 9px 0.4px #e91d63;
 }
 
 @media screen and (max-width: 425px){
@@ -67,11 +68,6 @@ body {
 	height: 100%;
 	object-fit: cover;
 	object-position: top;
-}
-
-#header ul li a,
-.navbar-brand {
-	color: #333;
 }
 
 .filter {
@@ -197,7 +193,8 @@ body {
 }
 
 .card {
-	color: #222;
+	color: #fff;
+	background: #333;
 }
 p.card-text {
 	height: 130px;

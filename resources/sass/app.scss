@@ -1,6 +1,7 @@
 
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url(option.scss);
 // Variables
 //@import 'variables';
 
@@ -210,6 +211,37 @@
 .btn-main-color {
   background: #E91d63;
   color: #fff;
+}
+
+.animate-text{
+  animation:blur .75s ease-out infinite;
+  text-shadow: 0 0 5px #abc, 0 0 7px #abc;
+}
+
+@keyframes blur{
+  from{
+    text-shadow:0px 0px 10px #fff,
+    0px 0px 10px #fff,
+    0px 0px 25px #fff,
+    0px 0px 25px #fff,
+    0px 0px 25px #fff,
+    0px 0px 25px #fff,
+    0px 0px 25px #fff,
+    0px 0px 25px #fff,
+    0px 0px 50px #fff,
+    0px 0px 50px #fff,
+    0px 0px 50px #7B96B8,
+    0px 0px 150px #7B96B8,
+    0px 10px 100px #7B96B8,
+    0px 10px 100px #7B96B8,
+    0px 10px 100px #7B96B8,
+    0px 10px 100px #7B96B8,
+    0px -10px 100px #7B96B8,
+    0px -10px 100px #7B96B8;}
+}
+
+.bg-main {
+  background: #E91d63;
 }
 
 .text-black {

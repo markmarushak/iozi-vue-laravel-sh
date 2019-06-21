@@ -114,12 +114,11 @@
 
 .checkbox-product-option {
 	display: block;
-	border-radius: 10px;
 	overflow: hidden;
 	margin: 5px 0;
 	padding: 7px 0;
 	position: relative;
-	border: 1px dotted #28a745;
+	border: 1px solid #fff;
 
 	input {
 		visibility: hidden
@@ -136,7 +135,7 @@
 	input:checked + .text + span,
 	input[value=true] + .text + span
 	{
-	    background: rgba(23, 162, 184, 0.64);
+	    background: rgba(232, 12, 88, 1);
 	    width: 100%;
 	    display: block;
 	    height: 100%;
@@ -181,6 +180,7 @@
             }
 		},
 		methods: {
+
 			fetch() {
 
 				axios.get(route('attribute.index',{type: 'option'}))
@@ -226,9 +226,7 @@
                         .then(response => console.log(response.data))
                 		.catch(error => console.log(error))
 				}
-
-				this.$router.push({name: 'cabinet'})
-
+				this.$router.push({name: '/'})
             },
 			setImages(file)
 			{

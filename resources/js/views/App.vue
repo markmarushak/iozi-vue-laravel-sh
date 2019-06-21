@@ -1,25 +1,30 @@
 <template>
     <div class="wrap">
 
-          <header id="header">
-            
-            <nav class="navbar navbar-expand-lg">
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                  <i class="fas fa-bars"></i>
-              </button>
-            
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-             
-                <ul class="navbar-nav ">
-                    <li class="nav-item">
-                        <router-link class="nav-link" :to="{ name: 'home' }">Галвная</router-link>
-                    </li>
-                   
-                    <li class="nav-item cabinet-menu" v-if="!$auth.check()">
-                        <router-link class="nav-link" :to="{ name: 'login' }">Вход</router-link>
-                      </li>
-                   <span  class="nav-item cabinet-menu">
+        <header id="header">
+
+            <nav class="navbar navbar-expand-lg navbar-dark bg-main">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <a class="navbar-brand d-none d-sm-block" href="#">ДЕВУШКИ НА ЛЮБОЙ ВКУС НИЖНИЙ НОВГОРОД</a>
+
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                    <ul class="navbar-nav ">
+                        <li class="nav-item">
+                            <router-link class="nav-link" :to="{ name: 'home' }">Галвная</router-link>
+                        </li>
+
+                        <li class="nav-item cabinet-menu" v-if="!$auth.check()">
+                            <router-link class="nav-link" :to="{ name: 'login' }">Вход</router-link>
+                        </li>
+                        <span class="nav-item cabinet-menu">
                         <li v-if="$auth.check()" class="pull-right nav-item">
                                 <router-link class="nav-link" :to="{ name: 'cabinet' }">Кабинет</router-link>
                             </li>
@@ -33,9 +38,9 @@
                       </span>
                     </li>
                    </span>
-                </ul>
-              
-              </div>
+                    </ul>
+
+                </div>
             </nav>
         </header>
         <div class="container">

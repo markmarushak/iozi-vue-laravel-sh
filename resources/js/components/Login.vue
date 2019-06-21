@@ -45,9 +45,6 @@
                 error: null
             };
         },
-        mounted() {
-            console.log(this.$auth.redirect());
-        },
         methods: {
             login() {
                 this.$auth.login({
@@ -56,10 +53,7 @@
                       password: this.data.body.password
                     }, 
                     success: function () {
-                        axios.get(route('get.user')).then(res => {
-                            this.$auth.user_role = res.data.data.roleLevel
-                            this.$auth.name = res.data.data.name
-                    })
+                        
                     },
                     error: function () {},
                     rememberMe: true,
