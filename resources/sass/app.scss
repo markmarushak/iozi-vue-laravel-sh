@@ -247,3 +247,11 @@
 .text-black {
   color: #222;
 }
+
+.confirm {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  font-size: 2em;
+  text-shadow: 0 0 1px #000;
+}

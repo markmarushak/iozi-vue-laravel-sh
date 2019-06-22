@@ -49,7 +49,7 @@
 
 					<div class="jumbotron jumbotron-fluid text-black" v-if="$router.currentRoute.name == 'cabinet'">
 						<div class="container">
-							<h1 class="display-4">Приветствуем в личном кабинете {{ user.name }}</h1>
+							<h1 class="display-4">Приветствуем в личном кабинете {{ name }}</h1>
 							<p class="lead">следите за новостями и контролируйте Ваш личный кабинет</p>
 						</div>
 					</div>
@@ -78,6 +78,9 @@
 										   @click="modals = product.images">
 											<img src="public/img/notFound.png" class="card-img-top" alt="test" style="height:280px;">
 										</a>
+										<span class="text-success confirm" v-if="product.confirm == '1'">
+											<i class="fas fa-check-circle"></i>
+										</span>
 									</div>
 									<div class="col-sm-12">
 										<div class="card-body text-center">
@@ -147,6 +150,7 @@
 				showModal: false,
 				editModal: false,
 				confirmModal: false,
+				name: ''
             }
         },
         methods: {
@@ -189,12 +193,12 @@
 
         },
 		computed: {
-			user: function () {
-				return this.$store.getters.user
+			role: function () {
+				return this.$store.getters.bg
 			},
 			isAdmin: function () {
-				if(!!(this.user.roleLevel)){
-					return !!(this.user.roleLevel <= 1)
+				if(!!(this.role)){
+					return !!(this.role <= 1)
 				}else{
 					return false
 				}
@@ -235,12 +239,16 @@
 			'confirm-modal': ConfirmModal
         },
 		mounted(){
+			axios.get(route('get.role')).then(response => {
+				this.$store.commit('set', {type: 'role', items: response.data})
+
+			})
 			this.fetchProduct()
 			this.$store.commit('set',{type:'bg', items: true})
 		},
 		watch: {
             isAdmin: function (val) {
-                console.log(val)
+
             },
 		}
     }

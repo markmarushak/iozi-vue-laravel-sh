@@ -29,7 +29,6 @@ class ProductController extends Controller
     public function index()
     {
         $products = Products::all();
-        
         foreach ($products as &$product){
 
             foreach ($product->attributes as $attr)
@@ -41,17 +40,16 @@ class ProductController extends Controller
         return $products;
     }
 
-    public function cabinet()
+    public function cabinet(Products $products)
     {
         $user = Utils::getCurrentUser();
-
-        if($user->roleLevel <= 1){
-            $products = Products::all();
-        }else{
-            $products = Products::where('user_id', $user->id)->get();
+        $query = $products::where('left_time','>', Carbon::now());
+        if($user->roleLevel != 1){
+            $query = $query->where('user_id', $user->id);
         }
+        $query = $query->get();
 
-        foreach ($products as &$product){
+        foreach ($query as &$product){
 
             foreach ($product->attributes as $attr)
             {

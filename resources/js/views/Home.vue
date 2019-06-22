@@ -21,6 +21,9 @@
                                         <a v-if="product.images == ''" @click="modals = product.images">
                                             <img src="public/img/notFound.png" class="card-img-top" alt="test">
                                         </a>
+                                        <span class="text-success confirm" v-if="product.confirm == '1'">
+											<i class="fas fa-check-circle"></i>
+										</span>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="card-body">
@@ -33,7 +36,7 @@
                                             <hr>
                                             <h5 class="card-title">{{ product.fullname }}</h5>
                                             <p class="card-text">{{ product.description }}</p>
-                                            <button class="btn btn-block btn-primary animate-text" data-toggle="modal" data-target="#exampleModal" @click="openProduct = product">Узнать</button>
+                                            <button class="btn btn-block btn-primary " data-toggle="modal" data-target="#exampleModal" @click="openProduct = product">Узнать</button>
                                             <button class="btn btn-block btn-success"><i class="fas fa-phone-square"></i> Вызвать</button>
                                         </div>
                                     </div>

@@ -96,17 +96,13 @@ class AuthController extends Controller
 
     public function user()
     {
-        try{
-            $user = Utils::getCurrentUser();
-        }catch (\Exception $e){
-            return $e->getMessage();
-        }
-        return response([
-                'status' => 'success',
-                'data' => $user
-            ]);
+        return response()->json(auth('api')->user());
     }
 
+    public function role()
+    {
+        return Utils::getCurrentUser()->roleLevel;
+    }
 
     /**
      * Get the authenticated User.

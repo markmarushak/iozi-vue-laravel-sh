@@ -16,21 +16,38 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 // this auth routes
+    Route::get('/', 'HomeController@index')->name('home');
 
-    Route::group(['middleware' => 'api'], function(){
-        Route::post('authrefresh', 'AuthController@getAuthenticatedUser');
+    Route::group([ 'prefix' => 'home'], function (){
 
+        Route::group(['namespace' => 'Product', 'prefix' => 'home'], function () {
+            Route::get('/products','ProductController@cabinet')->name('products.index');
+            Route::get('/products/{id}','ProductController@show')->name('products.show');
+            Route::post('/search','ProductController@search')->name('products.search');
+        });
+
+        Route::group(['namespace' => 'Attribute'], function () {
+            Route::get('/attribute/{type}', 'AttributeController@index')->name('attribute.index');
+            Route::get('/attribute{id}', 'AttributeController@show')->name('attribute.show');
+        });
     });
 
-    Route::group(['middleware' => ['jwt']], function(){
+    Route::post('refresh', 'AuthController@getAuthenticatedUser')->name('auth.refresh');
+    Route::post('login', 'AuthController@login')->name('auth.login');
+    Route::post('register', 'AuthController@register')->name('auth.register');
+    Route::post('logout', 'AuthController@logout')->name('auth.logout');
+    Route::post('role', 'AuthController@role')->name('auth.role');
 
-        Route::get('/current', 'AuthController@user')->name('get.user');
 
-        Route::group(['prefix' => 'products', 'namespace' => 'Product', 'middleware' => 'jwt.auth'], function () {
-            
+
+    Route::group(['middleware' => ['jwt'], 'prefix' => 'auth'], function(){
+        Route::get('current', 'AuthController@user')->name('get.user');
+        Route::get('current-role', 'AuthController@role')->name('get.role');
+
+        Route::group(['prefix' => 'products', 'namespace' => 'Product', 'middleware' => 'jwt'], function () {
             Route::post('/','ProductController@store')->name('products.store');
             Route::put('/','ProductController@update')->name('products.update');
-            Route::get('/products','ProductController@cabinet')->name('products.cabinet');
+            Route::get('/','ProductController@cabinet')->name('products.cabinet');
             Route::post('/image','ProductController@saveImage')->name('products.image');
             Route::post('/image/upload','ProductController@uploadImage')->name('products.image.upload');
             Route::post('/pay','ProductController@pay')->name('products.pay');
@@ -53,32 +70,11 @@ use Illuminate\Http\Request;
 
         });
 
-
         Route::group(['prefix' => 'payment', 'namespace' => 'Payment'], function () {
             Route::get('/','PaymentController@index')->name('payment.show');
         });
-
-
-
     });
 
-Route::post('/login', 'AuthController@login')->name('login');
-Route::post('/register', 'AuthController@register')->name('register');
-Route::post('/logout', 'AuthController@logout')->name('logout');
-
-Route::get('/', 'HomeController@index')->name('home');
-
-
-Route::group(['namespace' => 'Product'], function () {
-    Route::get('/products','ProductController@index')->name('products.index');
-    Route::get('/products/{id}','ProductController@show')->name('products.show');
-    Route::post('/search','ProductController@search')->name('products.search');
-});
-
-Route::group(['namespace' => 'Attribute'], function () {
-    Route::get('/attribute/{type}', 'AttributeController@index')->name('attribute.index');
-    Route::get('/attribute{id}', 'AttributeController@show')->name('attribute.show');
-});
 
 
 

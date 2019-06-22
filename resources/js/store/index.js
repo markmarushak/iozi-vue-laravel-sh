@@ -11,7 +11,8 @@ const store = new Vuex.Store({
             load: false,
             text: 'загрузка..'
         },
-        user: ''
+        user: '',
+        role: 'loh'
     },
     getters: {
         bg(state){
@@ -25,6 +26,10 @@ const store = new Vuex.Store({
         user(state){
             let user = state.user
             return user
+        },
+        role(state){
+            let role = state.role
+            return role
         }
     },
     mutations: {
