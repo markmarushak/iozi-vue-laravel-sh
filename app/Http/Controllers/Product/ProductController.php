@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Product;
 
 use App\Libraries\Utils\Utils;
 use App\Models\Confirm;
+use App\Models\User;
 use Carbon\Carbon;
 use Carbon\Traits\Date;
 use Illuminate\Http\Request;
@@ -26,28 +27,11 @@ class ProductController extends Controller
         $this->ap = $ap;
     }
 
-    public function index()
+    public function index(Products $products)
     {
-        $products = Products::all();
-        foreach ($products as &$product){
-
-            foreach ($product->attributes as $attr)
-            {
-                $attr->type = $attr->types($attr->attribute_id)->types;
-            }
-
-        }
-        return $products;
-    }
-
-    public function cabinet(Products $products)
-    {
-        $user = Utils::getCurrentUser();
-        $query = $products::where('left_time','>', Carbon::now());
-        if($user->roleLevel != 1){
-            $query = $query->where('user_id', $user->id);
-        }
-        $query = $query->get();
+        $query = $products
+                    ->where('time_left','>=', Carbon::now())
+                    ->get();
 
         foreach ($query as &$product){
 
@@ -57,7 +41,25 @@ class ProductController extends Controller
             }
 
         }
-        return $products;
+        return $query;
+    }
+
+    public function cabinet(Products $products)
+    {
+        $user = Utils::getCurrentUser();
+        if($user->roleLevel != 1)
+            $products->where('user_id', $user->id);
+
+        $query = $products->get();
+        foreach ($query as &$product){
+
+            foreach ($product->attributes as $attr)
+            {
+                $attr->type = $attr->types($attr->attribute_id)->types;
+            }
+
+        }
+        return $query;
     }
 
     public function show(Request $request)
@@ -92,6 +94,8 @@ class ProductController extends Controller
                 'user_id'     => $user_id,
                 'fullname'    => $data['fullname'],
                 'description' => $data['description'],
+                'phone' => $data['phone'],
+
             ]);
 
             // перебераем атрибуты и сохраняем к данному продукту
@@ -139,7 +143,8 @@ class ProductController extends Controller
 
         Products::where('id', $request->id)->update([
             'fullname'    => $data['fullname'],
-            'description' => $data['description']
+            'description' => $data['description'],
+            'phone' => $data['phone'],
         ]);
 
         // перебераем атрибуты и сохраняем к данному продукту
@@ -302,13 +307,18 @@ class ProductController extends Controller
 
     public function pay(Request $request)
     {
+        $user = User::find(Utils::getCurrentUserId());
+        $user->money = $user->money - config('product.rent');
+        $user->save();
+
         $data = Products::where('id',$request->id)->update([
-            'time_left' => Carbon::now()->addMinute(),
+            'time_left' => $request->time,
             'status'    => 'on'
         ]);
         return response()->json([
             'message' => 'Product payed',
             'data'    => $data,
+            'user'    => $user
         ]);
     }
 

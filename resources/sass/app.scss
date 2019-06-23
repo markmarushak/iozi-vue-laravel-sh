@@ -255,3 +255,45 @@
   font-size: 2em;
   text-shadow: 0 0 1px #000;
 }
+
+.checkbox-product-option {
+  display: block;
+  margin: 5px 0;
+  padding: 7px 5px;
+  position: relative;
+  border: 1px solid green;
+
+  input {
+    visibility: hidden;
+    display: none;
+  }
+
+  input:checked + .text ,
+  input[value=true] + .text
+  {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+  }
+
+  input:checked + .text + span,
+  input[value=true] + .text + span
+  {
+    background: rgba(232, 12, 88, 1);
+    width: 100%;
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+  .off, .on {
+    position: absolute;
+    right: 10px;
+    top: 0;
+  }
+  .on{color: green}
+  .off{color: red}
+}

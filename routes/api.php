@@ -21,7 +21,7 @@ use Illuminate\Http\Request;
     Route::group([ 'prefix' => 'home'], function (){
 
         Route::group(['namespace' => 'Product', 'prefix' => 'home'], function () {
-            Route::get('/products','ProductController@cabinet')->name('products.index');
+            Route::get('/products','ProductController@index')->name('products.index');
             Route::get('/products/{id}','ProductController@show')->name('products.show');
             Route::post('/search','ProductController@search')->name('products.search');
         });
@@ -43,6 +43,7 @@ use Illuminate\Http\Request;
     Route::group(['middleware' => ['jwt'], 'prefix' => 'auth'], function(){
         Route::get('current', 'AuthController@user')->name('get.user');
         Route::get('current-role', 'AuthController@role')->name('get.role');
+        Route::get('current-money', 'AuthController@role')->name('get.money');
 
         Route::group(['prefix' => 'products', 'namespace' => 'Product', 'middleware' => 'jwt'], function () {
             Route::post('/','ProductController@store')->name('products.store');

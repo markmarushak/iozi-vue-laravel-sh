@@ -61,7 +61,8 @@ body {
 .no-gutters {
 	height: auto;
 	overflow: hidden;
-	box-shadow: 0 0 9px 0.4px #e91d63;
+	box-shadow: 0 0 3px 3px green;
+	border-radius: 5px;
 }
 
 @media screen and (max-width: 425px){
@@ -110,8 +111,9 @@ body {
 }
 
 .filter-list {
-	background: #ff5c94;
+	background: #c10042;
 	color: #fff;
+	box-shadow: 0 0 3px 3px green;
 	position: fixed;
 	width: 16%;
 	padding: 10px;

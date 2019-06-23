@@ -38,6 +38,11 @@ a<template>
                                                 <input v-if="typeof list('attr')[index] != 'undefined'" type="text" class="form-control" v-model="attr.value = list('attr')[index].value" required>
                                             </div>
 
+                                            <div class="form-group col-sm-6">
+                                                <label>Номер телефона</label>
+                                                <input type="text" class="form-control" v-model="product.phone" required>
+                                            </div>
+
 
                                             <!-- main info -->
 
@@ -147,7 +152,8 @@ a<template>
                         time: [],
                     },
                     fullname: this.product.fullname,
-                    description: this.product.description
+                    description: this.product.description,
+                    phone: this.product.phone
                 },
                 images: [],
 

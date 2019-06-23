@@ -14,11 +14,11 @@
                                 <div class="row no-gutters">
                                     <div class="col-sm-6">
                                         <a v-if="product.images != ''" data-toggle="modal" data-target="#exampleModal"
-                                           @click="modals = product.images">
+                                           @click="openProduct = product">
                                             <img v-bind:src="assets(product.images[0].value)"
                                                  class="card-img-top">
                                         </a>
-                                        <a v-if="product.images == ''" @click="modals = product.images">
+                                        <a v-if="product.images == ''" @click="openProduct = product">
                                             <img src="public/img/notFound.png" class="card-img-top" alt="test">
                                         </a>
                                         <span class="text-success confirm" v-if="product.confirm == '1'">

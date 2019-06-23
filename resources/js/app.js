@@ -9,6 +9,7 @@ import VueCarousel from 'vue-carousel'
 import VueAuth from '@websanova/vue-auth'
 import store from './store'
 
+
 import App from './views/App'
 import authParams from './includes/auth'
 import routes from './includes/routes'

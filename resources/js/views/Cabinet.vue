@@ -22,7 +22,7 @@
 						</li>
 						<li class="list-group-item list-group-item-action ">
 							<router-link
-									:to="{ name: 'payment' }"><i class="fas fa-wallet"></i> Пополнить счет
+									:to="{ name: 'payment' }"><i class="fas fa-wallet"></i> Пополнить счет ({{ user.money }} P)
 							</router-link>
 						</li>
 						<li class="list-group-item list-group-item-action ">
@@ -100,7 +100,7 @@
 													</button>
 												</div>
 												<div class="col-3">
-													<button class="btn btn-success" @click="payProduct(product.id)"><i class="fas fa-ruble-sign"></i>
+													<button class="btn btn-success" :disabled="timeLeft(product.time_left)" @click="payProduct(product.id)"><i class="fas fa-ruble-sign"></i>
 													</button>
 												</div>
 											</div>
@@ -138,7 +138,7 @@
 
 
 <script>
-
+	import moment from 'moment'
     import EditProduct from './Cabinet/EditProduct'
 	import ConfirmModal from './Cabinet/ConfirmModal'
 
@@ -150,7 +150,9 @@
 				showModal: false,
 				editModal: false,
 				confirmModal: false,
-				name: ''
+				name: '',
+				now: moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+
             }
         },
         methods: {
@@ -178,11 +180,13 @@
                 this.showModal = true
 			},
 			payProduct(id){
-			    axios.post(route('products.pay'), {id: id})
+            	let days = window.Laravel.setting
+            	let time = moment(new Date()).add('days', days.days).format('YYYY-MM-DD HH:mm:ss')
+			    axios.post(route('products.pay'), {id: id, time: time})
 					.then(res => {
-					    alert("Продукт проплачен на сутки с до этого времени")
 					    this.fetchProduct()
-				})
+						// this.getUser()
+					})
 			},
 			closeModal(){
 			    this.editModal = false
@@ -190,9 +194,28 @@
                 this.showModal = false
 				this.fetchProduct()
 			},
+			getUser(){
+				axios.get(route('get.role')).then(response => {
+					this.$store.commit('set', {type: 'role', items: response.data})
+
+				})
+				axios.get(route('get.user')).then(response => {
+					this.$store.commit('set', {type: 'user', items: response.data})
+
+				})
+			},
+			timeLeft(time){
+            	console.log(time)
+            	console.log(this.now)
+
+            	return (time > this.now)
+			}
 
         },
 		computed: {
+        	user: function(){
+        		return this.$store.getters.user
+			},
 			role: function () {
 				return this.$store.getters.bg
 			},
@@ -239,10 +262,7 @@
 			'confirm-modal': ConfirmModal
         },
 		mounted(){
-			axios.get(route('get.role')).then(response => {
-				this.$store.commit('set', {type: 'role', items: response.data})
-
-			})
+			this.getUser()
 			this.fetchProduct()
 			this.$store.commit('set',{type:'bg', items: true})
 		},

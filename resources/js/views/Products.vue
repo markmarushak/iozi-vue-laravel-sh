@@ -30,6 +30,11 @@
 								<textarea v-model="product.description" style="width: 100%" rows="3" class="form-control"></textarea>
 							</div>
 
+							<div class="form-group col-sm-6">
+								<label>Номер телефона</label>
+								<input type="text" class="form-control" v-model="product.phone" required>
+							</div>
+
 							<div class="form-group col-sm-6" v-for="attr in product.additional.attributes">
 								<label>{{ attr.name }}</label>
 								<input v-if="attr.format == 'input'" type="text" class="form-control" v-model="attr.value" required>
@@ -105,57 +110,6 @@
 	</div>
 </template>
 
-<style lang="scss">
-
-.wrap-product-option {
-	overflow-y: auto;
-	max-height: 100vh;
-}
-
-.checkbox-product-option {
-	display: block;
-	margin: 5px 0;
-	padding: 7px 5px;
-	position: relative;
-	border: 1px solid #fff;
-
-	input {
-		visibility: hidden;
-		display: none;
-	}
-
-	input:checked + .text ,
-	input[value=true] + .text
-	{
-		position: relative;
-		z-index: 2;
-		color: #fff;
-	}
-
-	input:checked + .text + span,
-	input[value=true] + .text + span
-	{
-	    background: rgba(232, 12, 88, 1);
-	    width: 100%;
-	    display: block;
-	    height: 100%;
-	    position: absolute;
-	    top: 0;
-	    left: 0;
-	    z-index: 1;
-	}
-
-	.off, .on {
-		position: absolute;
-		right: 10px;
-		top: 0;
-	}
-	.on{color: green}
-	.off{color: red}	
-}
-
-</style>
-
 <script>
 	
 	import Image  from '../components/Image.vue'
@@ -174,7 +128,8 @@
                         time: [],
 					},
 					fullname: '',
-					description: ''
+					description: '',
+					phone: ''
 				},
                 images: [],
             }
